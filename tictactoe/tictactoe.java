@@ -44,7 +44,6 @@ public class TicTacToe {
         initGame();
         printBoard();
         moveScanner();
-        // boardChange();
     }
 
     public static void moveScanner() {
@@ -71,10 +70,11 @@ public class TicTacToe {
         boardChange(Character.toUpperCase(moveString.charAt(0)));
     }
 
-    // this is hideously long; will try to refactor later
-    // initial thought is to make a helper function 
+    // this is hideously long method
+    // maybe a switch statement would look better?
+    // tried to move printBoard() and moveScanner() into the helper method but didn't work
     public static void boardChange(char input) {
-        if (input == 'A') {
+        if (input == 'A' && board[0][0] == 'A') {
             if (playerXTurn) {
                 board[0][0] = 'X';
                 playerXTurn = !playerXTurn;
@@ -84,36 +84,40 @@ public class TicTacToe {
             }
             printBoard();
             moveScanner();
-        } else if (input == 'B') {
+        } else if (input == 'B' && board[0][1] == 'B') {
             board[0][1] = boardChangeHelper();
             printBoard();
             moveScanner();
-        } else if (input == 'C') {
+        } else if (input == 'C' && board[0][2] == 'C') {
             board[0][2] = boardChangeHelper();
             printBoard();
             moveScanner();
-        } else if (input == 'D') {
+        } else if (input == 'D' && board[1][0] == 'D') {
             board[1][0] = boardChangeHelper();
             printBoard();
             moveScanner();
-        } else if (input == 'E') {
+        } else if (input == 'E' && board[1][1] == 'E') {
             board[1][1] = boardChangeHelper();
             printBoard();
             moveScanner();
-        } else if (input == 'F') {
+        } else if (input == 'F' && board[1][2] == 'F') {
             board[1][2] = boardChangeHelper();
             printBoard();
             moveScanner();
-        } else if (input == 'G') {
+        } else if (input == 'G' && board[2][0] == 'G') {
             board[2][0] = boardChangeHelper();
             printBoard();
             moveScanner();
-        } else if (input == 'H') {
+        } else if (input == 'H' && board[2][1] == 'H') {
             board[2][1] = boardChangeHelper();
             printBoard();
             moveScanner();
-        } else if (input == 'I') {
+        } else if (input == 'I' && board[2][2] == 'I') {
             board[2][2] = boardChangeHelper();
+            printBoard();
+            moveScanner();
+        } else {
+            System.out.println("Already occupied! Pick another tile.");
             printBoard();
             moveScanner();
         }
@@ -130,7 +134,7 @@ public class TicTacToe {
 
     }
 
-    public boolean winCondition() {
+    public static boolean winCondition() {
         if (board[0][0] == board[0][1] && board[0][1] == board[0][2]) {
             System.out.println("Player " + board[0][0] + " wins!");
             return true;
