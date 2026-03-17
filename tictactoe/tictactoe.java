@@ -4,15 +4,15 @@
 import java.util.Scanner;
 
 public class TicTacToe {
+    // Aren't static variables bad practice unless they're final constants?
+    // Didn't know how to avoid this since main() is static, and since everything went into it
+    // all of my methods and variables had to be static as well
     private static boolean playerXTurn = true; 
     private static char[][] board = new char[3][3];
-
-    public TicTacToe() {
-        
-    }    
+    private static int turnCount = 1;
 
     public static void initGame() {
-        // this method will initialize char[][] board to ABCEDFGHI
+        // Initialize char[][] board to ABCEDFGHI
         String boardLetters = "ABCDEFGHI";
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
@@ -22,18 +22,21 @@ public class TicTacToe {
     }
 
     public static void printBoard() {
-        System.out.println("-------------------");
+        System.out.println("----------");
         System.out.println(" " + board[0][0] + " | " + board[0][1] + " | " + board[0][2]);
         System.out.println("----------");
         System.out.println(" " + board[1][0] + " | " + board[1][1] + " | " + board[1][2]);
         System.out.println("----------");
         System.out.println(" " + board[2][0] + " | " + board[2][1] + " | " + board[2][2]);
+        System.out.println("----------");
+    }
+
+    public static void printTurn() {
         if (playerXTurn) {
             System.out.println("Player X's turn! Enter your move.");
         } else {
             System.out.println("Player O's turn! Enter your move.");
-        }
-        
+        }  
     }
 
     // first time using static void main() method, not sure if this is the proper implementation
@@ -43,10 +46,15 @@ public class TicTacToe {
     public static void main() {
         initGame();
         printBoard();
+        printTurn();
         moveScanner();
     }
 
     public static void moveScanner() {
+        // takes an input from the user
+        // if it's an illegal input, will print out an error
+        // tried to throw new errors instead of just printing them
+        // but that would exit the program which is undesirable
         Scanner sc = new Scanner(System.in);
         String moveString = sc.nextLine();
     
@@ -56,23 +64,20 @@ public class TicTacToe {
         } else if (moveString.length() > 1) {
             System.out.println("Please enter one character.");
             moveScanner();
-        // this doesn't work rn, need to fix
-        // } else if (moveString.toUpperCase().equals("X") || moveString.toUpperCase().equals("O")) {
-        //     System.out.println("This space is already occupied!");
-        //     moveScanner();
         } else if (Character.getNumericValue(moveString.charAt(0)) < 10 || Character.getNumericValue(moveString.charAt(0)) > 18) {
             System.out.println("Enter a legal letter from A to I");
             moveScanner();
         }
 
-        // returns the character input needed to manipulate the board later
-        // System.out.println(Character.toUpperCase(moveChar)); // testing only
+        // turn count to check if the board is filled up and the game needs to end
+        turnCount++;
         boardChange(Character.toUpperCase(moveString.charAt(0)));
     }
 
     // this is hideously long method
     // maybe a switch statement would look better?
-    // tried to move printBoard() and moveScanner() into the helper method but didn't work
+    // tried to move the four methods into the helper method but didn't work 
+    // so just leaving it outside for now and will refactor later
     public static void boardChange(char input) {
         if (input == 'A' && board[0][0] == 'A') {
             if (playerXTurn) {
@@ -83,42 +88,61 @@ public class TicTacToe {
                 playerXTurn = !playerXTurn;
             }
             printBoard();
+            winCondition();
+            printTurn();
             moveScanner();
         } else if (input == 'B' && board[0][1] == 'B') {
             board[0][1] = boardChangeHelper();
             printBoard();
+            winCondition();
+            printTurn();
             moveScanner();
         } else if (input == 'C' && board[0][2] == 'C') {
             board[0][2] = boardChangeHelper();
             printBoard();
+            winCondition();
+            printTurn();
             moveScanner();
         } else if (input == 'D' && board[1][0] == 'D') {
             board[1][0] = boardChangeHelper();
             printBoard();
+            winCondition();
+            printTurn();
             moveScanner();
         } else if (input == 'E' && board[1][1] == 'E') {
             board[1][1] = boardChangeHelper();
             printBoard();
+            winCondition();
+            printTurn();
             moveScanner();
         } else if (input == 'F' && board[1][2] == 'F') {
             board[1][2] = boardChangeHelper();
             printBoard();
+            winCondition();
+            printTurn();
             moveScanner();
         } else if (input == 'G' && board[2][0] == 'G') {
             board[2][0] = boardChangeHelper();
             printBoard();
+            winCondition();
+            printTurn();
             moveScanner();
         } else if (input == 'H' && board[2][1] == 'H') {
             board[2][1] = boardChangeHelper();
             printBoard();
+            winCondition();
+            printTurn();
             moveScanner();
         } else if (input == 'I' && board[2][2] == 'I') {
             board[2][2] = boardChangeHelper();
             printBoard();
+            winCondition();
+            printTurn();
             moveScanner();
         } else {
-            System.out.println("Already occupied! Pick another tile.");
             printBoard();
+            System.out.println("Already occupied! Pick another tile.");
+            printTurn();
             moveScanner();
         }
     }
@@ -134,16 +158,46 @@ public class TicTacToe {
 
     }
 
-    public static boolean winCondition() {
-        if (board[0][0] == board[0][1] && board[0][1] == board[0][2]) {
+    public static void winCondition() {
+        // three horizontal win conditions
+        if (board[0][0] == board[0][1] && board[0][0] == board[0][2]) {
             System.out.println("Player " + board[0][0] + " wins!");
-            return true;
+            System.exit(0);
         }
-        else {
-            System.out.println("");
-            return false;
+        if (board[1][0] == board[1][1] && board[1][0] == board[1][2]) {
+            System.out.println("Player " + board[1][0] + " wins!");
+            System.exit(0);
+        }
+        if (board[2][0] == board[2][1] && board[2][0] == board[2][2]) {
+            System.out.println("Player " + board[2][0] + " wins!");
+            System.exit(0);
+        }
+        // three vertical win conditions
+        if (board[0][0] == board[1][0] && board[0][0] == board[2][0]) {
+            System.out.println("Player " + board[0][0] + " wins!");
+            System.exit(0);
+        }
+        if (board[0][1] == board[1][1] && board[0][1] == board[2][1]) {
+            System.out.println("Player " + board[0][1] + " wins!");
+            System.exit(0);
+        }
+        if (board[0][2] == board[1][2] && board[0][2] == board[2][2]) {
+            System.out.println("Player " + board[0][12] + " wins!");
+            System.exit(0);
+        }
+        // two diagonal win conditions
+        if (board[0][0] == board[1][1] && board[0][0] == board[2][2]) {
+            System.out.println("Player " + board[0][0] + " wins!");
+            System.exit(0);
+        }
+        if (board[0][2] == board[1][1] && board[0][2] == board[2][0]) {
+            System.out.println("Player " + board[0][2] + " wins!");
+            System.exit(0);
+        }
+        // board filled and nobody wins condition
+        if (turnCount > 9) {
+            System.out.println("Board has been filled, there is no winner.");
+            System.exit(0);
         }
     }
 }
-
-// TicTacToe newGame = new TicTacToe();
