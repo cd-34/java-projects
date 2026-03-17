@@ -22,6 +22,7 @@ public class TicTacToe {
     }
 
     public static void printBoard() {
+        System.out.println("-------------------");
         System.out.println(" " + board[0][0] + " | " + board[0][1] + " | " + board[0][2]);
         System.out.println("----------");
         System.out.println(" " + board[1][0] + " | " + board[1][1] + " | " + board[1][2]);
@@ -42,11 +43,11 @@ public class TicTacToe {
     public static void main() {
         initGame();
         printBoard();
-        // moveScanner();
-        boardChange();
+        moveScanner();
+        // boardChange();
     }
 
-    public static char moveScanner() {
+    public static void moveScanner() {
         Scanner sc = new Scanner(System.in);
         String moveString = sc.nextLine();
         char moveChar = moveString.charAt(0);
@@ -60,23 +61,26 @@ public class TicTacToe {
         } else if (moveString.length() > 1) {
             System.out.println("Please enter one character.");
             moveScanner();
-        } else if (moveString.toUpperCase().equals("X") || moveString.toUpperCase().equals("O")) {
-            System.out.println("This space is already occupied!");
-            moveScanner();
+        // this doesn't work rn, need to fix
+        // } else if (moveString.toUpperCase().equals("X") || moveString.toUpperCase().equals("O")) {
+        //     System.out.println("This space is already occupied!");
+        //     moveScanner();
         } else if (Character.getNumericValue(moveChar) < 10 || Character.getNumericValue(moveChar) > 18) {
             System.out.println("Enter a legal space from A to I");
             moveScanner();
         }
 
-        char moveCharTemp = moveString.charAt(0);
+
+
         // returns the character input needed to manipulate the board later
-        return Character.toUpperCase(moveCharTemp);
+        // System.out.println(Character.toUpperCase(moveChar)); // testing only
+        boardChange(Character.toUpperCase(moveChar));
     }
 
     // this is hideously long; will try to refactor later
     // initial thought is to make a helper function 
-    public static void boardChange() {
-        if (moveScanner() == 'A') {
+    public static void boardChange(char input) {
+        if (input == 'A') {
             if (playerXTurn) {
                 board[0][0] = 'X';
                 playerXTurn = !playerXTurn;
@@ -86,26 +90,61 @@ public class TicTacToe {
             }
             printBoard();
             moveScanner();
-        } 
-        if (moveScanner() == 'B') {
-            System.out.println("b reached");
+        } else if (input == 'B') {
+            board[0][1] = boardChangeHelper();
+            printBoard();
+            moveScanner();
+        } else if (input == 'C') {
+            board[0][2] = boardChangeHelper();
+            printBoard();
+            moveScanner();
+        } else if (input == 'D') {
+            board[1][0] = boardChangeHelper();
+            printBoard();
+            moveScanner();
+        } else if (input == 'E') {
+            board[1][1] = boardChangeHelper();
+            printBoard();
+            moveScanner();
+        } else if (input == 'F') {
+            board[1][2] = boardChangeHelper();
+            printBoard();
+            moveScanner();
+        } else if (input == 'G') {
+            board[2][0] = boardChangeHelper();
+            printBoard();
+            moveScanner();
+        } else if (input == 'H') {
+            board[2][1] = boardChangeHelper();
+            printBoard();
+            moveScanner();
+        } else if (input == 'I') {
+            board[2][2] = boardChangeHelper();
+            printBoard();
+            moveScanner();
         }
     }
 
-    // public static char boardChangeHelper() {
-    //     if (playerXTurn) {
-    //         playerXTurn = !playerXTurn;
-    //         return 'X';
-    //     } else {
-    //         playerXTurn = !playerXTurn;
-    //         return 'O';
-    //     }
-    // }
+    public static char boardChangeHelper() {
+        if (playerXTurn) {
+            playerXTurn = !playerXTurn;
+            return 'X';
+        } else {
+            playerXTurn = !playerXTurn;
+            return 'O';
+        }
 
-    public void winCondition() {
-        // three horizontal win conditions
-        // three vertical
-        // two diagonal
+    }
+
+    public boolean winCondition() {
+        if (board[0][0] == board[0][1] && board[0][1] == board[0][2]) {
+            System.out.println("Player " + board[0][0] + " wins!");
+            return true;
+        }
+        else {
+            System.out.println("");
+            return false;
+        }
     }
 }
 
