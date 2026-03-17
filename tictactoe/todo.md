@@ -4,3 +4,4 @@ For now I'll keep it here
 
 * Finish win conditions
 * Fix compilation error when input is blank
+* Prevent player input overwriting a node that is already occupied by X/O

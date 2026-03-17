@@ -50,12 +50,8 @@ public class TicTacToe {
     public static void moveScanner() {
         Scanner sc = new Scanner(System.in);
         String moveString = sc.nextLine();
-        char moveChar = moveString.charAt(0);
     
-        if (moveString.length() == 0) {
-            // produces compiler errors but continues to run fine
-            // if I tried to throw new error, it would exit the if statement and not recurse
-            // TODO find if there's a way to throw an exception but continue the if statement
+        if (moveString.isBlank()) {
             System.out.println("Please enter a character."); 
             moveScanner();
         } else if (moveString.length() > 1) {
@@ -65,16 +61,14 @@ public class TicTacToe {
         // } else if (moveString.toUpperCase().equals("X") || moveString.toUpperCase().equals("O")) {
         //     System.out.println("This space is already occupied!");
         //     moveScanner();
-        } else if (Character.getNumericValue(moveChar) < 10 || Character.getNumericValue(moveChar) > 18) {
-            System.out.println("Enter a legal space from A to I");
+        } else if (Character.getNumericValue(moveString.charAt(0)) < 10 || Character.getNumericValue(moveString.charAt(0)) > 18) {
+            System.out.println("Enter a legal letter from A to I");
             moveScanner();
         }
 
-
-
         // returns the character input needed to manipulate the board later
         // System.out.println(Character.toUpperCase(moveChar)); // testing only
-        boardChange(Character.toUpperCase(moveChar));
+        boardChange(Character.toUpperCase(moveString.charAt(0)));
     }
 
     // this is hideously long; will try to refactor later
