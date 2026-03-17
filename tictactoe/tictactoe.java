@@ -4,7 +4,7 @@
 import java.util.Scanner;
 
 public class TicTacToe {
-    private static char playerTurn = 'X';
+    private static boolean playerXTurn = true; 
     private static char[][] board = new char[3][3];
 
     public TicTacToe() {
@@ -27,7 +27,12 @@ public class TicTacToe {
         System.out.println(" " + board[1][0] + " | " + board[1][1] + " | " + board[1][2]);
         System.out.println("----------");
         System.out.println(" " + board[2][0] + " | " + board[2][1] + " | " + board[2][2]);
-        System.out.println("Player " + playerTurn + "'s turn! Enter your move.");
+        if (playerXTurn) {
+            System.out.println("Player X's turn! Enter your move.");
+        } else {
+            System.out.println("Player O's turn! Enter your move.");
+        }
+        
     }
 
     // first time using static void main() method, not sure if this is the proper implementation
@@ -37,7 +42,8 @@ public class TicTacToe {
     public static void main() {
         initGame();
         printBoard();
-        moveScanner();
+        // moveScanner();
+        boardChange();
     }
 
     public static char moveScanner() {
@@ -65,6 +71,41 @@ public class TicTacToe {
         char moveCharTemp = moveString.charAt(0);
         // returns the character input needed to manipulate the board later
         return Character.toUpperCase(moveCharTemp);
+    }
+
+    // this is hideously long; will try to refactor later
+    // initial thought is to make a helper function 
+    public static void boardChange() {
+        if (moveScanner() == 'A') {
+            if (playerXTurn) {
+                board[0][0] = 'X';
+                playerXTurn = !playerXTurn;
+            } else {
+                board[0][0] = 'O';
+                playerXTurn = !playerXTurn;
+            }
+            printBoard();
+            moveScanner();
+        } 
+        if (moveScanner() == 'B') {
+            System.out.println("b reached");
+        }
+    }
+
+    // public static char boardChangeHelper() {
+    //     if (playerXTurn) {
+    //         playerXTurn = !playerXTurn;
+    //         return 'X';
+    //     } else {
+    //         playerXTurn = !playerXTurn;
+    //         return 'O';
+    //     }
+    // }
+
+    public void winCondition() {
+        // three horizontal win conditions
+        // three vertical
+        // two diagonal
     }
 }
 
