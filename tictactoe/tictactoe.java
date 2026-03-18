@@ -4,14 +4,11 @@
 import java.util.Scanner;
 
 public class TicTacToe {
-    // Aren't static variables bad practice unless they're final constants?
-    // Didn't know how to avoid this since main() is static, and since everything went into it
-    // all of my methods and variables had to be static as well
-    private static boolean playerXTurn = true; 
-    private static char[][] board = new char[3][3];
-    private static int turnCount = 1;
+    private boolean playerXTurn = true; 
+    private char[][] board = new char[3][3];
+    private int turnCount = 1;
 
-    public static void initGame() {
+    public void initGame() {
         // Initialize char[][] board to ABCEDFGHI
         String boardLetters = "ABCDEFGHI";
         for (int i = 0; i < board.length; i++) {
@@ -21,7 +18,7 @@ public class TicTacToe {
         }
     }
 
-    public static void printBoard() {
+    public void printBoard() {
         System.out.println("----------");
         System.out.println(" " + board[0][0] + " | " + board[0][1] + " | " + board[0][2]);
         System.out.println("----------");
@@ -31,7 +28,7 @@ public class TicTacToe {
         System.out.println("----------");
     }
 
-    public static void printTurn() {
+    public void printTurn() {
         if (playerXTurn) {
             System.out.println("Player X's turn! Enter your move.");
         } else {
@@ -39,18 +36,19 @@ public class TicTacToe {
         }  
     }
 
-    // first time using static void main() method, not sure if this is the proper implementation
-    // because this is static, I feel like I'm forced make my other methods static as well
-    // otherwise the compiler will complain because a non-static method is being called within this static main() method
-    // what's the solution?
-    public static void main() {
+    public static void main(String[] args) {
+        TicTacToe game = new TicTacToe();
+        game.run();
+    }
+
+    public void run() {
         initGame();
         printBoard();
         printTurn();
         moveScanner();
     }
 
-    public static void moveScanner() {
+    public void moveScanner() {
         // takes an input from the user
         // if it's an illegal input, will print out an error
         // tried to throw new errors instead of just printing them
@@ -74,11 +72,12 @@ public class TicTacToe {
         boardChange(Character.toUpperCase(moveString.charAt(0)));
     }
 
-    // this is hideously long method
+    // this is a hideously long method
     // maybe a switch statement would look better?
-    // tried to move the four methods into the helper method but didn't work 
-    // so just leaving it outside for now and will refactor later
-    public static void boardChange(char input) {
+    // tried to move the four methods into the helper method but didn't work
+    // would have to change the helper method to void and not return anything
+    // might make a new method nextTurn() to condense it all some more
+    public void boardChange(char input) {
         if (input == 'A' && board[0][0] == 'A') {
             if (playerXTurn) {
                 board[0][0] = 'X';
@@ -147,7 +146,7 @@ public class TicTacToe {
         }
     }
 
-    public static char boardChangeHelper() {
+    public char boardChangeHelper() {
         if (playerXTurn) {
             playerXTurn = !playerXTurn;
             return 'X';
@@ -155,10 +154,9 @@ public class TicTacToe {
             playerXTurn = !playerXTurn;
             return 'O';
         }
-
     }
 
-    public static void winCondition() {
+    public void winCondition() {
         // three horizontal win conditions
         if (board[0][0] == board[0][1] && board[0][0] == board[0][2]) {
             System.out.println("Player " + board[0][0] + " wins!");
@@ -182,7 +180,7 @@ public class TicTacToe {
             System.exit(0);
         }
         if (board[0][2] == board[1][2] && board[0][2] == board[2][2]) {
-            System.out.println("Player " + board[0][12] + " wins!");
+            System.out.println("Player " + board[0][2] + " wins!");
             System.exit(0);
         }
         // two diagonal win conditions
