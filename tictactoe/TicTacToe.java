@@ -201,8 +201,18 @@ public class TicTacToe {
     }
 
     public void printWinner(char symbol) {
-        String winner = (symbol == 'X') ? player1.getName() : player2.getName();
+        String winner;
+        if (symbol == 'X') {
+            winner = player1.getName();
+            player1.incrementWins();
+        } else {
+            winner = player2.getName();
+            player2.incrementWins();
+        }
         System.out.println(winner + " wins!");
+        System.out.println("Scores:");
+        System.out.println(player1.getName() + ": " + player1.getWinCounter() + " | " 
+            + player2.getName() + ": " + player2.getWinCounter());
         System.exit(0);
     }
 }
