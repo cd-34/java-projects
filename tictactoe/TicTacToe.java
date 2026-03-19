@@ -69,7 +69,7 @@ public class TicTacToe {
         // takes an input from the user
         // if it's an illegal input, will print out an error
         // tried to throw new errors instead of just printing them
-        // but that would exit the program which is undesirable
+        // but that would exit the program which is undesirable if I want the game to continue
         Scanner sc = new Scanner(System.in);
         String moveString = sc.nextLine();
     
@@ -89,87 +89,51 @@ public class TicTacToe {
         boardChange(Character.toUpperCase(moveString.charAt(0)));
     }
 
-    // this is a hideously long method
-    // maybe a switch statement would look better?
-    // tried to move the four methods into the helper method but didn't work
-    // would have to change the helper method to void and not return anything
-    // might make a new method nextTurn() to condense it all some more
     public void boardChange(char input) {
-        if (input == 'A' && board[0][0] == 'A') {
-            if (player1Turn) {
-                board[0][0] = 'X';
-                player1Turn = !player1Turn;
-            } else {
-                board[0][0] = 'O';
-                player1Turn = !player1Turn;
-            }
-            printBoard();
-            winCondition();
-            printTurn();
-            moveScanner();
-        } else if (input == 'B' && board[0][1] == 'B') {
-            board[0][1] = boardChangeHelper();
-            printBoard();
-            winCondition();
-            printTurn();
-            moveScanner();
-        } else if (input == 'C' && board[0][2] == 'C') {
-            board[0][2] = boardChangeHelper();
-            printBoard();
-            winCondition();
-            printTurn();
-            moveScanner();
-        } else if (input == 'D' && board[1][0] == 'D') {
-            board[1][0] = boardChangeHelper();
-            printBoard();
-            winCondition();
-            printTurn();
-            moveScanner();
-        } else if (input == 'E' && board[1][1] == 'E') {
-            board[1][1] = boardChangeHelper();
-            printBoard();
-            winCondition();
-            printTurn();
-            moveScanner();
-        } else if (input == 'F' && board[1][2] == 'F') {
-            board[1][2] = boardChangeHelper();
-            printBoard();
-            winCondition();
-            printTurn();
-            moveScanner();
-        } else if (input == 'G' && board[2][0] == 'G') {
-            board[2][0] = boardChangeHelper();
-            printBoard();
-            winCondition();
-            printTurn();
-            moveScanner();
-        } else if (input == 'H' && board[2][1] == 'H') {
-            board[2][1] = boardChangeHelper();
-            printBoard();
-            winCondition();
-            printTurn();
-            moveScanner();
-        } else if (input == 'I' && board[2][2] == 'I') {
-            board[2][2] = boardChangeHelper();
-            printBoard();
-            winCondition();
-            printTurn();
-            moveScanner();
-        } else {
-            printBoard();
-            System.out.println("Already occupied! Pick another tile.");
-            printTurn();
-            moveScanner();
-        }
-    }
+        int row = -1;
+        int col = -1;
+        switch(input) {
+            case 'A': 
+                row = 0; col = 0;
+                break;
+            case 'B': 
+                row = 0; col = 1; 
+                break;
+            case 'C': 
+                row = 0; col = 2; 
+                break;
+            case 'D': 
+                row = 1; col = 0; 
+                break;
+            case 'E': 
+                row = 1; col = 1; 
+                break;
+            case 'F': 
+                row = 1; col = 2; 
+                break;
+            case 'G': 
+                row = 2; col = 0; 
+                break;
+            case 'H': 
+                row = 2; col = 1; 
+                break;
+            case 'I': 
+                row = 2; col = 2; 
+                break;
+        } 
 
-    public char boardChangeHelper() {
-        if (player1Turn) {
+        if (row != -1 && col != -1 && board[row][col] == input) {
+            board[row][col] = player1Turn ? 'X' : 'O';
             player1Turn = !player1Turn;
-            return 'X';
+            printBoard();
+            winCondition();
+            printTurn();
+            moveScanner();
         } else {
-            player1Turn = !player1Turn;
-            return 'O';
+            printBoard();
+            System.out.println("Already occupied! Pick another time.");
+            printTurn();
+            moveScanner();
         }
     }
 
@@ -218,7 +182,6 @@ public class TicTacToe {
 
     public void playAgain() {
         System.out.println("Would you like to play again? Y / N");
-        // take Y or N input;
         Scanner sc = new Scanner(System.in);
         String newGame = sc.nextLine();
         if (newGame.toUpperCase().equals("Y")) {
@@ -230,7 +193,8 @@ public class TicTacToe {
         } else if (newGame.toUpperCase().equals("N")){
             System.exit(0);
         } else {
-            System.out.println("Please input Y or N.");
+            System.out.println("Invalid input.");
+            playAgain();
         }
     }
 }

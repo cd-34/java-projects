@@ -36,17 +36,4 @@ public class Player {
 
         return inputName;
     }
-
-    // public static void main(String[] args) {
-    //     System.out.println("Please enter player 1's name.");
-    //     Player player1 = new Player(nameScanner());
-    //     System.out.println("Welcome " + player1.getName() + "!");
-
-    //     System.out.println("Please enter player 2's name.");
-    //     Player player2 = new Player(nameScanner());
-    //     System.out.println("Welcome " + player2.getName() + "!");
-    //     // System.out.println(player1.getName() + " " + player2.getName());
-    //     // now have two player objects
-    //     // each with a name and winCounter == 0
-    // }
 }
