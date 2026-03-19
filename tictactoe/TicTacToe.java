@@ -1,12 +1,14 @@
 // note to self: to run the program, go into this folder with terminal and type
-// java tictactoe.java
+// javac tictactoe/*.java
+// java tictactoe.TicTacToe
+
 package tictactoe;
 import java.util.Scanner;
 
 public class TicTacToe {
     private Player player1;
     private Player player2;
-    private boolean playerXTurn = true; 
+    private boolean player1Turn = true; 
     private char[][] board = new char[3][3];
     private int turnCount = 1;
 
@@ -36,10 +38,10 @@ public class TicTacToe {
     }
 
     public void printTurn() {
-        if (playerXTurn) {
-            System.out.println("Player X's turn! Enter your move.");
+        if (player1Turn) {
+            System.out.println(player1.getName() + "'s turn (X)! Enter your move.");
         } else {
-            System.out.println("Player O's turn! Enter your move.");
+            System.out.println(player2.getName() + "'s turn (O)! Enter your move.");
         }  
     }
 
@@ -94,12 +96,12 @@ public class TicTacToe {
     // might make a new method nextTurn() to condense it all some more
     public void boardChange(char input) {
         if (input == 'A' && board[0][0] == 'A') {
-            if (playerXTurn) {
+            if (player1Turn) {
                 board[0][0] = 'X';
-                playerXTurn = !playerXTurn;
+                player1Turn = !player1Turn;
             } else {
                 board[0][0] = 'O';
-                playerXTurn = !playerXTurn;
+                player1Turn = !player1Turn;
             }
             printBoard();
             winCondition();
@@ -162,55 +164,45 @@ public class TicTacToe {
     }
 
     public char boardChangeHelper() {
-        if (playerXTurn) {
-            playerXTurn = !playerXTurn;
+        if (player1Turn) {
+            player1Turn = !player1Turn;
             return 'X';
         } else {
-            playerXTurn = !playerXTurn;
+            player1Turn = !player1Turn;
             return 'O';
         }
     }
 
     public void winCondition() {
         // three horizontal win conditions
-        if (board[0][0] == board[0][1] && board[0][0] == board[0][2]) {
-            System.out.println("Player " + board[0][0] + " wins!");
-            System.exit(0);
-        }
-        if (board[1][0] == board[1][1] && board[1][0] == board[1][2]) {
-            System.out.println("Player " + board[1][0] + " wins!");
-            System.exit(0);
-        }
-        if (board[2][0] == board[2][1] && board[2][0] == board[2][2]) {
-            System.out.println("Player " + board[2][0] + " wins!");
-            System.exit(0);
+        for (int i = 0; i < 3; i++) {
+            if (board[i][0] == board[i][1] && board[i][0] == board[i][2]) {
+                printWinner(board[i][0]);
+            }
         }
         // three vertical win conditions
-        if (board[0][0] == board[1][0] && board[0][0] == board[2][0]) {
-            System.out.println("Player " + board[0][0] + " wins!");
-            System.exit(0);
-        }
-        if (board[0][1] == board[1][1] && board[0][1] == board[2][1]) {
-            System.out.println("Player " + board[0][1] + " wins!");
-            System.exit(0);
-        }
-        if (board[0][2] == board[1][2] && board[0][2] == board[2][2]) {
-            System.out.println("Player " + board[0][2] + " wins!");
-            System.exit(0);
+        for (int j = 0; j < 3; j++) {
+            if (board[0][j] == board[1][j] && board[0][j] == board[2][j]) {
+                printWinner(board[0][j]);
+            }
         }
         // two diagonal win conditions
         if (board[0][0] == board[1][1] && board[0][0] == board[2][2]) {
-            System.out.println("Player " + board[0][0] + " wins!");
-            System.exit(0);
+            printWinner(board[0][0]);
         }
         if (board[0][2] == board[1][1] && board[0][2] == board[2][0]) {
-            System.out.println("Player " + board[0][2] + " wins!");
-            System.exit(0);
+            printWinner(board[0][2]);
         }
         // board filled and nobody wins condition
         if (turnCount > 9) {
-            System.out.println("Board has been filled, there is no winner.");
+            System.out.println("Board has been filled, it's a tie!.");
             System.exit(0);
         }
+    }
+
+    public void printWinner(char symbol) {
+        String winner = (symbol == 'X') ? player1.getName() : player2.getName();
+        System.out.println(winner + " wins!");
+        System.exit(0);
     }
 }
