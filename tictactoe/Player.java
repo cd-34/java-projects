@@ -2,7 +2,7 @@
 // goal is to create a scanner for name and set a win counter 
 // remember that I'll need to support two players
 // player name immutable; win counter mutable 
-
+package tictactoe;
 import java.util.Scanner;
 
 public class Player {
@@ -17,6 +17,14 @@ public class Player {
         return name;
     }
 
+    public int getWinCounter() {
+        return winCounter;
+    }
+
+    public void incrementWins() {
+        winCounter++;
+    }
+
     public static String nameScanner() {
         Scanner sc = new Scanner(System.in);
         String inputName = sc.nextLine();
@@ -29,13 +37,16 @@ public class Player {
         return inputName;
     }
 
-    public static void main(String[] args) {
-        System.out.println("Please enter player 1's name.");
-        Player player1 = new Player(nameScanner());
-        System.out.println(player1.getName());
+    // public static void main(String[] args) {
+    //     System.out.println("Please enter player 1's name.");
+    //     Player player1 = new Player(nameScanner());
+    //     System.out.println("Welcome " + player1.getName() + "!");
 
-        System.out.println("Please enter player 2's name.");
-        Player player2 = new Player(nameScanner());
-        System.out.println(player2.getName());
-    }
+    //     System.out.println("Please enter player 2's name.");
+    //     Player player2 = new Player(nameScanner());
+    //     System.out.println("Welcome " + player2.getName() + "!");
+    //     // System.out.println(player1.getName() + " " + player2.getName());
+    //     // now have two player objects
+    //     // each with a name and winCounter == 0
+    // }
 }

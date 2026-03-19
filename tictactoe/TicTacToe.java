@@ -1,12 +1,19 @@
 // note to self: to run the program, go into this folder with terminal and type
 // java tictactoe.java
-
+package tictactoe;
 import java.util.Scanner;
 
 public class TicTacToe {
+    private Player player1;
+    private Player player2;
     private boolean playerXTurn = true; 
     private char[][] board = new char[3][3];
     private int turnCount = 1;
+
+    public TicTacToe(Player player1, Player player2) {
+        this.player1 = player1;
+        this.player2 = player2;
+    }
 
     public void initGame() {
         // Initialize char[][] board to ABCEDFGHI
@@ -37,7 +44,15 @@ public class TicTacToe {
     }
 
     public static void main(String[] args) {
-        TicTacToe game = new TicTacToe();
+        System.out.println("Please enter player 1's name.");
+        Player player1 = new Player(Player.nameScanner());
+        System.out.println("Welcome " + player1.getName() + "!");
+
+        System.out.println("Please enter player 2's name.");
+        Player player2 = new Player(Player.nameScanner());
+        System.out.println("Welcome " + player2.getName() + "!");
+        // System.out.println(player1.getName() + " " + player2.getName());
+        TicTacToe game = new TicTacToe(player1, player2);
         game.run();
     }
 
