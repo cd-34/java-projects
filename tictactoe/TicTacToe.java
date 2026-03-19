@@ -213,6 +213,24 @@ public class TicTacToe {
         System.out.println("Scores:");
         System.out.println(player1.getName() + ": " + player1.getWinCounter() + " | " 
             + player2.getName() + ": " + player2.getWinCounter());
-        System.exit(0);
+        playAgain();
+    }
+
+    public void playAgain() {
+        System.out.println("Would you like to play again? Y / N");
+        // take Y or N input;
+        Scanner sc = new Scanner(System.in);
+        String newGame = sc.nextLine();
+        if (newGame.toUpperCase().equals("Y")) {
+            turnCount = 0;
+            initGame();
+            printBoard();
+            printTurn();
+            moveScanner();
+        } else if (newGame.toUpperCase().equals("N")){
+            System.exit(0);
+        } else {
+            System.out.println("Please input Y or N.");
+        }
     }
 }
