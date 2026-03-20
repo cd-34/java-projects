@@ -38,6 +38,19 @@ public class TicTacToe {
         System.out.println("----------");
     }
 
+    public static String nameScanner() {
+        while (true) {
+            Scanner sc = new Scanner(System.in);
+            String inputName = sc.nextLine();
+
+            if (inputName.isBlank()) {
+                System.out.println("Invalid input - please enter your name.");
+                continue;
+            }
+            return inputName;
+        }
+    }
+
     public void printTurn() {
         if (player1Turn) {
             System.out.println(player1.getName() + "'s turn (X)! Enter your move.");
@@ -48,11 +61,11 @@ public class TicTacToe {
 
     public static void main(String[] args) {
         System.out.println("Please enter player 1's name.");
-        Player player1 = new Player(Player.nameScanner());
+        Player player1 = new Player(nameScanner());
         System.out.println("Welcome " + player1.getName() + "!");
 
         System.out.println("Please enter player 2's name.");
-        Player player2 = new Player(Player.nameScanner());
+        Player player2 = new Player(nameScanner());
         System.out.println("Welcome " + player2.getName() + "!");
         // System.out.println(player1.getName() + " " + player2.getName());
         TicTacToe game = new TicTacToe(player1, player2);
@@ -78,8 +91,6 @@ public class TicTacToe {
             if (!boardChange(move)) {
                 continue;
             }
-
-            // printBoard();
 
             if (hasWon()) {
                 return;
@@ -197,7 +208,6 @@ public class TicTacToe {
         System.out.println("Scores:");
         System.out.println(player1.getName() + ": " + player1.getWins() + " | " 
             + player2.getName() + ": " + player2.getWins());
-        // playAgain();
     }
 
     public boolean playAgain() {
