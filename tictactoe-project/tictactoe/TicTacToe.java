@@ -25,6 +25,7 @@ public class TicTacToe {
                 board[i][j] = boardLetters.charAt(i * 3 + j);
             }
         }
+        turnCount = 1;
     }
 
     public void printBoard() {
@@ -59,37 +60,60 @@ public class TicTacToe {
     }
 
     public void run() {
-        initGame();
-        printBoard();
-        printTurn();
-        moveScanner();
-    }
-
-    public void moveScanner() {
-        // takes an input from the user
-        // if it's an illegal input, will print out an error
-        // tried to throw new errors instead of just printing them
-        // but that would exit the program which is undesirable if I want the game to continue
-        Scanner sc = new Scanner(System.in);
-        String moveString = sc.nextLine();
-    
-        if (moveString.isBlank()) {
-            System.out.println("Please enter a character."); 
-            moveScanner();
-        } else if (moveString.length() > 1) {
-            System.out.println("Please enter one character.");
-            moveScanner();
-        } else if (Character.getNumericValue(moveString.charAt(0)) < 10 || Character.getNumericValue(moveString.charAt(0)) > 18) {
-            System.out.println("Enter a legal letter from A to I");
-            moveScanner();
+        boolean playing = true;
+        while (playing) {
+            initGame();
+            playGame();
+            playing = playAgain();
         }
-
-        // turn count to check if the board is filled up and the game needs to end
-        turnCount++;
-        boardChange(Character.toUpperCase(moveString.charAt(0)));
     }
 
-    public void boardChange(char input) {
+    public void playGame() {
+        while(true) {
+            printBoard();
+            printTurn();
+            
+            char move = moveScanner();
+
+            if (!boardChange(move)) {
+                continue;
+            }
+
+            // printBoard();
+
+            if (hasWon()) {
+                return;
+            }
+            // maybe this should be in hasWon()
+            // but when it was in there, it wouldn't reinitialize the game upon a tie
+            if (turnCount > 9) {
+                System.out.println("Board has been filled, it's a tie!");
+                return;
+            }
+        }
+    }
+
+    public char moveScanner() {
+        while (true) {
+            Scanner sc = new Scanner(System.in);
+            String moveString = sc.nextLine();
+        
+            if (moveString.isBlank()) {
+                System.out.println("Please enter a character."); 
+                continue;
+            } else if (moveString.length() > 1) {
+                System.out.println("Please enter one character.");
+                continue;
+            } else if (Character.getNumericValue(moveString.charAt(0)) < 10 || Character.getNumericValue(moveString.charAt(0)) > 18) {
+                System.out.println("Enter a legal letter from A to I");
+                continue;
+            }
+
+            return(Character.toUpperCase(moveString.charAt(0)));
+        }
+    }
+
+    public boolean boardChange(char input) {
         int row = -1;
         int col = -1;
         switch(input) {
@@ -125,43 +149,39 @@ public class TicTacToe {
         if (row != -1 && col != -1 && board[row][col] == input) {
             board[row][col] = player1Turn ? 'X' : 'O';
             player1Turn = !player1Turn;
-            printBoard();
-            winCondition();
-            printTurn();
-            moveScanner();
+            turnCount++;
+            return true;
         } else {
-            printBoard();
             System.out.println("Already occupied! Pick another time.");
-            printTurn();
-            moveScanner();
+            return false;
         }
     }
 
-    public void winCondition() {
+    public boolean hasWon() {
         // three horizontal win conditions
         for (int i = 0; i < 3; i++) {
             if (board[i][0] == board[i][1] && board[i][0] == board[i][2]) {
                 printWinner(board[i][0]);
+                return true;
             }
         }
         // three vertical win conditions
         for (int j = 0; j < 3; j++) {
             if (board[0][j] == board[1][j] && board[0][j] == board[2][j]) {
                 printWinner(board[0][j]);
+                return true;
             }
         }
         // two diagonal win conditions
         if (board[0][0] == board[1][1] && board[0][0] == board[2][2]) {
             printWinner(board[0][0]);
+            return true;
         }
         if (board[0][2] == board[1][1] && board[0][2] == board[2][0]) {
             printWinner(board[0][2]);
+            return true;
         }
-        // board filled and nobody wins condition
-        if (turnCount > 9) {
-            System.out.println("Board has been filled, it's a tie!.");
-            System.exit(0);
-        }
+        return false;
     }
 
     public void printWinner(char symbol) {
@@ -175,26 +195,24 @@ public class TicTacToe {
         }
         System.out.println(winner + " wins!");
         System.out.println("Scores:");
-        System.out.println(player1.getName() + ": " + player1.getWinCounter() + " | " 
-            + player2.getName() + ": " + player2.getWinCounter());
-        playAgain();
+        System.out.println(player1.getName() + ": " + player1.getWins() + " | " 
+            + player2.getName() + ": " + player2.getWins());
+        // playAgain();
     }
 
-    public void playAgain() {
-        System.out.println("Would you like to play again? Y / N");
-        Scanner sc = new Scanner(System.in);
-        String newGame = sc.nextLine();
-        if (newGame.toUpperCase().equals("Y")) {
-            turnCount = 0;
-            initGame();
-            printBoard();
-            printTurn();
-            moveScanner();
-        } else if (newGame.toUpperCase().equals("N")){
-            System.exit(0);
-        } else {
-            System.out.println("Invalid input.");
-            playAgain();
+    public boolean playAgain() {
+        while (true) {
+            System.out.println("Would you like to play again? Y / N");
+            Scanner sc = new Scanner(System.in);
+            String newGame = sc.nextLine();
+            
+            if (newGame.toUpperCase().equals("Y")) {
+                return true;
+            } else if (newGame.toUpperCase().equals("N")) {
+                return false;
+            } else {
+                System.out.println("Invalid input.");
+            }
         }
     }
 }

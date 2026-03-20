@@ -6,8 +6,8 @@ package tictactoe;
 import java.util.Scanner;
 
 public class Player {
-    private final String name;
-    private int winCounter = 0;
+    private String name;
+    private int wins = 0;
 
     public Player(String name) {
         this.name = name;
@@ -17,12 +17,12 @@ public class Player {
         return name;
     }
 
-    public int getWinCounter() {
-        return winCounter;
+    public int getWins() {
+        return wins;
     }
 
     public void incrementWins() {
-        winCounter++;
+        wins++;
     }
 
     public static String nameScanner() {
