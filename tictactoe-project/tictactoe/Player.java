@@ -26,14 +26,16 @@ public class Player {
     }
 
     public static String nameScanner() {
-        Scanner sc = new Scanner(System.in);
-        String inputName = sc.nextLine();
+        while (true) {
+            Scanner sc = new Scanner(System.in);
+            String inputName = sc.nextLine();
 
-        if (inputName.isBlank()) {
-            System.out.println("Invalid input - please enter your name.");
-            nameScanner();
+            if (inputName.isBlank()) {
+                System.out.println("Invalid input - please enter your name.");
+                continue;
+            }
+
+            return inputName;
         }
-
-        return inputName;
     }
 }
