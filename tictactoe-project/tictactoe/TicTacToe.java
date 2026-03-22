@@ -1,7 +1,3 @@
-// note to self: to run the program, go into this folder with terminal and type
-// javac tictactoe/*.java
-// java tictactoe.TicTacToe
-
 package tictactoe;
 import java.util.Scanner;
 
@@ -28,14 +24,17 @@ public class TicTacToe {
         turnCount = 1;
     }
 
-    public void printBoard() {
-        System.out.println("----------");
-        System.out.println(" " + board[0][0] + " | " + board[0][1] + " | " + board[0][2]);
-        System.out.println("----------");
-        System.out.println(" " + board[1][0] + " | " + board[1][1] + " | " + board[1][2]);
-        System.out.println("----------");
-        System.out.println(" " + board[2][0] + " | " + board[2][1] + " | " + board[2][2]);
-        System.out.println("----------");
+    @Override
+    public String toString() {
+        StringBuilder stringbuilder = new StringBuilder();
+        stringbuilder.append("----------\n");
+        stringbuilder.append(" ").append(board[0][0]).append(" | ").append(board[0][1]).append(" | ").append(board[0][2]).append("\n");
+        stringbuilder.append("----------\n");
+        stringbuilder.append(" ").append(board[1][0]).append(" | ").append(board[1][1]).append(" | ").append(board[1][2]).append("\n");
+        stringbuilder.append("----------\n");
+        stringbuilder.append(" ").append(board[2][0]).append(" | ").append(board[2][1]).append(" | ").append(board[2][2]).append("\n");
+        stringbuilder.append("----------");
+        return stringbuilder.toString();
     }
 
     public static String nameScanner() {
@@ -83,7 +82,7 @@ public class TicTacToe {
 
     public void playGame() {
         while(true) {
-            printBoard();
+            System.out.println(this);
             printTurn();
             
             char move = moveScanner();
