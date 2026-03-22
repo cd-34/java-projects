@@ -81,12 +81,15 @@ public class TicTacToe {
         boolean playing = true;
         while (playing) {
             initGame();
-            playGame();
+            Player winner = playGame();
+            if (winner != null) {
+                printWinner(winner);
+            }
             playing = playAgain();
         }
     }
 
-    public void playGame() {
+    public Player playGame() {
         while(true) {
             System.out.println(this);
             printTurn();
@@ -97,14 +100,14 @@ public class TicTacToe {
                 continue;
             }
 
-            if (hasWon()) {
-                return;
+            Player winner = hasWon();
+            if (winner != null) {
+                return winner;
             }
-            // maybe this should be in hasWon()
-            // but when it was in there, it wouldn't reinitialize the game upon a tie
+
             if (turnCount > 9) {
                 System.out.println("Board has been filled, it's a tie!");
-                return;
+                return null;
             }
         }
     }
@@ -172,43 +175,41 @@ public class TicTacToe {
         }
     }
 
-    public boolean hasWon() {
+    public Player hasWon() {
         // three horizontal win conditions
         for (int i = 0; i < 3; i++) {
             if (board[i][0] == board[i][1] && board[i][0] == board[i][2]) {
-                printWinner(board[i][0]);
-                return true;
+                return getWinner(board[i][0]);
             }
         }
         // three vertical win conditions
         for (int j = 0; j < 3; j++) {
             if (board[0][j] == board[1][j] && board[0][j] == board[2][j]) {
-                printWinner(board[0][j]);
-                return true;
+                return getWinner(board[0][j]);
             }
         }
         // two diagonal win conditions
         if (board[0][0] == board[1][1] && board[0][0] == board[2][2]) {
-            printWinner(board[0][0]);
-            return true;
+            return getWinner(board[0][0]);
         }
         if (board[0][2] == board[1][1] && board[0][2] == board[2][0]) {
-            printWinner(board[0][2]);
-            return true;
+            return getWinner(board[0][2]);
         }
-        return false;
+        return null;
     }
 
-    public void printWinner(char symbol) {
-        String winner;
+    private Player getWinner(char symbol) {
         if (symbol == 'X') {
-            winner = player1.getName();
-            player1.incrementWins();
+            return player1;
         } else {
-            winner = player2.getName();
-            player2.incrementWins();
+            return player2;
         }
-        System.out.println(winner + " wins!");
+    }
+
+    public void printWinner(Player winner) {
+        winner.incrementWins();
+
+        System.out.println(winner.getName() + " wins!");
         System.out.println("Scores:");
         System.out.println(player1.getName() + ": " + player1.getWins() + " | " 
             + player2.getName() + ": " + player2.getWins());
@@ -217,8 +218,7 @@ public class TicTacToe {
     public boolean playAgain() {
         while (true) {
             System.out.println("Would you like to play again? Y / N");
-            Scanner sc = new Scanner(System.in);
-            String newGame = sc.nextLine();
+            String newGame = scan.nextLine();
             
             if (newGame.toUpperCase().equals("Y")) {
                 return true;
