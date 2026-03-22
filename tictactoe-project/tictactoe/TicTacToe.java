@@ -7,10 +7,12 @@ public class TicTacToe {
     private boolean player1Turn = true; 
     private char[][] board = new char[3][3];
     private int turnCount = 1;
+    private Scanner scan; 
 
-    public TicTacToe(Player player1, Player player2) {
+    public TicTacToe(Player player1, Player player2, Scanner scan) {
         this.player1 = player1;
         this.player2 = player2;
+        this.scan = scan;
     }
 
     public void initGame() {
@@ -24,6 +26,7 @@ public class TicTacToe {
         turnCount = 1;
     }
 
+    // not sure if this is what's meant by changing printBoard() to a toString()
     @Override
     public String toString() {
         StringBuilder stringbuilder = new StringBuilder();
@@ -37,10 +40,9 @@ public class TicTacToe {
         return stringbuilder.toString();
     }
 
-    public static String nameScanner() {
+    public static String nameScanner(Scanner scan) {
         while (true) {
-            Scanner sc = new Scanner(System.in);
-            String inputName = sc.nextLine();
+            String inputName = scan.nextLine();
 
             if (inputName.isBlank()) {
                 System.out.println("Invalid input - please enter your name.");
@@ -59,16 +61,20 @@ public class TicTacToe {
     }
 
     public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        
         System.out.println("Please enter player 1's name.");
-        Player player1 = new Player(nameScanner());
+        Player player1 = new Player(nameScanner(scan));
         System.out.println("Welcome " + player1.getName() + "!");
 
         System.out.println("Please enter player 2's name.");
-        Player player2 = new Player(nameScanner());
+        Player player2 = new Player(nameScanner(scan));
         System.out.println("Welcome " + player2.getName() + "!");
         // System.out.println(player1.getName() + " " + player2.getName());
-        TicTacToe game = new TicTacToe(player1, player2);
+        TicTacToe game = new TicTacToe(player1, player2, scan);
         game.run();
+
+        scan.close();
     }
 
     public void run() {
@@ -105,8 +111,7 @@ public class TicTacToe {
 
     public char moveScanner() {
         while (true) {
-            Scanner sc = new Scanner(System.in);
-            String moveString = sc.nextLine();
+            String moveString = scan.nextLine();
         
             if (moveString.isBlank()) {
                 System.out.println("Please enter a character."); 
