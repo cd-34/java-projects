@@ -16,27 +16,29 @@ public class TicTacToe {
     }
 
     public void initGame() {
-        // Initialize char[][] board to ABCEDFGHI
-        String boardLetters = "ABCDEFGHI";
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
-                board[i][j] = boardLetters.charAt(i * 3 + j);
+                board[i][j] = '~';
             }
         }
         turnCount = 1;
+        // player1Turn = true;
     }
 
     // not sure if this is what's meant by changing printBoard() to a toString()
     @Override
     public String toString() {
         StringBuilder stringbuilder = new StringBuilder();
-        stringbuilder.append("----------\n");
-        stringbuilder.append(" ").append(board[0][0]).append(" | ").append(board[0][1]).append(" | ").append(board[0][2]).append("\n");
-        stringbuilder.append("----------\n");
-        stringbuilder.append(" ").append(board[1][0]).append(" | ").append(board[1][1]).append(" | ").append(board[1][2]).append("\n");
-        stringbuilder.append("----------\n");
-        stringbuilder.append(" ").append(board[2][0]).append(" | ").append(board[2][1]).append(" | ").append(board[2][2]).append("\n");
-        stringbuilder.append("----------");
+
+        stringbuilder.append("    A   B   C\n");
+        stringbuilder.append("  -------------\n");
+        stringbuilder.append("3 | ").append(board[0][0]).append(" | ").append(board[0][1]).append(" | ").append(board[0][2]).append(" |\n");
+        stringbuilder.append("  -------------\n");
+        stringbuilder.append("2 | ").append(board[1][0]).append(" | ").append(board[1][1]).append(" | ").append(board[1][2]).append(" |\n");
+        stringbuilder.append("  -------------\n");
+        stringbuilder.append("1 | ").append(board[2][0]).append(" | ").append(board[2][1]).append(" | ").append(board[2][2]).append(" |\n");
+        stringbuilder.append("  -------------");
+
         return stringbuilder.toString();
     }
 
@@ -54,9 +56,9 @@ public class TicTacToe {
 
     public void printTurn() {
         if (player1Turn) {
-            System.out.println(player1.getName() + "'s turn (X)! Enter your move.");
+            System.out.println(player1.getName() + "'s turn (X)! Enter your move (e.g. A1, B2, C3):");
         } else {
-            System.out.println(player2.getName() + "'s turn (O)! Enter your move.");
+            System.out.println(player2.getName() + "'s turn (O)! Enter your move (e.g. A1, B2, C3):");
         }  
     }
 
@@ -94,7 +96,7 @@ public class TicTacToe {
             System.out.println(this);
             printTurn();
             
-            char move = moveScanner(scan);
+            char[] move = moveScanner(scan);
 
             if (!boardChange(move)) {
                 continue;
@@ -112,65 +114,45 @@ public class TicTacToe {
         }
     }
 
-    public static char moveScanner(Scanner scan) {
+    public static char[] moveScanner(Scanner scan) {
         while (true) {
-            String moveString = scan.nextLine();
-        
-            if (moveString.isBlank()) {
-                System.out.println("Please enter a character."); 
-                continue;
-            } else if (moveString.length() > 1) {
-                System.out.println("Please enter one character.");
-                continue;
-            } else if (Character.getNumericValue(moveString.charAt(0)) < 10 || Character.getNumericValue(moveString.charAt(0)) > 18) {
-                System.out.println("Enter a legal letter from A to I");
+            String moveString = scan.nextLine().toUpperCase().trim();
+
+            if (moveString.length() != 2) {
+                System.out.println("Please enter a valid input of two characters (e.g. A1, B2, C3):");
                 continue;
             }
 
-            return(Character.toUpperCase(moveString.charAt(0)));
+            char col = moveString.charAt(0);
+            char row = moveString.charAt(1);
+
+            if (col < 'A' || col > 'C') {
+                System.out.println("Column must be A, B, or C:");
+                continue;
+            }
+
+            if (row < '1' || row > '3') {
+                System.out.println("Row must be be 1, 2, or 3:");
+                continue;
+            }
+
+            return new char[]{col, row};
         }
     }
 
-    public boolean boardChange(char input) {
-        int row = -1;
-        int col = -1;
-        switch(input) {
-            case 'A': 
-                row = 0; col = 0;
-                break;
-            case 'B': 
-                row = 0; col = 1; 
-                break;
-            case 'C': 
-                row = 0; col = 2; 
-                break;
-            case 'D': 
-                row = 1; col = 0; 
-                break;
-            case 'E': 
-                row = 1; col = 1; 
-                break;
-            case 'F': 
-                row = 1; col = 2; 
-                break;
-            case 'G': 
-                row = 2; col = 0; 
-                break;
-            case 'H': 
-                row = 2; col = 1; 
-                break;
-            case 'I': 
-                row = 2; col = 2; 
-                break;
-        } 
+    public boolean boardChange(char[] input) {
+        char col = input[0]; // letter
+        char row = input[1]; // number
+        int colIndex = col - 'A'; // C - A = 2 | B - A = 1 | A - A = 0
+        int rowIndex = '3' - row; // 3 - 3 = 0 or top row
 
-        if (row != -1 && col != -1 && board[row][col] == input) {
-            board[row][col] = player1Turn ? 'X' : 'O';
+        if (board[rowIndex][colIndex] == '~') {
+            board[rowIndex][colIndex] = player1Turn ? 'X' : 'O';
             player1Turn = !player1Turn;
             turnCount++;
             return true;
         } else {
-            System.out.println("Already occupied! Pick another time.");
+            System.out.println("That tile is already occupied!");
             return false;
         }
     }
@@ -178,21 +160,21 @@ public class TicTacToe {
     public Player hasWon() {
         // three horizontal win conditions
         for (int i = 0; i < 3; i++) {
-            if (board[i][0] == board[i][1] && board[i][0] == board[i][2]) {
+            if (board[i][0] != '~' && board[i][0] == board[i][1] && board[i][0] == board[i][2]) {
                 return getWinner(board[i][0]);
             }
         }
         // three vertical win conditions
         for (int j = 0; j < 3; j++) {
-            if (board[0][j] == board[1][j] && board[0][j] == board[2][j]) {
+            if (board[0][j] != '~' && board[0][j] == board[1][j] && board[0][j] == board[2][j]) {
                 return getWinner(board[0][j]);
             }
         }
         // two diagonal win conditions
-        if (board[0][0] == board[1][1] && board[0][0] == board[2][2]) {
+        if (board[0][0] != '~' && board[0][0] == board[1][1] && board[0][0] == board[2][2]) {
             return getWinner(board[0][0]);
         }
-        if (board[0][2] == board[1][1] && board[0][2] == board[2][0]) {
+        if (board[0][2] != '~' && board[0][2] == board[1][1] && board[0][2] == board[2][0]) {
             return getWinner(board[0][2]);
         }
         return null;
