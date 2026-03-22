@@ -62,7 +62,7 @@ public class TicTacToe {
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        
+
         System.out.println("Please enter player 1's name.");
         Player player1 = new Player(nameScanner(scan));
         System.out.println("Welcome " + player1.getName() + "!");
@@ -91,7 +91,7 @@ public class TicTacToe {
             System.out.println(this);
             printTurn();
             
-            char move = moveScanner();
+            char move = moveScanner(scan);
 
             if (!boardChange(move)) {
                 continue;
@@ -109,7 +109,7 @@ public class TicTacToe {
         }
     }
 
-    public char moveScanner() {
+    public static char moveScanner(Scanner scan) {
         while (true) {
             String moveString = scan.nextLine();
         
