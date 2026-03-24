@@ -1,5 +1,3 @@
-// pr branch test
-// to see if edits show up properly 
 package tictactoe;
 import java.util.Scanner;
 
@@ -66,18 +64,6 @@ public class TicTacToe {
         return border.toString();
     }
 
-    public static String nameScanner(Scanner scan) {
-        while (true) {
-            String inputName = scan.nextLine();
-
-            if (inputName.isBlank()) {               
-                System.out.println("Invalid input - please enter your name.");
-                continue;
-            }
-            return inputName;
-        }
-    }
-
     public void printTurn() {
         String playerName = (turnCount % 2 != 0) ? player1.getName() : player2.getName();
         String symbol = (turnCount % 2 != 0) ? "X" : "O";
@@ -88,11 +74,11 @@ public class TicTacToe {
         Scanner scan = new Scanner(System.in);
 
         System.out.println("Please enter player 1's name.");
-        Player player1 = new Player(nameScanner(scan));
+        Player player1 = new Player(InputHandler.nameScanner(scan));
         System.out.println("Welcome " + player1.getName() + "!");
 
         System.out.println("Please enter player 2's name.");
-        Player player2 = new Player(nameScanner(scan));
+        Player player2 = new Player(InputHandler.nameScanner(scan));
         System.out.println("Welcome " + player2.getName() + "!");
         // System.out.println(player1.getName() + " " + player2.getName());
         TicTacToe game = new TicTacToe(player1, player2, scan);
@@ -118,7 +104,7 @@ public class TicTacToe {
             System.out.println(this);
             printTurn();
             
-            char[] move = moveScanner(scan);
+            char[] move = InputHandler.moveScanner(scan);
 
             if (!boardChange(move)) {
                 continue;
@@ -133,32 +119,6 @@ public class TicTacToe {
                 System.out.println("Board has been filled, it's a tie!");
                 return null;
             }
-        }
-    }
-
-    public static char[] moveScanner(Scanner scan) {
-        while (true) {
-            String moveString = scan.nextLine().toUpperCase().trim();
-
-            if (moveString.length() != 2) {
-                System.out.println("Please enter a valid input of two characters (e.g. A1, B2, C3):");
-                continue;
-            }
-
-            char col = moveString.charAt(0);
-            char row = moveString.charAt(1);
-
-            if (col < 'A' || col > 'C') {
-                System.out.println("Column must be A, B, or C:");
-                continue;
-            }
-
-            if (row < '1' || row > '3') {
-                System.out.println("Row must be be 1, 2, or 3:");
-                continue;
-            }
-
-            return new char[]{col, row};
         }
     }
 
