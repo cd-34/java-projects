@@ -105,12 +105,13 @@ public class TicTacToe {
             printTurn();
             
             int[] move = InputHandler.moveScanner(scan, boardSize);
+            int[] recentMove = boardChange(move);
 
-            if (!boardChange(move)) {
+            if (recentMove == null) {
                 continue;
             }
 
-            Player winner = hasWon();
+            Player winner = hasWon(recentMove);
             if (winner != null) {
                 return winner;
             }
@@ -123,88 +124,75 @@ public class TicTacToe {
     }
 
     public void checkTie() {
+        System.out.println(this);
         System.out.println("Board has been filled, it's a tie!");
     }
 
-    public boolean boardChange(int[] input) {
+    public int[] boardChange(int[] input) {
         if (board[input[0]][input[1]] == blank) {
             board[input[0]][input[1]] = player1Turn ? 'X' : 'O';
             player1Turn = !player1Turn;
             turnCount++;
-            return true;
+            return input;
         } else {
             System.out.println("That tile is already occupied!");
-            return false;
+            return null;
         }
     }
 
-    public Player hasWon() {
+    public Player hasWon(int[] recentMove) {
+        int row = recentMove[0];
+        int col = recentMove[1];
+        char symbol = board[row][col];
         // horizontal win conditions
+        // only checks current horizontal
+        boolean winHorizontal = true;
         for (int i = 0; i < boardSize; i++) {
-            char first = board[i][0];
-            // skip current horizontal if first tile is blank
-            if (first == blank) {
-                continue;
+            if (board[row][i] != symbol) {
+                winHorizontal = false;
+                break;
             }
-
-            boolean win = true;
-            for (int j = 1; j < boardSize; j++) {
-                if (board[i][j] != first) {
-                    win = false;
-                    break;
-                }
-            }
-
-            if (win) {
-                return getWinner(first);
-            }
-
+        }
+        if (winHorizontal) {
+            return getWinner(symbol);
         }
         // vertical win conditions
+        // only checks current vertical
+        boolean winVertical = true;
         for (int j = 0; j < boardSize; j++) {
-            char first = board[0][j];
-
-            if (first == blank) {
-                continue;
+            if (board[j][col] != symbol) {
+                winVertical = false;
+                break;
             }
-
-            boolean win = true;
-            for (int i = 1; i < boardSize; i++) {
-                if (board[i][j] != first) {
-                    win = false; 
-                    break;
-                }
-            }
-
-            if (win) {
-                return getWinner(first);
-            }
+        }
+        if (winVertical) {
+            return getWinner(symbol);
         }
 
         // diagonal win condition from top left to bottom right
         if (board[0][0] != blank) {
-            boolean win = true;
+            boolean winDiag1 = true;
             for (int i = 1; i < boardSize; i++) {
                 if (board[i][i] != board[0][0]) {
-                    win = false;
+                    winDiag1 = false;
                     break;
                 }
             }
-            if (win) {
+            if (winDiag1) {
                 return getWinner(board[0][0]);
             }
         }
 
         // diagonal win conditon from bottom left to top right
         if (board[0][boardSize - 1] != blank) {
-            boolean win = true;
+            boolean winDiag2 = true;
             for (int i = 1; i < boardSize; i++) {
                 if (board[i][boardSize - 1 - i] != board[0][boardSize - 1]) {
-                    win = false;
+                    winDiag2 = false;
                     break;
                 }
             }
-            if (win) {
+            if (winDiag2) {
                 return getWinner(board[0][boardSize - 1]);
             }
         } 
