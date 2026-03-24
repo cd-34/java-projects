@@ -1,3 +1,5 @@
+// pr branch test
+// to see if edits show up properly 
 package tictactoe;
 import java.util.Scanner;
 
@@ -25,7 +27,6 @@ public class TicTacToe {
         // player1Turn = true;
     }
 
-    // not sure if this is what's meant by changing printBoard() to a toString()
     @Override
     public String toString() {
         StringBuilder stringbuilder = new StringBuilder();
@@ -46,7 +47,7 @@ public class TicTacToe {
         while (true) {
             String inputName = scan.nextLine();
 
-            if (inputName.isBlank()) {
+            if (inputName.isBlank()) {               
                 System.out.println("Invalid input - please enter your name.");
                 continue;
             }
