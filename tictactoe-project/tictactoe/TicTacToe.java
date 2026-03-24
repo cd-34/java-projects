@@ -139,25 +139,76 @@ public class TicTacToe {
     }
 
     public Player hasWon() {
-        // three horizontal win conditions
+        // horizontal win conditions
         for (int i = 0; i < boardSize; i++) {
-            if (board[i][0] != blank && board[i][0] == board[i][1] && board[i][0] == board[i][2]) {
-                return getWinner(board[i][0]);
+            char first = board[i][0];
+            // skip current horizontal if first tile is blank
+            if (first == blank) {
+                continue;
             }
+
+            boolean win = true;
+            for (int j = 1; j < boardSize; j++) {
+                if (board[i][j] != first) {
+                    win = false;
+                    break;
+                }
+            }
+
+            if (win) {
+                return getWinner(first);
+            }
+
         }
-        // three vertical win conditions
+        // vertical win conditions
         for (int j = 0; j < boardSize; j++) {
-            if (board[0][j] != blank && board[0][j] == board[1][j] && board[0][j] == board[2][j]) {
-                return getWinner(board[0][j]);
+            char first = board[0][j];
+
+            if (first == blank) {
+                continue;
+            }
+
+            boolean win = true;
+            for (int i = 1; i < boardSize; i++) {
+                if (board[i][j] != first) {
+                    win = false; 
+                    break;
+                }
+            }
+
+            if (win) {
+                return getWinner(first);
             }
         }
-        // two diagonal win conditions
-        if (board[0][0] != blank && board[0][0] == board[1][1] && board[0][0] == board[2][2]) {
-            return getWinner(board[0][0]);
+
+        // diagonal win condition from top left to bottom right
+        if (board[0][0] != blank) {
+            boolean win = true;
+            for (int i = 1; i < boardSize; i++) {
+                if (board[i][i] != board[0][0]) {
+                    win = false;
+                    break;
+                }
+            }
+            if (win) {
+                return getWinner(board[0][0]);
+            }
         }
-        if (board[0][2] != blank && board[0][2] == board[1][1] && board[0][2] == board[2][0]) {
-            return getWinner(board[0][2]);
-        }
+
+        // diagonal win conditon from bottom left to top right
+        if (board[0][boardSize - 1] != blank) {
+            boolean win = true;
+            for (int i = 1; i < boardSize; i++) {
+                if (board[i][boardSize - 1 - i] != board[0][boardSize - 1]) {
+                    win = false;
+                    break;
+                }
+            }
+            if (win) {
+                return getWinner(board[0][boardSize - 1]);
+            }
+        } 
+
         return null;
     }
 
