@@ -18,9 +18,10 @@ public class TicTacToe {
     }
 
     public void initGame() {
+        char blank = '~';
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
-                board[i][j] = '~';
+                board[i][j] = blank;
             }
         }
         turnCount = 1;
@@ -56,11 +57,14 @@ public class TicTacToe {
     }
 
     public void printTurn() {
-        if (player1Turn) {
-            System.out.println(player1.getName() + "'s turn (X)! Enter your move (e.g. A1, B2, C3):");
-        } else {
-            System.out.println(player2.getName() + "'s turn (O)! Enter your move (e.g. A1, B2, C3):");
-        }  
+        String playerName = (turnCount % 2 != 0) ? player1.getName() : player2.getName();
+        String symbol = (turnCount % 2 != 0) ? "X" : "O";
+        System.out.println(playerName + "'s turn (" + symbol + ")! Enter your move (e.g. A1, B2, C3):");
+        // if (player1Turn) {
+        //     System.out.println(player1.getName() + "'s turn (X)! Enter your move (e.g. A1, B2, C3):");
+        // } else {
+        //     System.out.println(player2.getName() + "'s turn (O)! Enter your move (e.g. A1, B2, C3):");
+        // }  
     }
 
     public static void main(String[] args) {
