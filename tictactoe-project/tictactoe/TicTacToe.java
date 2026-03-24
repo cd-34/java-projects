@@ -6,10 +6,11 @@ import java.util.Scanner;
 public class TicTacToe {
     private Player player1;
     private Player player2;
-    private boolean player1Turn = true; 
-    private char[][] board = new char[3][3];
+    private boolean player1Turn = true;
+    private int tictactoeSize = 3;
+    private char[][] board = new char[tictactoeSize][tictactoeSize];
     private int turnCount = 1;
-    private Scanner scan; 
+    private Scanner scan;
 
     public TicTacToe(Player player1, Player player2, Scanner scan) {
         this.player1 = player1;
@@ -60,11 +61,6 @@ public class TicTacToe {
         String playerName = (turnCount % 2 != 0) ? player1.getName() : player2.getName();
         String symbol = (turnCount % 2 != 0) ? "X" : "O";
         System.out.println(playerName + "'s turn (" + symbol + ")! Enter your move (e.g. A1, B2, C3):");
-        // if (player1Turn) {
-        //     System.out.println(player1.getName() + "'s turn (X)! Enter your move (e.g. A1, B2, C3):");
-        // } else {
-        //     System.out.println(player2.getName() + "'s turn (O)! Enter your move (e.g. A1, B2, C3):");
-        // }  
     }
 
     public static void main(String[] args) {
@@ -112,7 +108,7 @@ public class TicTacToe {
                 return winner;
             }
 
-            if (turnCount > 9) {
+            if (turnCount > (tictactoeSize * tictactoeSize)) {
                 System.out.println("Board has been filled, it's a tie!");
                 return null;
             }
@@ -164,13 +160,13 @@ public class TicTacToe {
 
     public Player hasWon() {
         // three horizontal win conditions
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < tictactoeSize; i++) {
             if (board[i][0] != '~' && board[i][0] == board[i][1] && board[i][0] == board[i][2]) {
                 return getWinner(board[i][0]);
             }
         }
         // three vertical win conditions
-        for (int j = 0; j < 3; j++) {
+        for (int j = 0; j < tictactoeSize; j++) {
             if (board[0][j] != '~' && board[0][j] == board[1][j] && board[0][j] == board[2][j]) {
                 return getWinner(board[0][j]);
             }
