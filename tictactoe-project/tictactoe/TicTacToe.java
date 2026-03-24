@@ -115,11 +115,15 @@ public class TicTacToe {
                 return winner;
             }
 
-            if (turnCount > (boardSize * boardSize)) {
-                System.out.println("Board has been filled, it's a tie!");
+            if (turnCount > boardSize * boardSize) {
+                checkTie();
                 return null;
             }
         }
+    }
+
+    public void checkTie() {
+        System.out.println("Board has been filled, it's a tie!");
     }
 
     public boolean boardChange(char[] input) {
