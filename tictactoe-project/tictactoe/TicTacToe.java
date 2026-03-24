@@ -7,8 +7,8 @@ public class TicTacToe {
     private Player player1;
     private Player player2;
     private boolean player1Turn = true;
-    private int tictactoeSize = 3;
-    private char[][] board = new char[tictactoeSize][tictactoeSize];
+    private int boardSize = 3;
+    private char[][] board = new char[boardSize][boardSize];
     private char blank = '~';
     private int turnCount = 1;
     private Scanner scan;
@@ -34,7 +34,7 @@ public class TicTacToe {
         StringBuilder stringbuilder = new StringBuilder();
         // column labels (letters)
         stringbuilder.append("    ");
-        for (int i = 0; i < tictactoeSize; i++) {
+        for (int i = 0; i < boardSize; i++) {
             stringbuilder.append((char) ('A' + i)).append("   ");
         }
         stringbuilder.append("\n");
@@ -42,12 +42,12 @@ public class TicTacToe {
         stringbuilder.append(toStringBorder());
         
         // rows (numbers)
-        for (int j = tictactoeSize; j >= 1; j--) {
+        for (int j = boardSize; j >= 1; j--) {
             // prints the number on the left
             stringbuilder.append(j).append(" | ");
             // prints the board with the blank '~'
-            for (int k = 0; k < tictactoeSize; k++) {
-            stringbuilder.append(board[tictactoeSize - j][k]).append(" | ");
+            for (int k = 0; k < boardSize; k++) {
+            stringbuilder.append(board[boardSize - j][k]).append(" | ");
             }
             stringbuilder.append("\n");
             stringbuilder.append(toStringBorder());
@@ -59,7 +59,7 @@ public class TicTacToe {
         // creates "------" border
         StringBuilder border = new StringBuilder();
         border.append("  ");
-        for (int i = 0; i < tictactoeSize; i++) {
+        for (int i = 0; i < boardSize; i++) {
             border.append("----");
         }
         border.append("\n");
@@ -129,7 +129,7 @@ public class TicTacToe {
                 return winner;
             }
 
-            if (turnCount > (tictactoeSize * tictactoeSize)) {
+            if (turnCount > (boardSize * boardSize)) {
                 System.out.println("Board has been filled, it's a tie!");
                 return null;
             }
@@ -181,13 +181,13 @@ public class TicTacToe {
 
     public Player hasWon() {
         // three horizontal win conditions
-        for (int i = 0; i < tictactoeSize; i++) {
+        for (int i = 0; i < boardSize; i++) {
             if (board[i][0] != blank && board[i][0] == board[i][1] && board[i][0] == board[i][2]) {
                 return getWinner(board[i][0]);
             }
         }
         // three vertical win conditions
-        for (int j = 0; j < tictactoeSize; j++) {
+        for (int j = 0; j < boardSize; j++) {
             if (board[0][j] != blank && board[0][j] == board[1][j] && board[0][j] == board[2][j]) {
                 return getWinner(board[0][j]);
             }
