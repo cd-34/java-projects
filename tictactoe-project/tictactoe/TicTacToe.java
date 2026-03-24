@@ -9,6 +9,7 @@ public class TicTacToe {
     private boolean player1Turn = true;
     private int tictactoeSize = 3;
     private char[][] board = new char[tictactoeSize][tictactoeSize];
+    private char blank = '~';
     private int turnCount = 1;
     private Scanner scan;
 
@@ -19,7 +20,6 @@ public class TicTacToe {
     }
 
     public void initGame() {
-        char blank = '~';
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
                 board[i][j] = blank;
@@ -147,7 +147,7 @@ public class TicTacToe {
         int colIndex = col - 'A'; // C - A = 2 | B - A = 1 | A - A = 0
         int rowIndex = '3' - row; // 3 - 3 = 0 or top row
 
-        if (board[rowIndex][colIndex] == '~') {
+        if (board[rowIndex][colIndex] == blank) {
             board[rowIndex][colIndex] = player1Turn ? 'X' : 'O';
             player1Turn = !player1Turn;
             turnCount++;
@@ -161,21 +161,21 @@ public class TicTacToe {
     public Player hasWon() {
         // three horizontal win conditions
         for (int i = 0; i < tictactoeSize; i++) {
-            if (board[i][0] != '~' && board[i][0] == board[i][1] && board[i][0] == board[i][2]) {
+            if (board[i][0] != blank && board[i][0] == board[i][1] && board[i][0] == board[i][2]) {
                 return getWinner(board[i][0]);
             }
         }
         // three vertical win conditions
         for (int j = 0; j < tictactoeSize; j++) {
-            if (board[0][j] != '~' && board[0][j] == board[1][j] && board[0][j] == board[2][j]) {
+            if (board[0][j] != blank && board[0][j] == board[1][j] && board[0][j] == board[2][j]) {
                 return getWinner(board[0][j]);
             }
         }
         // two diagonal win conditions
-        if (board[0][0] != '~' && board[0][0] == board[1][1] && board[0][0] == board[2][2]) {
+        if (board[0][0] != blank && board[0][0] == board[1][1] && board[0][0] == board[2][2]) {
             return getWinner(board[0][0]);
         }
-        if (board[0][2] != '~' && board[0][2] == board[1][1] && board[0][2] == board[2][0]) {
+        if (board[0][2] != blank && board[0][2] == board[1][1] && board[0][2] == board[2][0]) {
             return getWinner(board[0][2]);
         }
         return null;
