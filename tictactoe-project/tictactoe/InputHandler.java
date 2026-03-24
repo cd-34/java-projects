@@ -14,7 +14,7 @@ public class InputHandler {
         }
     }
 
-    public static char[] moveScanner(Scanner scan) {
+    public static int[] moveScanner(Scanner scan) {
         while (true) {
             String moveString = scan.nextLine().toUpperCase().trim();
 
@@ -36,7 +36,10 @@ public class InputHandler {
                 continue;
             }
 
-            return new char[]{col, row};
+            // converts chess notation into [row][column]
+            // for example A3 
+            // {3 - 3, A - A} = {0, 0}
+            return new int[]{'3' - row, col - 'A'};
         }
     }
 }

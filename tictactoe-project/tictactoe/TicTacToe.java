@@ -104,7 +104,7 @@ public class TicTacToe {
             System.out.println(this);
             printTurn();
             
-            char[] move = InputHandler.moveScanner(scan);
+            int[] move = InputHandler.moveScanner(scan);
 
             if (!boardChange(move)) {
                 continue;
@@ -126,14 +126,9 @@ public class TicTacToe {
         System.out.println("Board has been filled, it's a tie!");
     }
 
-    public boolean boardChange(char[] input) {
-        char col = input[0]; // letter
-        char row = input[1]; // number
-        int colIndex = col - 'A'; // C - A = 2 | B - A = 1 | A - A = 0
-        int rowIndex = '3' - row; // 3 - 3 = 0 or top row
-
-        if (board[rowIndex][colIndex] == blank) {
-            board[rowIndex][colIndex] = player1Turn ? 'X' : 'O';
+    public boolean boardChange(int[] input) {
+        if (board[input[0]][input[1]] == blank) {
+            board[input[0]][input[1]] = player1Turn ? 'X' : 'O';
             player1Turn = !player1Turn;
             turnCount++;
             return true;
