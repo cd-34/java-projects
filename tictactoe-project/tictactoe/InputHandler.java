@@ -14,7 +14,7 @@ public class InputHandler {
         }
     }
 
-    public static int[] moveScanner(Scanner scan) {
+    public static int[] moveScanner(Scanner scan, int boardSize) {
         while (true) {
             String moveString = scan.nextLine().toUpperCase().trim();
 
@@ -25,21 +25,23 @@ public class InputHandler {
 
             char col = moveString.charAt(0);
             char row = moveString.charAt(1);
+            char maxCol = (char) ('A' + boardSize - 1);
+            char maxRow = (char) ('1' + boardSize - 1);
 
-            if (col < 'A' || col > 'C') {
-                System.out.println("Column must be A, B, or C:");
+            if (col < 'A' || col > maxCol) {
+                System.out.println("Column must be A and " + maxCol + ":");
                 continue;
             }
 
-            if (row < '1' || row > '3') {
-                System.out.println("Row must be be 1, 2, or 3:");
+            if (row < '1' || row > maxRow) {
+                System.out.println("Row must be between 1 and " + maxRow + ":");
                 continue;
             }
 
             // converts chess notation into [row][column]
-            // for example A3 
+            // for example A3 in boardSize 3
             // {3 - 3, A - A} = {0, 0}
-            return new int[]{'3' - row, col - 'A'};
+            return new int[]{maxRow - row, col - 'A'};
         }
     }
 }

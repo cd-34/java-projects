@@ -104,7 +104,7 @@ public class TicTacToe {
             System.out.println(this);
             printTurn();
             
-            int[] move = InputHandler.moveScanner(scan);
+            int[] move = InputHandler.moveScanner(scan, boardSize);
 
             if (!boardChange(move)) {
                 continue;
