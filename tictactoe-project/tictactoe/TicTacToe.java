@@ -32,17 +32,38 @@ public class TicTacToe {
     @Override
     public String toString() {
         StringBuilder stringbuilder = new StringBuilder();
-
-        stringbuilder.append("    A   B   C\n");
-        stringbuilder.append("  -------------\n");
-        stringbuilder.append("3 | ").append(board[0][0]).append(" | ").append(board[0][1]).append(" | ").append(board[0][2]).append(" |\n");
-        stringbuilder.append("  -------------\n");
-        stringbuilder.append("2 | ").append(board[1][0]).append(" | ").append(board[1][1]).append(" | ").append(board[1][2]).append(" |\n");
-        stringbuilder.append("  -------------\n");
-        stringbuilder.append("1 | ").append(board[2][0]).append(" | ").append(board[2][1]).append(" | ").append(board[2][2]).append(" |\n");
-        stringbuilder.append("  -------------");
-
+        // column labels (letters)
+        stringbuilder.append("    ");
+        for (int i = 0; i < tictactoeSize; i++) {
+            stringbuilder.append((char) ('A' + i)).append("   ");
+        }
+        stringbuilder.append("\n");
+        
+        stringbuilder.append(toStringBorder());
+        
+        // rows (numbers)
+        for (int j = tictactoeSize; j >= 1; j--) {
+            // prints the number on the left
+            stringbuilder.append(j).append(" | ");
+            // prints the board with the blank '~'
+            for (int k = 0; k < tictactoeSize; k++) {
+            stringbuilder.append(board[tictactoeSize - j][k]).append(" | ");
+            }
+            stringbuilder.append("\n");
+            stringbuilder.append(toStringBorder());
+        }
         return stringbuilder.toString();
+    }
+
+    public String toStringBorder() {
+        // creates "------" border
+        StringBuilder border = new StringBuilder();
+        border.append("  ");
+        for (int i = 0; i < tictactoeSize; i++) {
+            border.append("----");
+        }
+        border.append("\n");
+        return border.toString();
     }
 
     public static String nameScanner(Scanner scan) {
