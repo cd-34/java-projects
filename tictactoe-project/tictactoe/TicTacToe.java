@@ -4,7 +4,6 @@ import java.util.Scanner;
 public class TicTacToe {
     private Player player1;
     private Player player2;
-    private boolean player1Turn = true;
     private static final int BOARD_SIZE = 3;
     private char[][] board = new char[BOARD_SIZE][BOARD_SIZE];
     private static final char BLANK = '~';
@@ -24,7 +23,10 @@ public class TicTacToe {
             }
         }
         turnCount = 1;
-        // player1Turn = true;
+    }
+
+    public Player getCurrentPlayer() {
+        return (turnCount % 2 != 0) ? player1 : player2;
     }
 
     @Override
@@ -65,9 +67,9 @@ public class TicTacToe {
     }
 
     public void printTurn() {
-        String playerName = (turnCount % 2 != 0) ? player1.getName() : player2.getName();
-        String symbol = (turnCount % 2 != 0) ? "X" : "O";
-        System.out.println(playerName + "'s turn (" + symbol + ")! Enter your move (e.g. A1, B2, C3):");
+        // String playerName = (turnCount % 2 != 0) ? player1.getName() : player2.getName();
+        Player currentPlayer = getCurrentPlayer();
+        System.out.println(currentPlayer.getName() + "'s turn (" + currentPlayer.getSymbol() + ")! Enter your move (e.g. A1, B2, C3):");
     }
 
     public void run() {
@@ -113,8 +115,7 @@ public class TicTacToe {
 
     public int[] boardChange(int[] input) {
         if (board[input[0]][input[1]] == BLANK) {
-            board[input[0]][input[1]] = player1Turn ? 'X' : 'O';
-            player1Turn = !player1Turn;
+            board[input[0]][input[1]] = getCurrentPlayer().getSymbol();
             turnCount++;
             return input;
         } else {
