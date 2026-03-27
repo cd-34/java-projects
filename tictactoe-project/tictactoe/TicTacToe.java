@@ -128,60 +128,39 @@ public class TicTacToe {
         int row = recentMove[0];
         int col = recentMove[1];
         char symbol = board[row][col];
-        // horizontal win conditions
-        // only checks current horizontal
-        boolean winHorizontal = true;
+        // creates an array for the current horizontal tiles 
+        char[] horizontal = new char[BOARD_SIZE];
         for (int i = 0; i < BOARD_SIZE; i++) {
-            if (board[row][i] != symbol) {
-                winHorizontal = false;
-                break;
-            }
+            horizontal[i] = board[row][i];
         }
-        if (winHorizontal) {
-            return getWinner(symbol);
-        }
-        // vertical win conditions
-        // only checks current vertical
-        boolean winVertical = true;
+        // creates an array for the current vertical tiles
+        char[] vertical = new char[BOARD_SIZE];
         for (int j = 0; j < BOARD_SIZE; j++) {
-            if (board[j][col] != symbol) {
-                winVertical = false;
-                break;
-            }
+            vertical[j] = board[j][col]; 
         }
-        if (winVertical) {
-            return getWinner(symbol);
-        }
-
-        // diagonal win condition from top left to bottom right
-        if (board[0][0] != BLANK) {
-            boolean winDiag1 = true;
-            for (int i = 1; i < BOARD_SIZE; i++) {
-                if (board[i][i] != board[0][0]) {
-                    winDiag1 = false;
-                    break;
-                }
-            }
-            if (winDiag1) {
-                return getWinner(board[0][0]);
-            }
+        // creates an array for the current diagonal tiles
+        char[] diag1 = new char[BOARD_SIZE];
+        for (int k = 0; k < BOARD_SIZE; k++) {
+            diag1[k] = board[k][k];
         }
 
-        // diagonal win conditon from bottom left to top right
-        if (board[0][BOARD_SIZE - 1] != BLANK) {
-            boolean winDiag2 = true;
-            for (int i = 1; i < BOARD_SIZE; i++) {
-                if (board[i][BOARD_SIZE - 1 - i] != board[0][BOARD_SIZE - 1]) {
-                    winDiag2 = false;
-                    break;
-                }
-            }
-            if (winDiag2) {
-                return getWinner(board[0][BOARD_SIZE - 1]);
-            }
-        } 
+        // creates an array for the current anti diagonal tiles
+        char[] diag2 = new char[BOARD_SIZE]; 
+        for (int l = 0; l < BOARD_SIZE; l++) {
+            diag2[l] = board[l][BOARD_SIZE - 1 - l];
+        }
 
         return null;
+    }
+
+    public boolean allElementsMatch(char[] array) {
+        // still need to check for blank because of the diagonals
+        for (int i = 1; i < array.length; i++) {
+            if (array[i] == array[i - 1] && array[i] != BLANK) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private Player getWinner(char symbol) {
