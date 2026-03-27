@@ -37,7 +37,7 @@ public class TicTacToe {
         }
         stringbuilder.append("\n");
         
-        stringbuilder.append(toStringBorder());
+        stringbuilder.append(makeTopBorder());
         
         // rows (numbers)
         for (int j = BOARD_SIZE; j >= 1; j--) {
@@ -48,13 +48,13 @@ public class TicTacToe {
             stringbuilder.append(board[BOARD_SIZE - j][k]).append(" | ");
             }
             stringbuilder.append("\n");
-            stringbuilder.append(toStringBorder());
+            stringbuilder.append(makeTopBorder());
         }
         return stringbuilder.toString();
     }
 
-    public String toStringBorder() {
-        // creates "------" border
+    public String makeTopBorder() {
+        // creates top "------" border
         StringBuilder border = new StringBuilder();
         border.append("  ");
         for (int i = 0; i < BOARD_SIZE; i++) {
