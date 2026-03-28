@@ -96,9 +96,8 @@ public class TicTacToe {
                 continue;
             }
 
-            Player winner = hasWon(recentMove);
-            if (winner != null) {
-                return winner;
+            if (hasWon(recentMove) == true) {
+                return getCurrentPlayer();
             }
 
             if (turnCount > BOARD_SIZE * BOARD_SIZE) {
@@ -124,7 +123,7 @@ public class TicTacToe {
         }
     }
 
-    public Player hasWon(int[] recentMove) {
+    public boolean hasWon(int[] recentMove) {
         int row = recentMove[0];
         int col = recentMove[1];
         char symbol = board[row][col];
@@ -150,25 +149,23 @@ public class TicTacToe {
             diag2[l] = board[l][BOARD_SIZE - 1 - l];
         }
 
-        return null;
+        if (allElementsMatch(horizontal) 
+            || allElementsMatch(vertical)
+            || allElementsMatch(diag1)
+            || allElementsMatch(diag2)) {
+                return true;
+            }
+        return false;
     }
 
     public boolean allElementsMatch(char[] array) {
         // still need to check for blank because of the diagonals
         for (int i = 1; i < array.length; i++) {
-            if (array[i] == array[i - 1] && array[i] != BLANK) {
-                return true;
+            if (array[i] != array[i - 1] || array[i] == BLANK) {
+                return false;
             }
         }
-        return false;
-    }
-
-    private Player getWinner(char symbol) {
-        if (symbol == 'X') {
-            return player1;
-        } else {
-            return player2;
-        }
+        return true;
     }
 
     public void printWinner(Player winner) {
