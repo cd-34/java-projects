@@ -16,7 +16,7 @@ public class TicTacToe {
         this.scan = scan;
     }
 
-    public void initGame() {
+    public void init() {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
                 board[i][j] = BLANK;
@@ -67,7 +67,6 @@ public class TicTacToe {
     }
 
     public void printTurn() {
-        // String playerName = (turnCount % 2 != 0) ? player1.getName() : player2.getName();
         Player currentPlayer = getCurrentPlayer();
         System.out.println(currentPlayer.getName() + "'s turn (" + currentPlayer.getSymbol() + ")! Enter your move (e.g. A1, B2, C3):");
     }
@@ -75,7 +74,7 @@ public class TicTacToe {
     public void run() {
         boolean playing = true;
         while (playing) {
-            initGame();
+            init();
             Player winner = playGame();
             if (winner != null) {
                 printWinner(winner);
@@ -115,7 +114,6 @@ public class TicTacToe {
     public int[] boardChange(int[] input) {
         if (board[input[0]][input[1]] == BLANK) {
             board[input[0]][input[1]] = getCurrentPlayer().getSymbol();
-            turnCount++;
             return input;
         } else {
             System.out.println("That tile is already occupied!");
@@ -126,7 +124,6 @@ public class TicTacToe {
     public boolean hasWon(int[] recentMove) {
         int row = recentMove[0];
         int col = recentMove[1];
-        char symbol = board[row][col];
         // creates an array for the current horizontal tiles 
         char[] horizontal = new char[BOARD_SIZE];
         for (int i = 0; i < BOARD_SIZE; i++) {
@@ -155,6 +152,7 @@ public class TicTacToe {
             || allElementsMatch(diag2)) {
                 return true;
             }
+        turnCount++;
         return false;
     }
 
