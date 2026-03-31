@@ -101,16 +101,15 @@ public class TicTacToe {
         System.out.println(this);
 
         if (state == GameState.WON) {
-            printWinner(getCurrentPlayer());
-            return getCurrentPlayer();
+            return getWinner();
         } else  {
-            printTie();
-            return null;
+            return tiedGame();
         }
     }
 
-    public void printTie() {
+    public Player tiedGame() {
         System.out.println("Board has been filled, it's a tie!");
+        return null;
     }
 
     public GameState place(int[] coords) throws InvalidMoveException {
@@ -183,13 +182,14 @@ public class TicTacToe {
         return true;
     }
 
-    public void printWinner(Player winner) {
+    public Player getWinner() {
         winner.incrementWins();
 
         System.out.println(winner.getName() + " wins!");
         System.out.println("Scores:");
         System.out.println(player1.getName() + ": " + player1.getWins() + " | " 
             + player2.getName() + ": " + player2.getWins());
+        return getCurrentPlayer();
     }
 
     public boolean playAgain() {
