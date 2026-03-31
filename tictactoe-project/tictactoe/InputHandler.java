@@ -2,6 +2,13 @@ package tictactoe;
 import java.util.Scanner;
 
 public class InputHandler {    
+    private Scanner scan;
+    private int boardSize;
+    
+    public InputHandler(Scanner scan, int boardSize) {
+        this.scan = scan;
+        this.boardSize = boardSize;
+    }
     public static String nameScanner(Scanner scan) {
         while (true) {
             String inputName = scan.nextLine();

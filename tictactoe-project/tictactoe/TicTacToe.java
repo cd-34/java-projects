@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class TicTacToe {
     private Player player1;
     private Player player2;
+    private Player winner = null;
     private static final int BOARD_SIZE = 3;
     private char[][] board = new char[BOARD_SIZE][BOARD_SIZE];
     private static final char BLANK = '~';
@@ -76,49 +77,66 @@ public class TicTacToe {
         while (playing) {
             init();
             Player winner = playGame();
-            if (winner != null) {
-                printWinner(winner);
-            }
             playing = playAgain();
         }
     }
 
     public Player playGame() {
-        while(true) {
+        GameState state = GameState.IN_PROGRESS;
+
+        while(state == GameState.IN_PROGRESS) {
             System.out.println(this);
             printTurn();
             
-            int[] move = InputHandler.moveScanner(scan, BOARD_SIZE);
-            int[] recentMove = boardChange(move);
-
-            if (recentMove == null) {
+            try {
+                int[] move = InputHandler.moveScanner(scan, BOARD_SIZE);
+                state = place(move);
+            } catch (InvalidMoveException e) {
+                System.out.println("error shouldn't be reached");
                 continue;
             }
+        }
 
-            if (hasWon(recentMove) == true) {
-                return getCurrentPlayer();
-            }
+        // game no longer in process: win or tie
+        System.out.println(this);
 
-            if (turnCount > BOARD_SIZE * BOARD_SIZE) {
-                checkTie();
-                return null;
-            }
+        if (state == GameState.WON) {
+            printWinner(getCurrentPlayer());
+            return getCurrentPlayer();
+        } else  {
+            printTie();
+            return null;
         }
     }
 
-    public void checkTie() {
-        System.out.println(this);
+    public void printTie() {
         System.out.println("Board has been filled, it's a tie!");
     }
 
-    public int[] boardChange(int[] input) {
-        if (board[input[0]][input[1]] == BLANK) {
-            board[input[0]][input[1]] = getCurrentPlayer().getSymbol();
-            return input;
-        } else {
-            System.out.println("That tile is already occupied!");
-            return null;
+    public GameState place(int[] coords) throws InvalidMoveException {
+        if (coords[0] < 0 || coords[1] >= BOARD_SIZE
+        || coords[1] < 0 || coords[1] >= BOARD_SIZE) {
+            throw new InvalidMoveException("coords out of bounds");
         }
+
+        if (board[coords[0]][coords[1]] != BLANK) {
+            throw new InvalidMoveException("Tile already occupied");
+        }
+
+        board[coords[0]][coords[1]] = getCurrentPlayer().getSymbol();
+        System.out.println(turnCount);
+
+        if (hasWon(coords)) {
+            winner = getCurrentPlayer();
+            return GameState.WON;
+        }
+
+        if (turnCount >= BOARD_SIZE * BOARD_SIZE) {
+            return GameState.TIED;
+        }
+
+        turnCount++;
+        return GameState.IN_PROGRESS;
     }
 
     public boolean hasWon(int[] recentMove) {
@@ -152,7 +170,6 @@ public class TicTacToe {
             || allElementsMatch(diag2)) {
                 return true;
             }
-        turnCount++;
         return false;
     }
 
