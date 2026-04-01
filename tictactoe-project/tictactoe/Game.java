@@ -21,7 +21,7 @@ public class Game {
         while (playing) {
             tictactoe.init();
             Player winner = playGame();
-            playing = playAgain();
+            playing = inputHandler.playAgain();
         }
     }
 
@@ -69,20 +69,5 @@ public class Game {
 
     public void printTie() {
         System.out.println("Board has been filled, it's a tie!");
-    }
-
-    public boolean playAgain() {
-        while (true) {
-            System.out.println("Would you like to play again? Y / N");
-            String newGame = scan.nextLine();
-            
-            if (newGame.toUpperCase().equals("Y")) {
-                return true;
-            } else if (newGame.toUpperCase().equals("N")) {
-                return false;
-            } else {
-                System.out.println("Invalid input.");
-            }
-        }
-    }
+    }   
 }

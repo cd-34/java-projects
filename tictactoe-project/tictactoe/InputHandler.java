@@ -51,4 +51,19 @@ public class InputHandler {
             return new int[]{maxRow - row, col - 'A'};
         }
     }
+
+    public boolean playAgain() {
+        while (true) {
+            System.out.println("Would you like to play again? Y / N");
+            String newGame = scan.nextLine();
+            
+            if (newGame.toUpperCase().equals("Y")) {
+                return true;
+            } else if (newGame.toUpperCase().equals("N")) {
+                return false;
+            } else {
+                System.out.println("Invalid input.");
+            }
+        }
+    }
 }
