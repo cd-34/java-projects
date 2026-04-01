@@ -25,10 +25,6 @@ public class TicTacToe {
         turnCount = 1;
     }
 
-    public Player getCurrentPlayer() {
-        return (turnCount % 2 != 0) ? player1 : player2;
-    }
-
     @Override
     public String toString() {
         StringBuilder stringbuilder = new StringBuilder();
@@ -91,7 +87,7 @@ public class TicTacToe {
         return GameState.IN_PROGRESS;
     }
 
-    public boolean hasWon(int[] recentMove) {
+    private boolean hasWon(int[] recentMove) {
         int row = recentMove[0];
         int col = recentMove[1];
         // creates an array for the current horizontal tiles 
@@ -125,7 +121,7 @@ public class TicTacToe {
         return false;
     }
 
-    public boolean allElementsMatch(char[] array) {
+    private boolean allElementsMatch(char[] array) {
         // still need to check for blank because of the diagonals
         for (int i = 1; i < array.length; i++) {
             if (array[i] != array[i - 1] || array[i] == BLANK) {
@@ -133,6 +129,10 @@ public class TicTacToe {
             }
         }
         return true;
+    }
+
+    public Player getCurrentPlayer() {
+        return (turnCount % 2 != 0) ? player1 : player2;
     }
 
     public Player getWinner() {
