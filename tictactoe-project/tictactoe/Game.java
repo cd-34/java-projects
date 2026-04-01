@@ -21,7 +21,7 @@ public class Game {
         while (playing) {
             tictactoe.init();
             Player winner = playGame();
-            playing = inputHandler.playAgain();
+            playing = inputHandler.playAgain(scan);
         }
     }
 
@@ -33,7 +33,7 @@ public class Game {
             printTurn();
             
             try {
-                int[] move = inputHandler.moveScanner();
+                int[] move = inputHandler.moveScanner(scan);
                 state = tictactoe.place(move);
             } catch (InvalidMoveException e) {
                 System.out.println("Invalid move.");

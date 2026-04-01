@@ -9,9 +9,9 @@ public class InputHandler {
         this.scan = scan;
         this.BOARD_SIZE = BOARD_SIZE;
     }
-    public String nameScanner() {
+    public static String nameScanner(Scanner scan) {
         while (true) {
-            String inputName = this.scan.nextLine();
+            String inputName = scan.nextLine();
 
             if (inputName.isBlank()) {               
                 System.out.println("Invalid input - please enter your name.");
@@ -21,9 +21,9 @@ public class InputHandler {
         }
     }
 
-    public int[] moveScanner() {
+    public static int[] moveScanner(Scanner scan) {
         while (true) {
-            String moveString = this.scan.nextLine().toUpperCase().trim();
+            String moveString = scan.nextLine().toUpperCase().trim();
 
             if (moveString.length() != 2) {
                 System.out.println("Please enter a valid input of two characters (e.g. A1, B2, C3):");
@@ -52,7 +52,7 @@ public class InputHandler {
         }
     }
 
-    public boolean playAgain() {
+    public static boolean playAgain(Scanner scan) {
         while (true) {
             System.out.println("Would you like to play again? Y / N");
             String newGame = scan.nextLine();
