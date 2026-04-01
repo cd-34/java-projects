@@ -47,54 +47,10 @@ public class Game {
         if (state == GameState.WON) {
             printWinner();
             return tictactoe.getWinner();
-        } else { 
+        } else  {
             printTie();
             return null;
         }
-    }
-
-    public boolean hasWon(int[] recentMove) {
-        int row = recentMove[0];
-        int col = recentMove[1];
-        // creates an array for the current horizontal tiles 
-        char[] horizontal = new char[BOARD_SIZE];
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            horizontal[i] = board[row][i];
-        }
-        // creates an array for the current vertical tiles
-        char[] vertical = new char[BOARD_SIZE];
-        for (int j = 0; j < BOARD_SIZE; j++) {
-            vertical[j] = board[j][col]; 
-        }
-        // creates an array for the current diagonal tiles
-        char[] diag1 = new char[BOARD_SIZE];
-        for (int k = 0; k < BOARD_SIZE; k++) {
-            diag1[k] = board[k][k];
-        }
-
-        // creates an array for the current anti diagonal tiles
-        char[] diag2 = new char[BOARD_SIZE]; 
-        for (int l = 0; l < BOARD_SIZE; l++) {
-            diag2[l] = board[l][BOARD_SIZE - 1 - l];
-        }
-
-        if (allElementsMatch(horizontal) 
-            || allElementsMatch(vertical)
-            || allElementsMatch(diag1)
-            || allElementsMatch(diag2)) {
-                return true;
-            }
-        return false;
-    }
-
-    public boolean allElementsMatch(char[] array) {
-        // still need to check for blank because of the diagonals
-        for (int i = 1; i < array.length; i++) {
-            if (array[i] != array[i - 1] || array[i] == BLANK) {
-                return false;
-            }
-        }
-        return true;
     }
 
     public void printWinner() {
