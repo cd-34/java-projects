@@ -29,7 +29,7 @@ public class Game {
         GameState state = GameState.IN_PROGRESS;
 
         while(state == GameState.IN_PROGRESS) {
-            System.out.println(this);
+            System.out.println(tictactoe);
             printTurn();
             
             try {
@@ -42,7 +42,7 @@ public class Game {
         }
 
         // game no longer in process: win or tie
-        System.out.println(this);
+        System.out.println(tictactoe);
 
         if (state == GameState.WON) {
             return getWinner(tictactoe.winner);

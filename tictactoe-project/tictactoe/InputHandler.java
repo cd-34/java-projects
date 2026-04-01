@@ -9,9 +9,9 @@ public class InputHandler {
         this.scan = scan;
         this.BOARD_SIZE = BOARD_SIZE;
     }
-    public static String nameScanner(Scanner scan) {
+    public String nameScanner() {
         while (true) {
-            String inputName = scan.nextLine();
+            String inputName = this.scan.nextLine();
 
             if (inputName.isBlank()) {               
                 System.out.println("Invalid input - please enter your name.");
