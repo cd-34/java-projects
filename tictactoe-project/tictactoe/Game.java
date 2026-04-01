@@ -45,20 +45,20 @@ public class Game {
         System.out.println(tictactoe);
 
         if (state == GameState.WON) {
-            return getWinner(tictactoe.winner);
+            printWinner();
+            return tictactoe.getWinner();
         } else  {
             return tiedGame();
         }
     }
 
-    public Player getWinner(Player winner) {
-        winner.incrementWins();
+    public void printWinner() {
+        tictactoe.getWinner().incrementWins();
 
-        System.out.println(winner.getName() + " wins!");
+        System.out.println(tictactoe.getWinner().getName() + " wins!");
         System.out.println("Scores:");
         System.out.println(player1.getName() + ": " + player1.getWins() + " | " 
             + player2.getName() + ": " + player2.getWins());
-        return tictactoe.getCurrentPlayer();
     }
 
     public void printTurn() {

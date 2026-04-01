@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class TicTacToe {
     private Player player1;
     private Player player2;
-    public Player winner = null; // change back to private
+    private Player winner = null;
     private static final int BOARD_SIZE = 3;
     private char[][] board = new char[BOARD_SIZE][BOARD_SIZE];
     private static final char BLANK = '~';
@@ -133,5 +133,9 @@ public class TicTacToe {
             }
         }
         return true;
+    }
+
+    public Player getWinner() {
+        return winner;
     }
 }
