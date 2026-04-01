@@ -4,17 +4,16 @@ import java.util.Scanner;
 public class TicTacToe {
     private Player player1;
     private Player player2;
-    private Player winner = null;
+    public Player winner = null; // change back to private
     private static final int BOARD_SIZE = 3;
     private char[][] board = new char[BOARD_SIZE][BOARD_SIZE];
     private static final char BLANK = '~';
     private int turnCount = 1;
     private Scanner scan;
 
-    public TicTacToe(Player player1, Player player2, Scanner scan) {
+    public TicTacToe(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
-        this.scan = scan;
     }
 
     public void init() {
@@ -67,51 +66,6 @@ public class TicTacToe {
         return border.toString();
     }
 
-    public void printTurn() {
-        Player currentPlayer = getCurrentPlayer();
-        System.out.println(currentPlayer.getName() + "'s turn (" + currentPlayer.getSymbol() + ")! Enter your move (e.g. A1, B2, C3):");
-    }
-
-    public void run() {
-        boolean playing = true;
-        while (playing) {
-            init();
-            Player winner = playGame();
-            playing = playAgain();
-        }
-    }
-
-    public Player playGame() {
-        GameState state = GameState.IN_PROGRESS;
-
-        while(state == GameState.IN_PROGRESS) {
-            System.out.println(this);
-            printTurn();
-            
-            try {
-                int[] move = InputHandler.moveScanner(scan, BOARD_SIZE);
-                state = place(move);
-            } catch (InvalidMoveException e) {
-                System.out.println("error shouldn't be reached");
-                continue;
-            }
-        }
-
-        // game no longer in process: win or tie
-        System.out.println(this);
-
-        if (state == GameState.WON) {
-            return getWinner();
-        } else  {
-            return tiedGame();
-        }
-    }
-
-    public Player tiedGame() {
-        System.out.println("Board has been filled, it's a tie!");
-        return null;
-    }
-
     public GameState place(int[] coords) throws InvalidMoveException {
         if (coords[0] < 0 || coords[1] >= BOARD_SIZE
         || coords[1] < 0 || coords[1] >= BOARD_SIZE) {
@@ -123,7 +77,6 @@ public class TicTacToe {
         }
 
         board[coords[0]][coords[1]] = getCurrentPlayer().getSymbol();
-        System.out.println(turnCount);
 
         if (hasWon(coords)) {
             winner = getCurrentPlayer();
@@ -182,28 +135,5 @@ public class TicTacToe {
         return true;
     }
 
-    public Player getWinner() {
-        winner.incrementWins();
 
-        System.out.println(winner.getName() + " wins!");
-        System.out.println("Scores:");
-        System.out.println(player1.getName() + ": " + player1.getWins() + " | " 
-            + player2.getName() + ": " + player2.getWins());
-        return getCurrentPlayer();
-    }
-
-    public boolean playAgain() {
-        while (true) {
-            System.out.println("Would you like to play again? Y / N");
-            String newGame = scan.nextLine();
-            
-            if (newGame.toUpperCase().equals("Y")) {
-                return true;
-            } else if (newGame.toUpperCase().equals("N")) {
-                return false;
-            } else {
-                System.out.println("Invalid input.");
-            }
-        }
-    }
 }

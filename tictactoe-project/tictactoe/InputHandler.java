@@ -3,11 +3,11 @@ import java.util.Scanner;
 
 public class InputHandler {    
     private Scanner scan;
-    private int boardSize;
+    private static int BOARD_SIZE;
     
-    public InputHandler(Scanner scan, int boardSize) {
+    public InputHandler(Scanner scan, int BOARD_SIZE) {
         this.scan = scan;
-        this.boardSize = boardSize;
+        this.BOARD_SIZE = BOARD_SIZE;
     }
     public static String nameScanner(Scanner scan) {
         while (true) {
@@ -21,9 +21,9 @@ public class InputHandler {
         }
     }
 
-    public static int[] moveScanner(Scanner scan, int BOARD_SIZE) {
+    public int[] moveScanner() {
         while (true) {
-            String moveString = scan.nextLine().toUpperCase().trim();
+            String moveString = this.scan.nextLine().toUpperCase().trim();
 
             if (moveString.length() != 2) {
                 System.out.println("Please enter a valid input of two characters (e.g. A1, B2, C3):");
