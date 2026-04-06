@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class InputHandler {    
     private Scanner scan;
-    private static int boardSize;
+    private int boardSize;
     
     public InputHandler(Scanner scan, int boardSize) {
         this.scan = scan;
@@ -21,7 +21,7 @@ public class InputHandler {
         }
     }
 
-    public static int[] moveScanner(Scanner scan) {
+    public static int[] moveScanner(Scanner scan, int boardSize) {
         while (true) {
             String moveString = scan.nextLine().toUpperCase().trim();
 

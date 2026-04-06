@@ -2,7 +2,8 @@ package tictactoe;
 import java.util.Scanner;
 
 public class Main {
-    private static final int boardSize = 4;
+    private static final int boardSize = 3;
+    
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 

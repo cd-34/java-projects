@@ -7,12 +7,14 @@ public class Game {
     private Player player1;
     private Player player2;
     private Scanner scan;
+    private int boardSize;
 
     public Game(Player player1, Player player2, InputHandler inputHandler, Scanner scan, int boardSize) {
         this.player1 = player1;
         this.player2 = player2;
         this.inputHandler = inputHandler;
         this.scan = scan;
+        this.boardSize = boardSize;
         this.tictactoe = new TicTacToe(player1, player2, boardSize);
     }
 
@@ -33,7 +35,7 @@ public class Game {
             printTurn();
             
             try {
-                int[] move = inputHandler.moveScanner(scan);
+                int[] move = inputHandler.moveScanner(scan, boardSize);
                 state = tictactoe.place(move);
             } catch (InvalidMoveException e) {
                 System.out.println("Invalid move.");
