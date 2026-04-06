@@ -2,9 +2,9 @@ package tictactoe;
 import java.util.Scanner;
 
 public class Main {
+    private static final int boardSize = 4;
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        int boardSize = 3;
 
         InputHandler inputHandler = new InputHandler(scan, boardSize);
 
@@ -16,7 +16,7 @@ public class Main {
         Player player2 = new Player(inputHandler.nameScanner(scan), 'O');
         System.out.println("Welcome " + player2.getName() + "!");
 
-        Game game = new Game(player1, player2, inputHandler, scan);
+        Game game = new Game(player1, player2, inputHandler, scan, boardSize);
         game.run();
 
         scan.close();

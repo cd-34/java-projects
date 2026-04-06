@@ -5,15 +5,17 @@ public class TicTacToe {
     private Player player1;
     private Player player2;
     private Player winner = null;
-    private static final int BOARD_SIZE = 3;
-    private char[][] board = new char[BOARD_SIZE][BOARD_SIZE];
+    private final int boardSize;
+    private char[][] board;
     private static final char BLANK = '~';
     private int turnCount = 1;
     private Scanner scan;
 
-    public TicTacToe(Player player1, Player player2) {
+    public TicTacToe(Player player1, Player player2, int boardSize) {
         this.player1 = player1;
         this.player2 = player2;
+        this.boardSize = boardSize;
+        this.board = new char[boardSize][boardSize];
     }
 
     public void init() {
@@ -30,7 +32,7 @@ public class TicTacToe {
         StringBuilder stringbuilder = new StringBuilder();
         // column labels (letters)
         stringbuilder.append("    ");
-        for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int i = 0; i < boardSize; i++) {
             stringbuilder.append((char) ('A' + i)).append("   ");
         }
         stringbuilder.append("\n");
@@ -38,12 +40,12 @@ public class TicTacToe {
         stringbuilder.append(makeTopBorder());
         
         // rows (numbers)
-        for (int j = BOARD_SIZE; j >= 1; j--) {
+        for (int j = boardSize; j >= 1; j--) {
             // prints the number on the left
             stringbuilder.append(j).append(" | ");
             // prints the board with the BLANK '~'
-            for (int k = 0; k < BOARD_SIZE; k++) {
-            stringbuilder.append(board[BOARD_SIZE - j][k]).append(" | ");
+            for (int k = 0; k < boardSize; k++) {
+            stringbuilder.append(board[boardSize - j][k]).append(" | ");
             }
             stringbuilder.append("\n");
             stringbuilder.append(makeTopBorder());
@@ -55,7 +57,7 @@ public class TicTacToe {
         // creates top "------" border
         StringBuilder border = new StringBuilder();
         border.append("  ");
-        for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int i = 0; i < boardSize; i++) {
             border.append("----");
         }
         border.append("\n");
@@ -63,8 +65,8 @@ public class TicTacToe {
     }
 
     public GameState place(int[] coords) throws InvalidMoveException {
-        if (coords[0] < 0 || coords[1] >= BOARD_SIZE
-        || coords[1] < 0 || coords[1] >= BOARD_SIZE) {
+        if (coords[0] < 0 || coords[1] >= boardSize
+        || coords[1] < 0 || coords[1] >= boardSize) {
             throw new InvalidMoveException("coords out of bounds");
         }
 
@@ -79,7 +81,7 @@ public class TicTacToe {
             return GameState.WON;
         }
 
-        if (turnCount >= BOARD_SIZE * BOARD_SIZE) {
+        if (turnCount >= boardSize * boardSize) {
             return GameState.TIED;
         }
 
@@ -91,25 +93,25 @@ public class TicTacToe {
         int row = recentMove[0];
         int col = recentMove[1];
         // creates an array for the current horizontal tiles 
-        char[] horizontal = new char[BOARD_SIZE];
-        for (int i = 0; i < BOARD_SIZE; i++) {
+        char[] horizontal = new char[boardSize];
+        for (int i = 0; i < boardSize; i++) {
             horizontal[i] = board[row][i];
         }
         // creates an array for the current vertical tiles
-        char[] vertical = new char[BOARD_SIZE];
-        for (int j = 0; j < BOARD_SIZE; j++) {
+        char[] vertical = new char[boardSize];
+        for (int j = 0; j < boardSize; j++) {
             vertical[j] = board[j][col]; 
         }
         // creates an array for the current diagonal tiles
-        char[] diag1 = new char[BOARD_SIZE];
-        for (int k = 0; k < BOARD_SIZE; k++) {
+        char[] diag1 = new char[boardSize];
+        for (int k = 0; k < boardSize; k++) {
             diag1[k] = board[k][k];
         }
 
         // creates an array for the current anti diagonal tiles
-        char[] diag2 = new char[BOARD_SIZE]; 
-        for (int l = 0; l < BOARD_SIZE; l++) {
-            diag2[l] = board[l][BOARD_SIZE - 1 - l];
+        char[] diag2 = new char[boardSize]; 
+        for (int l = 0; l < boardSize; l++) {
+            diag2[l] = board[l][boardSize - 1 - l];
         }
 
         if (allElementsMatch(horizontal) 

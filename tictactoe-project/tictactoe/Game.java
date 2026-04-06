@@ -8,12 +8,12 @@ public class Game {
     private Player player2;
     private Scanner scan;
 
-    public Game(Player player1, Player player2, InputHandler inputHandler, Scanner scan) {
+    public Game(Player player1, Player player2, InputHandler inputHandler, Scanner scan, int boardSize) {
         this.player1 = player1;
         this.player2 = player2;
         this.inputHandler = inputHandler;
         this.scan = scan;
-        this.tictactoe = new TicTacToe(player1, player2);
+        this.tictactoe = new TicTacToe(player1, player2, boardSize);
     }
 
     public void run() {

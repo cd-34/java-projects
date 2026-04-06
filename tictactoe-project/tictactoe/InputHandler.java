@@ -3,11 +3,11 @@ import java.util.Scanner;
 
 public class InputHandler {    
     private Scanner scan;
-    private static int BOARD_SIZE;
+    private static int boardSize;
     
-    public InputHandler(Scanner scan, int BOARD_SIZE) {
+    public InputHandler(Scanner scan, int boardSize) {
         this.scan = scan;
-        this.BOARD_SIZE = BOARD_SIZE;
+        this.boardSize = boardSize;
     }
     public static String nameScanner(Scanner scan) {
         while (true) {
@@ -32,8 +32,8 @@ public class InputHandler {
 
             char col = moveString.charAt(0);
             char row = moveString.charAt(1);
-            char maxCol = (char) ('A' + BOARD_SIZE - 1);
-            char maxRow = (char) ('1' + BOARD_SIZE - 1);
+            char maxCol = (char) ('A' + boardSize - 1);
+            char maxRow = (char) ('1' + boardSize - 1);
 
             if (col < 'A' || col > maxCol) {
                 System.out.println("Column must be A and " + maxCol + ":");
@@ -46,7 +46,7 @@ public class InputHandler {
             }
 
             // converts chess notation into [row][column]
-            // for example A3 in BOARD_SIZE 3
+            // for example A3 in boardSize 3
             // {3 - 3, A - A} = {0, 0}
             return new int[]{maxRow - row, col - 'A'};
         }
