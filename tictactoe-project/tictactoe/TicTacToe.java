@@ -4,211 +4,140 @@ import java.util.Scanner;
 public class TicTacToe {
     private Player player1;
     private Player player2;
-    private boolean player1Turn = true; 
-    private char[][] board = new char[3][3];
+    private Player winner = null;
+    private final int boardSize;
+    private char[][] board;
+    private static final char BLANK = '~';
     private int turnCount = 1;
-    private Scanner scan; 
+    private Scanner scan;
 
-    public TicTacToe(Player player1, Player player2, Scanner scan) {
+    public TicTacToe(Player player1, Player player2, int boardSize) {
         this.player1 = player1;
         this.player2 = player2;
-        this.scan = scan;
+        this.boardSize = boardSize;
+        this.board = new char[boardSize][boardSize];
     }
 
-    public void initGame() {
+    public void init() {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
-                board[i][j] = '~';
+                board[i][j] = BLANK;
             }
         }
         turnCount = 1;
-        // player1Turn = true;
     }
 
-    // not sure if this is what's meant by changing printBoard() to a toString()
     @Override
     public String toString() {
         StringBuilder stringbuilder = new StringBuilder();
-
-        stringbuilder.append("    A   B   C\n");
-        stringbuilder.append("  -------------\n");
-        stringbuilder.append("3 | ").append(board[0][0]).append(" | ").append(board[0][1]).append(" | ").append(board[0][2]).append(" |\n");
-        stringbuilder.append("  -------------\n");
-        stringbuilder.append("2 | ").append(board[1][0]).append(" | ").append(board[1][1]).append(" | ").append(board[1][2]).append(" |\n");
-        stringbuilder.append("  -------------\n");
-        stringbuilder.append("1 | ").append(board[2][0]).append(" | ").append(board[2][1]).append(" | ").append(board[2][2]).append(" |\n");
-        stringbuilder.append("  -------------");
-
+        // column labels (letters)
+        stringbuilder.append("    ");
+        for (int i = 0; i < boardSize; i++) {
+            stringbuilder.append((char) ('A' + i)).append("   ");
+        }
+        stringbuilder.append("\n");
+        
+        stringbuilder.append(makeTopBorder());
+        
+        // rows (numbers)
+        for (int j = boardSize; j >= 1; j--) {
+            // prints the number on the left
+            stringbuilder.append(j).append(" | ");
+            // prints the board with the BLANK '~'
+            for (int k = 0; k < boardSize; k++) {
+            stringbuilder.append(board[boardSize - j][k]).append(" | ");
+            }
+            stringbuilder.append("\n");
+            stringbuilder.append(makeTopBorder());
+        }
         return stringbuilder.toString();
     }
 
-    public static String nameScanner(Scanner scan) {
-        while (true) {
-            String inputName = scan.nextLine();
-
-            if (inputName.isBlank()) {
-                System.out.println("Invalid input - please enter your name.");
-                continue;
-            }
-            return inputName;
+    public String makeTopBorder() {
+        // creates top "------" border
+        StringBuilder border = new StringBuilder();
+        border.append("  ");
+        for (int i = 0; i < boardSize; i++) {
+            border.append("----");
         }
+        border.append("\n");
+        return border.toString();
     }
 
-    public void printTurn() {
-        if (player1Turn) {
-            System.out.println(player1.getName() + "'s turn (X)! Enter your move (e.g. A1, B2, C3):");
-        } else {
-            System.out.println(player2.getName() + "'s turn (O)! Enter your move (e.g. A1, B2, C3):");
-        }  
+    public GameState place(int[] coords) throws InvalidMoveException {
+        if (coords[0] < 0 || coords[1] >= boardSize
+        || coords[1] < 0 || coords[1] >= boardSize) {
+            throw new InvalidMoveException("coords out of bounds");
+        }
+
+        if (board[coords[0]][coords[1]] != BLANK) {
+            throw new InvalidMoveException("Tile already occupied");
+        }
+
+        board[coords[0]][coords[1]] = getCurrentPlayer().getSymbol();
+
+        if (hasWon(coords)) {
+            winner = getCurrentPlayer();
+            return GameState.WON;
+        }
+
+        if (turnCount >= boardSize * boardSize) {
+            return GameState.TIED;
+        }
+
+        turnCount++;
+        return GameState.IN_PROGRESS;
     }
 
-    public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-
-        System.out.println("Please enter player 1's name.");
-        Player player1 = new Player(nameScanner(scan));
-        System.out.println("Welcome " + player1.getName() + "!");
-
-        System.out.println("Please enter player 2's name.");
-        Player player2 = new Player(nameScanner(scan));
-        System.out.println("Welcome " + player2.getName() + "!");
-        // System.out.println(player1.getName() + " " + player2.getName());
-        TicTacToe game = new TicTacToe(player1, player2, scan);
-        game.run();
-
-        scan.close();
-    }
-
-    public void run() {
-        boolean playing = true;
-        while (playing) {
-            initGame();
-            Player winner = playGame();
-            if (winner != null) {
-                printWinner(winner);
-            }
-            playing = playAgain();
+    private boolean hasWon(int[] recentMove) {
+        int row = recentMove[0];
+        int col = recentMove[1];
+        // creates an array for the current horizontal tiles 
+        char[] horizontal = new char[boardSize];
+        for (int i = 0; i < boardSize; i++) {
+            horizontal[i] = board[row][i];
         }
-    }
-
-    public Player playGame() {
-        while(true) {
-            System.out.println(this);
-            printTurn();
-            
-            char[] move = moveScanner(scan);
-
-            if (!boardChange(move)) {
-                continue;
-            }
-
-            Player winner = hasWon();
-            if (winner != null) {
-                return winner;
-            }
-
-            if (turnCount > 9) {
-                System.out.println("Board has been filled, it's a tie!");
-                return null;
-            }
+        // creates an array for the current vertical tiles
+        char[] vertical = new char[boardSize];
+        for (int j = 0; j < boardSize; j++) {
+            vertical[j] = board[j][col]; 
         }
-    }
-
-    public static char[] moveScanner(Scanner scan) {
-        while (true) {
-            String moveString = scan.nextLine().toUpperCase().trim();
-
-            if (moveString.length() != 2) {
-                System.out.println("Please enter a valid input of two characters (e.g. A1, B2, C3):");
-                continue;
-            }
-
-            char col = moveString.charAt(0);
-            char row = moveString.charAt(1);
-
-            if (col < 'A' || col > 'C') {
-                System.out.println("Column must be A, B, or C:");
-                continue;
-            }
-
-            if (row < '1' || row > '3') {
-                System.out.println("Row must be be 1, 2, or 3:");
-                continue;
-            }
-
-            return new char[]{col, row};
+        // creates an array for the current diagonal tiles
+        char[] diag1 = new char[boardSize];
+        for (int k = 0; k < boardSize; k++) {
+            diag1[k] = board[k][k];
         }
-    }
 
-    public boolean boardChange(char[] input) {
-        char col = input[0]; // letter
-        char row = input[1]; // number
-        int colIndex = col - 'A'; // C - A = 2 | B - A = 1 | A - A = 0
-        int rowIndex = '3' - row; // 3 - 3 = 0 or top row
-
-        if (board[rowIndex][colIndex] == '~') {
-            board[rowIndex][colIndex] = player1Turn ? 'X' : 'O';
-            player1Turn = !player1Turn;
-            turnCount++;
-            return true;
-        } else {
-            System.out.println("That tile is already occupied!");
-            return false;
+        // creates an array for the current anti diagonal tiles
+        char[] diag2 = new char[boardSize]; 
+        for (int l = 0; l < boardSize; l++) {
+            diag2[l] = board[l][boardSize - 1 - l];
         }
-    }
 
-    public Player hasWon() {
-        // three horizontal win conditions
-        for (int i = 0; i < 3; i++) {
-            if (board[i][0] != '~' && board[i][0] == board[i][1] && board[i][0] == board[i][2]) {
-                return getWinner(board[i][0]);
-            }
-        }
-        // three vertical win conditions
-        for (int j = 0; j < 3; j++) {
-            if (board[0][j] != '~' && board[0][j] == board[1][j] && board[0][j] == board[2][j]) {
-                return getWinner(board[0][j]);
-            }
-        }
-        // two diagonal win conditions
-        if (board[0][0] != '~' && board[0][0] == board[1][1] && board[0][0] == board[2][2]) {
-            return getWinner(board[0][0]);
-        }
-        if (board[0][2] != '~' && board[0][2] == board[1][1] && board[0][2] == board[2][0]) {
-            return getWinner(board[0][2]);
-        }
-        return null;
-    }
-
-    private Player getWinner(char symbol) {
-        if (symbol == 'X') {
-            return player1;
-        } else {
-            return player2;
-        }
-    }
-
-    public void printWinner(Player winner) {
-        winner.incrementWins();
-
-        System.out.println(winner.getName() + " wins!");
-        System.out.println("Scores:");
-        System.out.println(player1.getName() + ": " + player1.getWins() + " | " 
-            + player2.getName() + ": " + player2.getWins());
-    }
-
-    public boolean playAgain() {
-        while (true) {
-            System.out.println("Would you like to play again? Y / N");
-            String newGame = scan.nextLine();
-            
-            if (newGame.toUpperCase().equals("Y")) {
+        if (allElementsMatch(horizontal) 
+            || allElementsMatch(vertical)
+            || allElementsMatch(diag1)
+            || allElementsMatch(diag2)) {
                 return true;
-            } else if (newGame.toUpperCase().equals("N")) {
+            }
+        return false;
+    }
+
+    private boolean allElementsMatch(char[] array) {
+        // still need to check for blank because of the diagonals
+        for (int i = 1; i < array.length; i++) {
+            if (array[i] != array[i - 1] || array[i] == BLANK) {
                 return false;
-            } else {
-                System.out.println("Invalid input.");
             }
         }
+        return true;
+    }
+
+    public Player getCurrentPlayer() {
+        return (turnCount % 2 != 0) ? player1 : player2;
+    }
+
+    public Player getWinner() {
+        return winner;
     }
 }

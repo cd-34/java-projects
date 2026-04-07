@@ -6,4 +6,4 @@ COPY tictactoe/ ./tictactoe/
 
 RUN javac tictactoe/*.java
 
-CMD ["java", "tictactoe.TicTacToe"]
+CMD ["java", "tictactoe.Main"]
