@@ -1,12 +1,12 @@
 .PHONY: build run clean
 
 build:
-	docker build -t tictactoe .
+	docker build -t chopsticks .
 
 run:
-	docker run -it --rm tictactoe
+	docker run -it --rm chopsticks
 
 clean:
-	docker rmi tictactoe
+	docker rmi chopsticks
 
 all: build run
