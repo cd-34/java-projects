@@ -19,6 +19,4 @@ public class InputHandler {
             return inputName;
         }
     }
-
-    
 }
