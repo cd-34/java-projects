@@ -10,5 +10,34 @@ public class Chopsticks {
         this.player2 = player2;
     }
 
+    @Override 
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(makeHorizontalBorder());
+        sb.append("| Left  | Right |");
+        sb.append("\n");
 
+        sb.append(makeHorizontalBorder());
+        sb.append("|  " + player2.getLeftHand() + "    |   " + player2.getRightHand() + "   |  " + player2.getName());
+        sb.append("\n");
+
+        sb.append(makeHorizontalBorder());
+        sb.append("|  " + player1.getLeftHand() + "    |   " + player1.getRightHand() + "   |  " + player1.getName());
+
+        sb.append("\n");
+        sb.append(makeHorizontalBorder());
+        
+        return sb.toString();
+    }
+
+    public String makeHorizontalBorder() {
+        StringBuilder border = new StringBuilder();
+        border.append("|---------------|");
+        border.append("\n");
+        return border.toString();
+    }
+
+    public void init() {
+        System.out.println(this);
+    }
 }

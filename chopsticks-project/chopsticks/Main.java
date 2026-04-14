@@ -15,6 +15,8 @@ public class Main {
         System.out.println("Welcome " + player2.getName() + "!");
 
         // initialize game
+        Game game = new Game(player1, player2, scan);
+        game.run();
 
         scan.close();
     }
