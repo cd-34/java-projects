@@ -44,6 +44,9 @@ public class Game {
 
     public void printTurn() {
         Player currentPlayer = chopsticks.getCurrentPlayer();
-        System.out.println(currentPlayer.getName() + "'s turn! Make your move.");
+        System.out.println(currentPlayer.getName() + "'s turn! Enter your move.");
+        // maybe move this to a "rules" section that prints at the start of every game instead of every turn
+        System.out.println("To attack, type the letter you want to attack with with the desired location (E.g. LR)");
+        System.out.println("To split, type the numbers of how you'd like to split (E.g. 23)");
     }
 }
