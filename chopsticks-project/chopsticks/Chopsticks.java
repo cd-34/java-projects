@@ -37,6 +37,8 @@ public class Chopsticks {
         return border.toString();
     }
 
+    // starts a game by initializing the player's hands
+    // and printing out the "board"
     public void init() {
         player2.setLeftHand(1);
         player2.setRightHand(1);
@@ -46,5 +48,5 @@ public class Chopsticks {
         System.out.println(this);
     }
 
-    
+
 }

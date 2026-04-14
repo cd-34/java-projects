@@ -4,8 +4,10 @@ import java.util.Scanner;
 public class Game {
     private Player player1;
     private Player player2;
+    private Player winner = null;
     private Scanner scan;
     private Chopsticks chopsticks;
+    private InputHandler inputHandler;
 
     public Game(Player player1, Player player2, Scanner scan) {
         this.player1 = player1;
@@ -14,23 +16,28 @@ public class Game {
         this.chopsticks = new Chopsticks(player1, player2);
     }
 
+    // initializes the game and starts playGame() until there is a winner
     public void run() {
         boolean playing = true;
         while (playing) {
             chopsticks.init();
             // need to play the game 
-
+            Player winner = playGame();
             // need to create playAgain to return true/false based on scanner
-            // playing = inputHandler.playAgain(scan);
-            playing = false; // temporary
+            
+            playing = inputHandler.playAgain(scan);
         }
     }
 
+    // 
     public Player playGame() {
         GameState state = GameState.IN_PROGRESS;
         while (state == GameState.IN_PROGRESS) {
-            System.out.println("gamestate works");
+            
+            state = GameState.WON; // temporary
         }
+
+        // should return winner 
         return null;
     }
 }
