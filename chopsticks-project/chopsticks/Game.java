@@ -34,10 +34,16 @@ public class Game {
     public Player playGame() {
         GameState state = GameState.IN_PROGRESS;
         while (state == GameState.IN_PROGRESS) {
+            printTurn();
             state = GameState.WON; // temporary
         }
 
         // should return winner 
         return null; // temporary
+    }
+
+    public void printTurn() {
+        Player currentPlayer = chopsticks.getCurrentPlayer();
+        System.out.println(currentPlayer.getName() + "'s turn! Make your move.");
     }
 }
