@@ -18,11 +18,11 @@ public class Chopsticks {
         sb.append("\n");
 
         sb.append(makeHorizontalBorder());
-        sb.append("|  " + player2.getLeftHand() + "    |   " + player2.getRightHand() + "   |  " + player2.getName());
+        sb.append("|   " + player2.getLeftHand() + "   |   " + player2.getRightHand() + "   |  " + player2.getName());
         sb.append("\n");
 
         sb.append(makeHorizontalBorder());
-        sb.append("|  " + player1.getLeftHand() + "    |   " + player1.getRightHand() + "   |  " + player1.getName());
+        sb.append("|   " + player1.getLeftHand() + "   |   " + player1.getRightHand() + "   |  " + player1.getName());
 
         sb.append("\n");
         sb.append(makeHorizontalBorder());
@@ -38,6 +38,13 @@ public class Chopsticks {
     }
 
     public void init() {
+        player2.setLeftHand(1);
+        player2.setRightHand(1);
+
+        player1.setLeftHand(1);
+        player1.setRightHand(1);
         System.out.println(this);
     }
+
+    
 }

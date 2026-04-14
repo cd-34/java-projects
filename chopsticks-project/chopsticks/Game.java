@@ -18,11 +18,11 @@ public class Game {
         boolean playing = true;
         while (playing) {
             chopsticks.init();
-            playing = false; // temporary
             // need to play the game 
 
             // need to create playAgain to return true/false based on scanner
             // playing = inputHandler.playAgain(scan);
+            playing = false; // temporary
         }
     }
 
