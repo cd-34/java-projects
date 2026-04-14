@@ -4,6 +4,7 @@ public class Chopsticks {
     private Player player1;
     private Player player2;
     private Player winner = null;
+    private int turnCount = 1;
 
     public Chopsticks(Player player1, Player player2) {
         this.player1 = player1;
@@ -48,5 +49,7 @@ public class Chopsticks {
         System.out.println(this);
     }
 
-
+    public Player getCurrentPlayer() {
+        return (turnCount % 2 != 0) ? player1 : player2;
+    }
 }
