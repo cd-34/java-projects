@@ -5,8 +5,9 @@ public class InputHandler {
     private Scanner scan;
     private Chopsticks chopsticks;
 
-    public InputHandler(Scanner scan) {
+    public InputHandler(Scanner scan, Chopsticks chopsticks) {
         this.scan = scan;
+        this.chopsticks = chopsticks;
     }
 
     public static String nameScanner(Scanner scan) {
@@ -34,32 +35,53 @@ public class InputHandler {
 
             char one = moveString.charAt(0);
             char two = moveString.charAt(1);
+            Player currentPlayer = chopsticks.getCurrentPlayer();
+            Player opposingPlayer = chopsticks.getOpposingPlayer();
             
             // Procedure for attacks
             if (one == 'L' || one == 'R') {
-                if (two != 'L' || two != 'R') {
+                if (two != 'L' && two != 'R') {
                     System.out.println("Please enter a legal attack (E.g. LL, LR, RL, RR):");
                     continue;
                 }
+                // need to figure out how to determine what to add to what
+                // maybe ternary statement here is better? 
+                if (one == 'L') {
+                    if (two == 'L') {
+                        return currentPlayer.getLeftHand() + opposingPlayer.getLeftHand();
+                    } else {
+                        return currentPlayer.getLeftHand() + opposingPlayer.getRightHand();
+                    }
+                } 
+                if (one == 'R') {
+                    if (two == 'L') {
+                        return currentPlayer.getRightHand() + opposingPlayer.getLeftHand();
+                    } else {
+                        return currentPlayer.getRightHand() + opposingPlayer.getRightHand();
+                    }
+                }
+                
             }
 
             // Procedure for splitting
-            Player currentPlayer = chopsticks.getCurrentPlayer();
-            if (one > 1 && one < 5) {
+            int digitOne = one - '0';
+            int digitTwo = two - '0';
+
+            if (digitOne >= 1 && one <= 4) {
                 // new split has one hand dead or the numbers are beyond the limits
-                if (two < 1 || two >= 5) {
+                if (digitTwo < 1 || digitTwo >= 5) {
                     System.out.println("Please enter a legal split (both hands between 1 and 4):");
                     continue;   
                 }
                 
                 // new split doesn't add up to the same amount
-                if (one + two != currentPlayer.getLeftHand() + currentPlayer.getRightHand()) {
+                if (digitOne + digitTwo != currentPlayer.getLeftHand() + currentPlayer.getRightHand()) {
                     System.out.println("The split you've entered does not add to your current total.");
                     continue;
                 }
                 // new split is the same as the current split
-                if (one == currentPlayer.getRightHand() && two == currentPlayer.getLeftHand()
-                    || one == currentPlayer.getLeftHand() && two == currentPlayer.getRightHand()) {
+                if (digitOne == currentPlayer.getRightHand() && digitTwo == currentPlayer.getLeftHand()
+                    || digitOne == currentPlayer.getLeftHand() && digitTwo == currentPlayer.getRightHand()) {
                     System.out.println("The split you've entered is identical to your previous split.");
                     continue;
                 }

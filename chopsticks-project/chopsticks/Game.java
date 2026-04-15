@@ -9,10 +9,11 @@ public class Game {
     private Chopsticks chopsticks;
     private InputHandler inputHandler;
 
-    public Game(Player player1, Player player2, Scanner scan) {
+    public Game(Player player1, Player player2, Scanner scan, InputHandler inputHandler) {
         this.player1 = player1;
         this.player2 = player2;
         this.scan = scan;
+        this.inputHandler = inputHandler;
         this.chopsticks = new Chopsticks(player1, player2);
     }
 
@@ -25,7 +26,6 @@ public class Game {
         while (playing) {
             chopsticks.init();
             Player winner = playGame();
-            // need to create playAgain to return true/false based on scanner
             playing = inputHandler.playAgain(scan);
         }
     }
@@ -35,6 +35,8 @@ public class Game {
         GameState state = GameState.IN_PROGRESS;
         while (state == GameState.IN_PROGRESS) {
             printTurn();
+
+            System.out.println(inputHandler.moveScanner(scan));
             state = GameState.WON; // temporary
         }
 

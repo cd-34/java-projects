@@ -52,4 +52,8 @@ public class Chopsticks {
     public Player getCurrentPlayer() {
         return (turnCount % 2 != 0) ? player1 : player2;
     }
+
+    public Player getOpposingPlayer() {
+        return (turnCount % 2 == 0) ? player1 : player2;
+    }
 }
