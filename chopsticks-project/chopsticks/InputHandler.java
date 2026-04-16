@@ -71,11 +71,19 @@ public class InputHandler {
         Player current = chopsticks.getCurrentPlayer();
         int currentTotal = current.getLeftHand() + current.getRightHand();
 
+        // validating range
         if (left < 1 || left > 4 || right < 1 || right > 4) {
             System.out.println("Both hands must be between 1 and 4");
             return -1;
         }
 
+        // validating total
+        if (left + right != currentTotal) {
+            System.out.println("Split must preserve total.");
+            return -1;
+        }
+
+        // validating not identical
         if ((left == current.getLeftHand() && right == current.getRightHand())
             || (left == current.getRightHand() && right == current.getLeftHand())) {
             System.out.println("Split is identical to current position");
