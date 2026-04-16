@@ -70,7 +70,9 @@ public class InputHandler {
 
         int attackValue = (start == 'L') ? current.getLeftHand() : current.getRightHand();
         int targetValue = (end == 'L') ? opponent.getLeftHand() : opponent.getRightHand();
-
+        
+        // this only returns the start and ending hand
+        // need to add them up in Game
         return Move.attack(start, end);
     }
 
@@ -100,6 +102,8 @@ public class InputHandler {
             return null;
         }
         
+        // this only returns what your hands are after splitting
+        // need to actually change it in game
         return Move.split(left, right);
     }
 

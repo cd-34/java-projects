@@ -35,13 +35,38 @@ public class Game {
         GameState state = GameState.IN_PROGRESS;
         while (state == GameState.IN_PROGRESS) {
             printTurn();
-
+            
             System.out.println(inputHandler.moveScanner());
             state = GameState.WON; // temporary
         }
 
         // should return winner 
         return null; // temporary
+    }
+
+    public void applyMove(Move move) {
+        if (move.getType() == Move.Type.ATTACK) {
+            applyAttack(move);
+        } else {
+            applySplit(move);
+        }
+    }
+
+    public void applyAttack(Move move) {
+        Player current = chopsticks.getCurrentPlayer();
+        Player opponent = chopsticks.getOpposingPlayer();
+
+        int attackValue = (move.getStartHand() == 'L') ? current.getLeftHand() : current.getRightHand();
+
+        if (move.getEndHand() == 'L') {
+            opponent.setLeftHand(opponent.getLeftHand() + attackValue);
+        } else {
+            opponent.setRightHand(opponent.getRightHand() + attackValue);
+        }
+    }
+
+    public void applySplit(Move move) {
+        return;
     }
 
     public void printTurn() {
