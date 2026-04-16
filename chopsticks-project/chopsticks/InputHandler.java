@@ -22,73 +22,67 @@ public class InputHandler {
         }
     }
 
-    // maybe I should split this into two methods
-    // a scanner for attacks and a scanner for splits instead of combining them
     public int moveScanner(Scanner scan) {
         while (true) {
-            String moveString = scan.nextLine().toUpperCase().trim();
+            String move = scan.nextLine().toUpperCase().trim();
             
-            if (moveString.length() != 2) {
+            if (move.length() != 2) {
                 System.out.println("Please enter a valid input of two characters (E.g. LR or 23)");
                 continue;
             }
 
-            char one = moveString.charAt(0);
-            char two = moveString.charAt(1);
-            Player currentPlayer = chopsticks.getCurrentPlayer();
-            Player opposingPlayer = chopsticks.getOpposingPlayer();
-            
-            // Procedure for attacks
-            if (one == 'L' || one == 'R') {
-                if (two != 'L' && two != 'R') {
-                    System.out.println("Please enter a legal attack (E.g. LL, LR, RL, RR):");
-                    continue;
-                }
-                // need to figure out how to determine what to add to what
-                // maybe ternary statement here is better? 
-                if (one == 'L') {
-                    if (two == 'L') {
-                        return currentPlayer.getLeftHand() + opposingPlayer.getLeftHand();
-                    } else {
-                        return currentPlayer.getLeftHand() + opposingPlayer.getRightHand();
-                    }
-                } 
-                if (one == 'R') {
-                    if (two == 'L') {
-                        return currentPlayer.getRightHand() + opposingPlayer.getLeftHand();
-                    } else {
-                        return currentPlayer.getRightHand() + opposingPlayer.getRightHand();
-                    }
-                }
-                
+            if (isAttack(move)) {
+                return parseAttack(move);
+            } else if (isSplit(move)) {
+                return parseSplit(move);
+            } else {
+                System.out.println("Invalid move format.");
             }
-
-            // Procedure for splitting
-            int digitOne = one - '0';
-            int digitTwo = two - '0';
-
-            if (digitOne >= 1 && one <= 4) {
-                // new split has one hand dead or the numbers are beyond the limits
-                if (digitTwo < 1 || digitTwo >= 5) {
-                    System.out.println("Please enter a legal split (both hands between 1 and 4):");
-                    continue;   
-                }
-                
-                // new split doesn't add up to the same amount
-                if (digitOne + digitTwo != currentPlayer.getLeftHand() + currentPlayer.getRightHand()) {
-                    System.out.println("The split you've entered does not add to your current total.");
-                    continue;
-                }
-                // new split is the same as the current split
-                if (digitOne == currentPlayer.getRightHand() && digitTwo == currentPlayer.getLeftHand()
-                    || digitOne == currentPlayer.getLeftHand() && digitTwo == currentPlayer.getRightHand()) {
-                    System.out.println("The split you've entered is identical to your previous split.");
-                    continue;
-                }
-            }
-
-            return 0; // temporary
         }
+    }
+
+    private boolean isAttack(String move) {
+        return (move.charAt(0) == 'L' || move.charAt(0) == 'R') 
+            && (move.charAt(1) == 'L' || move.charAt(1) == 'R');
+    }
+
+    private boolean isSplit(String move) {
+        return Character.isDigit(move.charAt(0)) 
+            && Character.isDigit(move.charAt(1));
+    }
+
+    private int parseAttack(String move) {
+        char start = move.charAt(0);
+        char end = move.charAt(1);
+
+        Player current = chopsticks.getCurrentPlayer();
+        Player opponent = chopsticks.getOpposingPlayer();
+
+        int attackValue = (start == 'L') ? current.getLeftHand() : current.getRightHand();
+        int targetValue = (end == 'L') ? opponent.getLeftHand() : opponent.getRightHand();
+
+        return attackValue + targetValue;
+    }
+
+    private int parseSplit(String move) {
+        int left = move.charAt(0) - '0';
+        int right = move.charAt(1) - '0';
+
+        Player current = chopsticks.getCurrentPlayer();
+        int currentTotal = current.getLeftHand() + current.getRightHand();
+
+        if (left < 1 || left > 4 || right < 1 || right > 4) {
+            System.out.println("Both hands must be between 1 and 4");
+            return -1;
+        }
+
+        if ((left == current.getLeftHand() && right == current.getRightHand())
+            || (left == current.getRightHand() && right == current.getLeftHand())) {
+            System.out.println("Split is identical to current position");
+            return -1;
+        }
+        
+        return left + right; // temporary need to fix to properly assign hands
     }
 
     public static boolean playAgain(Scanner scan) {
