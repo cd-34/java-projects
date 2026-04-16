@@ -117,11 +117,11 @@ public class Chopsticks {
         if (move.getType() == Move.Type.ATTACK) {
             return isValidAttack(move);
         } else {
-            return true;
+            return isValidSplit(move);
         }
     }
 
-    public boolean isValidAttack(Move move) {
+    private boolean isValidAttack(Move move) {
         Player current = getCurrentPlayer();
         Player opponent = getOpposingPlayer();
 
@@ -136,6 +136,32 @@ public class Chopsticks {
 
         if (targetHand == 0) {
             System.out.println("You cannot attack a dead hand.");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isValidSplit(Move move) {
+        Player current = getCurrentPlayer();
+        int currentTotal = current.getLeftHand() + current.getRightHand();
+        int left = move.getLeft();
+        int right = move.getRight();
+        // validating range
+        if (left < 1 || left > 4 || right < 1 || right > 4) {
+            System.out.println("Both hands must be between 1 and 4");
+            return false;
+        }
+
+        // validating total
+        if (left + right != currentTotal) {
+            System.out.println("Split must preserve total.");
+            return false;
+        }
+
+        // validating not identical
+        if ((left == current.getLeftHand() && right == current.getRightHand())
+            || (left == current.getRightHand() && right == current.getLeftHand())) {
+            System.out.println("Split is identical to current position");
             return false;
         }
         return true;

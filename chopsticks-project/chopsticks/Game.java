@@ -40,6 +40,7 @@ public class Game {
 
             Move move;
 
+            // Loops until a valid move is made
             while(true) {
                 move = inputHandler.moveScanner();
                 if (chopsticks.isValidMove(move)) {
@@ -53,7 +54,7 @@ public class Game {
                 state = GameState.WON;
             }
         }
-        // still need to print winner statements and increase win counts
+        
         incrementCurrentPlayerWins();
         printWinner();
         return chopsticks.getWinner(); 
