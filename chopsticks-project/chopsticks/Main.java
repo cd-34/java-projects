@@ -1,23 +1,23 @@
-package tictactoe;
+package chopsticks;
 import java.util.Scanner;
 
 public class Main {
-    private static final int BOARD_SIZE = 3;
-    
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 
-        InputHandler inputHandler = new InputHandler(scan, BOARD_SIZE);
-
         System.out.println("Please enter player 1's name.");
-        Player player1 = new Player(inputHandler.nameScanner(scan), 'X');
+        Player player1 = new Player(InputHandler.nameScanner(scan));
         System.out.println("Welcome " + player1.getName() + "!");
 
         System.out.println("Please enter player 2's name.");
-        Player player2 = new Player(inputHandler.nameScanner(scan), 'O');
+        Player player2 = new Player(InputHandler.nameScanner(scan));
         System.out.println("Welcome " + player2.getName() + "!");
 
-        Game game = new Game(player1, player2, inputHandler, scan, BOARD_SIZE);
+        Chopsticks chopsticks = new Chopsticks(player1, player2);
+        InputHandler inputHandler = new InputHandler(scan, chopsticks);
+
+        // initialize game
+        Game game = new Game(player1, player2, scan, inputHandler);
         game.run();
 
         scan.close();
