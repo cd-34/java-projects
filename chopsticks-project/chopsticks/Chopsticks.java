@@ -112,4 +112,32 @@ public class Chopsticks {
         }
         return null;
     }
+
+    public boolean isValidMove(Move move) {
+        if (move.getType() == Move.Type.ATTACK) {
+            return isValidAttack(move);
+        } else {
+            return true;
+        }
+    }
+
+    public boolean isValidAttack(Move move) {
+        Player current = getCurrentPlayer();
+        Player opponent = getOpposingPlayer();
+
+        int attackingHand = (move.getStartHand() == 'L') ? current.getLeftHand() : current.getRightHand();
+
+        int targetHand = (move.getEndHand() == 'L') ? opponent.getLeftHand() : current.getRightHand();
+
+        if (attackingHand == 0) {
+            System.out.println("You cannot attack with a dead hand.");
+            return false;
+        }
+
+        if (targetHand == 0) {
+            System.out.println("You cannot attack a dead hand.");
+            return false;
+        }
+        return true;
+    }
 }

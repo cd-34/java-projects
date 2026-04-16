@@ -35,9 +35,17 @@ public class Game {
     public Player playGame() {
         GameState state = GameState.IN_PROGRESS;
         while (state == GameState.IN_PROGRESS) {
-            System.out.println(chopsticks);
+            System.out.println(chopsticks); // prints the "board"
             printTurn();
-            Move move = inputHandler.moveScanner();
+
+            Move move;
+
+            while(true) {
+                move = inputHandler.moveScanner();
+                if (chopsticks.isValidMove(move)) {
+                    break;
+                }
+            }
             chopsticks.applyMove(move);
             chopsticks.incrementTurnCount();
         }
