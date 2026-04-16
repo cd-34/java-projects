@@ -56,4 +56,31 @@ public class Chopsticks {
     public Player getOpposingPlayer() {
         return (turnCount % 2 == 0) ? player1 : player2;
     }
+
+    public void applyMove(Move move) {
+        if (move.getType() == Move.Type.ATTACK) {
+            applyAttack(move);
+        } else {
+            applySplit(move);
+        }
+    }
+
+    public void applyAttack(Move move) {
+        Player current = getCurrentPlayer();
+        Player opponent = getOpposingPlayer();
+
+        int attackValue = (move.getStartHand() == 'L') ? current.getLeftHand() : current.getRightHand();
+
+        if (move.getEndHand() == 'L') {
+            opponent.setLeftHand(opponent.getLeftHand() + attackValue);
+        } else {
+            opponent.setRightHand(opponent.getRightHand() + attackValue);
+        }
+    }
+
+    public void applySplit(Move move) {
+        Player current = getCurrentPlayer();
+        current.setLeftHand(move.getLeft());
+        current.setRightHand(move.getRight());
+    }
 }
