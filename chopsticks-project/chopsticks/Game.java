@@ -47,8 +47,14 @@ public class Game {
                 }
             }
             chopsticks.applyMove(move);
-            chopsticks.incrementTurnCount();
+            if (!chopsticks.isGameOver()) {
+                chopsticks.incrementTurnCount();
+            } else {
+                System.out.println(chopsticks);
+                state = GameState.WON;
+            }
         }
+        // still need to print winner statements and increase win counts
         return chopsticks.getWinner(); 
     }
 
