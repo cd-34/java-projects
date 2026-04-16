@@ -83,4 +83,22 @@ public class Chopsticks {
         current.setLeftHand(move.getLeft());
         current.setRightHand(move.getRight());
     }
+
+    public boolean isPlayerDead(Player player) {
+        return player.getLeftHand() == 0 && player.getRightHand() == 0;
+    }
+
+    public boolean isGameOver() {
+        return isPlayerDead(player1) || isPlayerDead(player2);
+    }
+
+    public Player getWinner() {
+        if (isPlayerDead(player1)) {
+            return player2;
+        } 
+        if (isPlayerDead(player2)) {
+            return player1;
+        }
+        return null;
+    }
 }
