@@ -41,8 +41,7 @@ public class Game {
             chopsticks.applyMove(move);
             chopsticks.incrementTurnCount();
         }
-        // should return winner 
-        return null; // temporary
+        return chopsticks.getWinner(); 
     }
 
     public void printTurn() {
