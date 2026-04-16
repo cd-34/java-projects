@@ -46,7 +46,6 @@ public class Chopsticks {
 
         player1.setLeftHand(1);
         player1.setRightHand(1);
-        System.out.println(this);
     }
 
     public Player getCurrentPlayer() {
@@ -55,6 +54,10 @@ public class Chopsticks {
 
     public Player getOpposingPlayer() {
         return (turnCount % 2 == 0) ? player1 : player2;
+    }
+
+    public int incrementTurnCount() {
+        return turnCount++;
     }
 
     public void applyMove(Move move) {

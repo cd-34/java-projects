@@ -26,6 +26,7 @@ public class Game {
         while (playing) {
             chopsticks.init();
             Player winner = playGame();
+            // make a printWinner method
             playing = inputHandler.playAgain(scan);
         }
     }
@@ -34,9 +35,11 @@ public class Game {
     public Player playGame() {
         GameState state = GameState.IN_PROGRESS;
         while (state == GameState.IN_PROGRESS) {
+            System.out.println(chopsticks);
             printTurn();
-            System.out.println(inputHandler.moveScanner());
-            state = GameState.WON; // temporary
+            Move move = inputHandler.moveScanner();
+            chopsticks.applyMove(move);
+            chopsticks.incrementTurnCount();
         }
         // should return winner 
         return null; // temporary
