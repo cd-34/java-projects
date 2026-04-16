@@ -48,6 +48,9 @@ public class InputHandler {
         }
     }
 
+    // these four methods below can be private right? 
+    // since they're only used in moveScanner for validation
+    // but better to keep the others public?
     private boolean isAttack(String move) {
         return (move.charAt(0) == 'L' || move.charAt(0) == 'R') 
             && (move.charAt(1) == 'L' || move.charAt(1) == 'R');

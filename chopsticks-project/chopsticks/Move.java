@@ -16,6 +16,17 @@ public class Move {
     private int left;
     private int right;
 
+    // maybe temporary for debugging purposes, might remove in final version?
+    @Override
+    public String toString() {
+        if (type == Type.ATTACK) {
+            return "ATTACK: " + startHand + " -> " + endHand;
+        } else if (type == Type.SPLIT) {
+            return "SPLIT: " + left + " | " + right;
+        }
+        return "Invalid move";
+    }
+
     public static Move attack(char start, char end) {
         Move move = new Move();
         move.type = Type.ATTACK;
