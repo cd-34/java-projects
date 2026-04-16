@@ -22,22 +22,29 @@ public class InputHandler {
         }
     }
 
-    public int moveScanner(Scanner scan) {
+    public Move moveScanner() {
         while (true) {
-            String move = scan.nextLine().toUpperCase().trim();
+            String moveString = scan.nextLine().toUpperCase().trim();
             
-            if (move.length() != 2) {
+            if (moveString.length() != 2) {
                 System.out.println("Please enter a valid input of two characters (E.g. LR or 23)");
                 continue;
             }
 
-            if (isAttack(move)) {
-                return parseAttack(move);
-            } else if (isSplit(move)) {
-                return parseSplit(move);
+            Move move;
+
+            if (isAttack(moveString)) {
+                move = parseAttack(moveString);
+            } else if (isSplit(moveString)) {
+                move = parseSplit(moveString);
             } else {
                 System.out.println("Invalid move format.");
+                continue;
             }
+            if (move == null) {
+                continue;
+            }
+            return move;
         }
     }
 
@@ -51,7 +58,7 @@ public class InputHandler {
             && Character.isDigit(move.charAt(1));
     }
 
-    private int parseAttack(String move) {
+    private Move parseAttack(String move) {
         char start = move.charAt(0);
         char end = move.charAt(1);
 
@@ -61,10 +68,10 @@ public class InputHandler {
         int attackValue = (start == 'L') ? current.getLeftHand() : current.getRightHand();
         int targetValue = (end == 'L') ? opponent.getLeftHand() : opponent.getRightHand();
 
-        return attackValue + targetValue;
+        return Move.attack(start, end);
     }
 
-    private int parseSplit(String move) {
+    private Move parseSplit(String move) {
         int left = move.charAt(0) - '0';
         int right = move.charAt(1) - '0';
 
@@ -74,23 +81,23 @@ public class InputHandler {
         // validating range
         if (left < 1 || left > 4 || right < 1 || right > 4) {
             System.out.println("Both hands must be between 1 and 4");
-            return -1;
+            return null;
         }
 
         // validating total
         if (left + right != currentTotal) {
             System.out.println("Split must preserve total.");
-            return -1;
+            return null;
         }
 
         // validating not identical
         if ((left == current.getLeftHand() && right == current.getRightHand())
             || (left == current.getRightHand() && right == current.getLeftHand())) {
             System.out.println("Split is identical to current position");
-            return -1;
+            return null;
         }
         
-        return left + right; // temporary need to fix to properly assign hands
+        return Move.split(left, right);
     }
 
     public static boolean playAgain(Scanner scan) {

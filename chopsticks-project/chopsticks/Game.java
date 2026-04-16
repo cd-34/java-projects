@@ -36,7 +36,7 @@ public class Game {
         while (state == GameState.IN_PROGRESS) {
             printTurn();
 
-            System.out.println(inputHandler.moveScanner(scan));
+            System.out.println(inputHandler.moveScanner());
             state = GameState.WON; // temporary
         }
 
