@@ -82,7 +82,7 @@ public class Chopsticks {
             }
         } else {
             if (opponent.getRightHand() + attackValue >= 5) {
-                opponent.setLeftHand(0);
+                opponent.setRightHand(0);
             } else {
                 opponent.setRightHand(opponent.getRightHand() + attackValue);
             }
