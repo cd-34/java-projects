@@ -86,7 +86,7 @@ public class Chopsticks {
     }
 
     public boolean isPlayerDead(Player player) {
-        return player.getLeftHand() == 0 && player.getRightHand() == 0;
+        return player.getLeftHand().isDead() && player.getRightHand().isDead();
     }
 
     public boolean isGameOver() {
@@ -133,7 +133,7 @@ public class Chopsticks {
 
     private boolean isValidSplit(Move move) {
         Player current = getCurrentPlayer();
-        int currentTotal = current.getLeftHand() + current.getRightHand();
+        int currentTotal = current.getLeftHand().getFingers() + current.getRightHand().getFingers();
         int left = move.getLeft();
         int right = move.getRight();
         // validating range
@@ -149,8 +149,8 @@ public class Chopsticks {
         }
 
         // validating not identical
-        if ((left == current.getLeftHand() && right == current.getRightHand())
-            || (left == current.getRightHand() && right == current.getLeftHand())) {
+        if ((left == current.getLeftHand().getFingers() && right == current.getRightHand().getFingers())
+            || (left == current.getRightHand().getFingers() && right == current.getLeftHand().getFingers())) {
             System.out.println("Split is identical to current position");
             return false;
         }
