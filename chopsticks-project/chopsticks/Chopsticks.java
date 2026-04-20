@@ -81,8 +81,8 @@ public class Chopsticks {
 
     public void applySplit(Move move) {
         Player current = getCurrentPlayer();
-        current.getLeftHand().set(move.getLeftHand());
-        current.getRightHand().set(move.getRightHand());
+        current.getLeftHand().set(move.getLeft());
+        current.getRightHand().set(move.getRight());
     }
 
     public boolean isPlayerDead(Player player) {
