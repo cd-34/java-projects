@@ -8,6 +8,8 @@ public class Player {
 
     public Player(String name) {
         this.name = name;
+        this.leftHand = new Hand(1);
+        this.rightHand = new Hand(1);
     }
 
     public String getName() {
