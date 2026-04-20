@@ -19,11 +19,11 @@ public class Chopsticks {
         sb.append("\n");
 
         sb.append(makeHorizontalBorder());
-        sb.append("|   " + player2.getLeftHand() + "   |   " + player2.getRightHand() + "   |  " + player2.getName());
+        sb.append("|   " + player2.getLeftHand().getFingers() + "   |   " + player2.getRightHand().getFingers() + "   |  " + player2.getName());
         sb.append("\n");
 
         sb.append(makeHorizontalBorder());
-        sb.append("|   " + player1.getLeftHand() + "   |   " + player1.getRightHand() + "   |  " + player1.getName());
+        sb.append("|   " + player1.getLeftHand().getFingers() + "   |   " + player1.getRightHand().getFingers() + "   |  " + player1.getName());
 
         sb.append("\n");
         sb.append(makeHorizontalBorder());
