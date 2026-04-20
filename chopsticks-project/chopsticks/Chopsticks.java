@@ -72,21 +72,11 @@ public class Chopsticks {
         Player current = getCurrentPlayer();
         Player opponent = getOpposingPlayer();
 
-        int attackValue = (move.getStartHand() == 'L') ? current.getLeftHand() : current.getRightHand();
+        Hand attacking = (move.getStartHand() == 'L') ? current.getLeftHand() : current.getRightHand();
 
-        if (move.getEndHand() == 'L') {
-            if (opponent.getLeftHand() + attackValue >= 5) {
-                opponent.setLeftHand(0);
-            } else {
-                opponent.setLeftHand(opponent.getLeftHand() + attackValue);
-            }
-        } else {
-            if (opponent.getRightHand() + attackValue >= 5) {
-                opponent.setRightHand(0);
-            } else {
-                opponent.setRightHand(opponent.getRightHand() + attackValue);
-            }
-        }
+        Hand target = (move.getEndHand() == 'L') ? opponent.getLeftHand() : opponent.getRightHand();
+
+        target.add(attacking.getFingers());
     }
 
     public void applySplit(Move move) {
