@@ -3,8 +3,8 @@ package chopsticks;
 public class Player {
     private final String name;
     private int wins = 0;
-    private int leftHand;
-    private int rightHand;
+    private Hand leftHand;
+    private Hand rightHand;
 
     public Player(String name) {
         this.name = name;
@@ -14,19 +14,19 @@ public class Player {
         return name;
     }
 
-    public int getLeftHand() {
+    public Hand getLeftHand() {
         return leftHand;
     }
 
-    public void setLeftHand(int left) {
+    public void setLeftHand(Hand left) {
         leftHand = left;
     }
 
-    public int getRightHand() {
+    public Hand getRightHand() {
         return rightHand;
     }
 
-    public void setRightHand(int right) {
+    public void setRightHand(Hand right) {
         rightHand = right;
     }
 
