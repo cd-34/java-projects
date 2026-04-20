@@ -81,8 +81,8 @@ public class Chopsticks {
 
     public void applySplit(Move move) {
         Player current = getCurrentPlayer();
-        current.setLeftHand(move.getLeft());
-        current.setRightHand(move.getRight());
+        current.getLeftHand().set(move.getLeftHand());
+        current.getRightHand().set(move.getRightHand());
     }
 
     public boolean isPlayerDead(Player player) {
@@ -115,16 +115,16 @@ public class Chopsticks {
         Player current = getCurrentPlayer();
         Player opponent = getOpposingPlayer();
 
-        int attackingHand = (move.getStartHand() == 'L') ? current.getLeftHand() : current.getRightHand();
+        Hand attackingHand = (move.getStartHand() == 'L') ? current.getLeftHand() : current.getRightHand();
 
-        int targetHand = (move.getEndHand() == 'L') ? opponent.getLeftHand() : current.getRightHand();
+        Hand targetHand = (move.getEndHand() == 'L') ? opponent.getLeftHand() : opponent.getRightHand();
 
-        if (attackingHand == 0) {
+        if (attackingHand.isDead()) {
             System.out.println("You cannot attack with a dead hand.");
             return false;
         }
 
-        if (targetHand == 0) {
+        if (targetHand.isDead()) {
             System.out.println("You cannot attack a dead hand.");
             return false;
         }
