@@ -68,8 +68,8 @@ public class InputHandler {
         Player current = chopsticks.getCurrentPlayer();
         Player opponent = chopsticks.getOpposingPlayer();
 
-        int attackValue = (start == 'L') ? current.getLeftHand() : current.getRightHand();
-        int targetValue = (end == 'L') ? opponent.getLeftHand() : opponent.getRightHand();
+        Hand attackValue = (start == 'L') ? current.getLeftHand() : current.getRightHand();
+        Hand targetValue = (end == 'L') ? opponent.getLeftHand() : opponent.getRightHand();
         
         return Move.attack(start, end);
     }
