@@ -41,11 +41,11 @@ public class Chopsticks {
     // starts a game by initializing the player's hands
     // and printing out the "board"
     public void init() {
-        player2.setLeftHand(1);
-        player2.setRightHand(1);
+        player2.getLeftHand().set(1);
+        player2.getRightHand().set(1);
 
-        player1.setLeftHand(1);
-        player1.setRightHand(1);
+        player1.getLeftHand().set(1);
+        player1.getRightHand().set(1);
     }
 
     public Player getCurrentPlayer() {
