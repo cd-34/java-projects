@@ -26,7 +26,6 @@ public class Game {
         while (playing) {
             chopsticks.init();
             Player winner = playGame();
-            // make a printWinner method
             playing = inputHandler.playAgain(scan);
         }
     }
