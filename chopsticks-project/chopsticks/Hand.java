@@ -17,6 +17,10 @@ public class Hand {
 
     public void add(int value) {
         fingers = fingers + value;
+
+        if (fingers >= 5) {
+            fingers = 0;
+        } 
     }
 
     public void set(int value) {
