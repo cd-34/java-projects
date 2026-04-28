@@ -39,4 +39,8 @@ public class Player {
     public void incrementWins() {
         wins++;
     }
+
+    public boolean isPlayerDead(Player player) {
+        return player.getLeftHand().isDead() && player.getRightHand().isDead();
+    }
 }

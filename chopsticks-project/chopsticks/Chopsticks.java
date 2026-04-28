@@ -85,19 +85,15 @@ public class Chopsticks {
         current.getRightHand().set(move.getRight());
     }
 
-    public boolean isPlayerDead(Player player) {
-        return player.getLeftHand().isDead() && player.getRightHand().isDead();
-    }
-
     public boolean isGameOver() {
-        return isPlayerDead(player1) || isPlayerDead(player2);
+        return Player.isPlayerDead(player1) || Player.isPlayerDead(player2);
     }
 
     public Player getWinner() {
-        if (isPlayerDead(player1)) {
+        if (Player.isPlayerDead(player1)) {
             return player2;
         } 
-        if (isPlayerDead(player2)) {
+        if (Player.isPlayerDead(player2)) {
             return player1;
         }
         return null;
