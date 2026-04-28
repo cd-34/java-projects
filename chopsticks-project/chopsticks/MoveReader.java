@@ -74,13 +74,6 @@ public class MoveReader {
     private Move parseAttack(String move) {
         Side start = parseSide(move.charAt(0));
         Side end = parseSide(move.charAt(1));
-
-        Player current = chopsticks.getCurrentPlayer();
-        Player opponent = chopsticks.getOpposingPlayer();
-
-        Hand attackValue = (start == Side.LEFT) ? current.getLeftHand() : current.getRightHand();
-        Hand targetValue = (end == Side.LEFT) ? opponent.getLeftHand() : opponent.getRightHand();
-        
         return Move.attack(start, end);
     }
 
