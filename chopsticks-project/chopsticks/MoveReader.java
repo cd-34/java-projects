@@ -41,9 +41,9 @@ public class MoveReader {
                 System.out.println("Invalid move format.");
                 continue;
             }
-            if (move == null) {
-                continue;
-            }
+            // if (move == null) {
+            //     continue;
+            // }
             return move;
         }
     }
