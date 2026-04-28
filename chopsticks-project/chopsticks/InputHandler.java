@@ -22,7 +22,7 @@ public class InputHandler {
         }
     }
 
-    public Move moveScanner() {
+    public Move promptMove() {
         while (true) {
             String moveString = scan.nextLine().toUpperCase().trim();
             

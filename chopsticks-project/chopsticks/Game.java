@@ -41,7 +41,7 @@ public class Game {
 
             // Loops until a valid move is made
             while(true) {
-                move = inputHandler.moveScanner();
+                move = inputHandler.promptMove();
                 if (chopsticks.isValidMove(move)) {
                     break;
                 }
