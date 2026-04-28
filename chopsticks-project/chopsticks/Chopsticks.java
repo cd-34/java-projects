@@ -61,7 +61,7 @@ public class Chopsticks {
     }
 
     public void applyMove(Move move) {
-        if (move.getType() == Move.Type.ATTACK) {
+        if (move.getType() == Move.MoveType.ATTACK) {
             applyAttack(move);
         } else {
             applySplit(move);
@@ -100,7 +100,7 @@ public class Chopsticks {
     }
 
     public boolean isValidMove(Move move) {
-        if (move.getType() == Move.Type.ATTACK) {
+        if (move.getType() == Move.MoveType.ATTACK) {
             return isValidAttack(move);
         } else {
             return isValidSplit(move);

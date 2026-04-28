@@ -1,12 +1,12 @@
 package chopsticks;
 
 public class Move {
-    public enum Type {
+    public enum MoveType {
         ATTACK,
         SPLIT
     }
 
-    private Type type;
+    private MoveType moveType;
 
     // For attacks
     private Side startHand; 
@@ -19,9 +19,9 @@ public class Move {
     // maybe temporary for debugging purposes, might remove in final version?
     @Override
     public String toString() {
-        if (type == Type.ATTACK) {
+        if (moveType == MoveType.ATTACK) {
             return "ATTACK: " + startHand + " -> " + endHand;
-        } else if (type == Type.SPLIT) {
+        } else if (moveType == MoveType.SPLIT) {
             return "SPLIT: " + left + " | " + right;
         }
         return "Invalid move";
@@ -29,7 +29,7 @@ public class Move {
 
     public static Move attack(Side startHand, Side endHand) {
         Move move = new Move();
-        move.type = Type.ATTACK;
+        move.moveType = MoveType.ATTACK;
         move.startHand = startHand;
         move.endHand = endHand;
         return move;
@@ -37,14 +37,14 @@ public class Move {
 
     public static Move split(int left, int right) {
         Move move = new Move();
-        move.type = Type.SPLIT;
+        move.moveType = MoveType.SPLIT;
         move.left = left;
         move.right = right;
         return move;
     }
 
-    public Type getType() {
-        return type;
+    public MoveType getType() {
+        return moveType;
     }
 
     public Side getStartHand() {
