@@ -48,19 +48,6 @@ public class MoveReader {
         }
     }
 
-    // these four methods below can be private right? 
-    // since they're only used in moveScanner for validation
-    // but better to keep the others public?
-    private boolean isAttack(String move) {
-        return (move.charAt(0) == 'L' || move.charAt(0) == 'R') 
-            && (move.charAt(1) == 'L' || move.charAt(1) == 'R');
-    }
-
-    private boolean isSplit(String move) {
-        return Character.isDigit(move.charAt(0)) 
-            && Character.isDigit(move.charAt(1));
-    }
-
     public Side parseSide(char c) {
         if (c == 'L') {
             return Side.LEFT;
@@ -69,6 +56,19 @@ public class MoveReader {
             return Side.RIGHT;
         }
         return null;
+    }
+
+    // these four methods below can be private right? 
+    // since they're only used in moveScanner for validation
+    // but better to keep the others public?
+    private boolean isAttack(String move) {
+        return (parseSide(move.charAt(0)) == Side.LEFT || parseSide(move.charAt(0)) == Side.RIGHT) 
+            && (parseSide(move.charAt(1)) == Side.LEFT || parseSide(move.charAt(1)) == Side.RIGHT);
+    }
+
+    private boolean isSplit(String move) {
+        return Character.isDigit(move.charAt(0)) 
+            && Character.isDigit(move.charAt(1));
     }
 
     private Move parseAttack(String move) {
