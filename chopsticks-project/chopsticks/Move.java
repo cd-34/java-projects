@@ -27,11 +27,11 @@ public class Move {
         return "Invalid move";
     }
 
-    public static Move attack(Side start, Side end) {
+    public static Move attack(Side startHand, Side endHand) {
         Move move = new Move();
         move.type = Type.ATTACK;
-        move.startHand = start;
-        move.endHand = end;
+        move.startHand = startHand;
+        move.endHand = endHand;
         return move;
     }
 
