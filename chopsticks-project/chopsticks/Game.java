@@ -5,15 +5,13 @@ public class Game {
     private Player player1;
     private Player player2;
     private Player winner = null;
-    private Scanner scan;
     private Chopsticks chopsticks;
-    private InputHandler inputHandler;
+    private MoveReader moveReader;
 
-    public Game(Player player1, Player player2, Scanner scan, InputHandler inputHandler) {
+    public Game(Player player1, Player player2, MoveReader moveReader) {
         this.player1 = player1;
         this.player2 = player2;
-        this.scan = scan;
-        this.inputHandler = inputHandler;
+        this.moveReader = moveReader;
         this.chopsticks = new Chopsticks(player1, player2);
     }
 
@@ -26,8 +24,7 @@ public class Game {
         while (playing) {
             chopsticks.init();
             Player winner = playGame();
-            // make a printWinner method
-            playing = inputHandler.playAgain(scan);
+            playing = moveReader.playAgain();
         }
     }
 
@@ -38,26 +35,32 @@ public class Game {
             System.out.println(chopsticks); // prints the "board"
             printTurn();
 
-            Move move;
-
-            // Loops until a valid move is made
-            while(true) {
-                move = inputHandler.moveScanner();
-                if (chopsticks.isValidMove(move)) {
-                    break;
-                }
-            }
+            // checks if move is valid
+            Move move = getValidMove();
+            // if it is valid, applies the movie
             chopsticks.applyMove(move);
+            // after every move application, checks if game is over
             if (!chopsticks.isGameOver()) {
                 chopsticks.incrementTurnCount();
             } else {
+                // once game is over, state == GameState.WON and while loop exits
                 state = GameState.WON;
             }
         }
         
-        incrementCurrentPlayerWins();
+        Player currentPlayer = chopsticks.getCurrentPlayer();
+        currentPlayer.incrementWins();
         printWinner();
         return chopsticks.getWinner(); 
+    }
+
+    private Move getValidMove() {
+        while(true) {
+            Move move = moveReader.promptMove();
+            if (chopsticks.isValidMove(move)) {
+                return move;
+            }
+        }
     }
 
     public void printTurn() {
@@ -66,11 +69,6 @@ public class Game {
         // maybe move this to a "rules" section that prints at the start of every game instead of every turn
         System.out.println("To attack, type the letter you want to attack with with the desired location (E.g. LR)");
         System.out.println("To split, type the numbers of how you'd like to split (E.g. 23)");
-    }
-
-    public void incrementCurrentPlayerWins() {
-        Player currentPlayer = chopsticks.getCurrentPlayer();
-        currentPlayer.incrementWins();
     }
 
     public void printWinner() {

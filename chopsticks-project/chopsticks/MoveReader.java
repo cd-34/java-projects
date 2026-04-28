@@ -1,11 +1,11 @@
 package chopsticks;
 import java.util.Scanner;
 
-public class InputHandler {
+public class MoveReader {
     private Scanner scan;
     private Chopsticks chopsticks;
 
-    public InputHandler(Scanner scan, Chopsticks chopsticks) {
+    public MoveReader(Scanner scan, Chopsticks chopsticks) {
         this.scan = scan;
         this.chopsticks = chopsticks;
     }
@@ -22,7 +22,7 @@ public class InputHandler {
         }
     }
 
-    public Move moveScanner() {
+    public Move promptMove() {
         while (true) {
             String moveString = scan.nextLine().toUpperCase().trim();
             
@@ -41,19 +41,29 @@ public class InputHandler {
                 System.out.println("Invalid move format.");
                 continue;
             }
-            if (move == null) {
-                continue;
-            }
+            // if (move == null) {
+            //     continue;
+            // }
             return move;
         }
+    }
+
+    public Side parseSide(char c) {
+        if (c == 'L') {
+            return Side.LEFT;
+        }
+        if (c == 'R') {
+            return Side.RIGHT;
+        }
+        return null;
     }
 
     // these four methods below can be private right? 
     // since they're only used in moveScanner for validation
     // but better to keep the others public?
     private boolean isAttack(String move) {
-        return (move.charAt(0) == 'L' || move.charAt(0) == 'R') 
-            && (move.charAt(1) == 'L' || move.charAt(1) == 'R');
+        return (parseSide(move.charAt(0)) == Side.LEFT || parseSide(move.charAt(0)) == Side.RIGHT) 
+            && (parseSide(move.charAt(1)) == Side.LEFT || parseSide(move.charAt(1)) == Side.RIGHT);
     }
 
     private boolean isSplit(String move) {
@@ -62,26 +72,16 @@ public class InputHandler {
     }
 
     private Move parseAttack(String move) {
-        char start = move.charAt(0);
-        char end = move.charAt(1);
-
-        Player current = chopsticks.getCurrentPlayer();
-        Player opponent = chopsticks.getOpposingPlayer();
-
-        int attackValue = (start == 'L') ? current.getLeftHand() : current.getRightHand();
-        int targetValue = (end == 'L') ? opponent.getLeftHand() : opponent.getRightHand();
-        
+        Side start = parseSide(move.charAt(0));
+        Side end = parseSide(move.charAt(1));
         return Move.attack(start, end);
     }
 
     private Move parseSplit(String move) {
-        int left = move.charAt(0) - '0';
-        int right = move.charAt(1) - '0';
-
-        return Move.split(left, right);
+        return Move.split(move.charAt(0) - '0', move.charAt(1) - '0');
     }
 
-    public static boolean playAgain(Scanner scan) {
+    public boolean playAgain() {
         while (true) {
             System.out.println("Would you like to play again? Y / N");
             String response = scan.nextLine();

@@ -19,11 +19,11 @@ public class Chopsticks {
         sb.append("\n");
 
         sb.append(makeHorizontalBorder());
-        sb.append("|   " + player2.getLeftHand() + "   |   " + player2.getRightHand() + "   |  " + player2.getName());
+        sb.append("|   " + player2.getLeftHand().getFingers() + "   |   " + player2.getRightHand().getFingers() + "   |  " + player2.getName());
         sb.append("\n");
 
         sb.append(makeHorizontalBorder());
-        sb.append("|   " + player1.getLeftHand() + "   |   " + player1.getRightHand() + "   |  " + player1.getName());
+        sb.append("|   " + player1.getLeftHand().getFingers() + "   |   " + player1.getRightHand().getFingers() + "   |  " + player1.getName());
 
         sb.append("\n");
         sb.append(makeHorizontalBorder());
@@ -41,11 +41,11 @@ public class Chopsticks {
     // starts a game by initializing the player's hands
     // and printing out the "board"
     public void init() {
-        player2.setLeftHand(1);
-        player2.setRightHand(1);
+        player2.getLeftHand().set(1);
+        player2.getRightHand().set(1);
 
-        player1.setLeftHand(1);
-        player1.setRightHand(1);
+        player1.getLeftHand().set(1);
+        player1.getRightHand().set(1);
     }
 
     public Player getCurrentPlayer() {
@@ -61,7 +61,7 @@ public class Chopsticks {
     }
 
     public void applyMove(Move move) {
-        if (move.getType() == Move.Type.ATTACK) {
+        if (move.getType() == Move.MoveType.ATTACK) {
             applyAttack(move);
         } else {
             applySplit(move);
@@ -72,49 +72,35 @@ public class Chopsticks {
         Player current = getCurrentPlayer();
         Player opponent = getOpposingPlayer();
 
-        int attackValue = (move.getStartHand() == 'L') ? current.getLeftHand() : current.getRightHand();
+        Hand attacking = (move.getStartHand() == Side.LEFT) ? current.getLeftHand() : current.getRightHand();
 
-        if (move.getEndHand() == 'L') {
-            if (opponent.getLeftHand() + attackValue >= 5) {
-                opponent.setLeftHand(0);
-            } else {
-                opponent.setLeftHand(opponent.getLeftHand() + attackValue);
-            }
-        } else {
-            if (opponent.getRightHand() + attackValue >= 5) {
-                opponent.setRightHand(0);
-            } else {
-                opponent.setRightHand(opponent.getRightHand() + attackValue);
-            }
-        }
+        Hand target = (move.getEndHand() == Side.LEFT) ? opponent.getLeftHand() : opponent.getRightHand();
+
+        target.add(attacking.getFingers());
     }
 
     public void applySplit(Move move) {
         Player current = getCurrentPlayer();
-        current.setLeftHand(move.getLeft());
-        current.setRightHand(move.getRight());
-    }
-
-    public boolean isPlayerDead(Player player) {
-        return player.getLeftHand() == 0 && player.getRightHand() == 0;
+        current.getLeftHand().set(move.getLeft());
+        current.getRightHand().set(move.getRight());
     }
 
     public boolean isGameOver() {
-        return isPlayerDead(player1) || isPlayerDead(player2);
+        return player1.isDead() || player2.isDead();
     }
 
     public Player getWinner() {
-        if (isPlayerDead(player1)) {
+        if (player1.isDead()) {
             return player2;
         } 
-        if (isPlayerDead(player2)) {
+        if (player2.isDead()) {
             return player1;
         }
         return null;
     }
 
     public boolean isValidMove(Move move) {
-        if (move.getType() == Move.Type.ATTACK) {
+        if (move.getType() == Move.MoveType.ATTACK) {
             return isValidAttack(move);
         } else {
             return isValidSplit(move);
@@ -125,16 +111,16 @@ public class Chopsticks {
         Player current = getCurrentPlayer();
         Player opponent = getOpposingPlayer();
 
-        int attackingHand = (move.getStartHand() == 'L') ? current.getLeftHand() : current.getRightHand();
+        Hand attackingHand = (move.getStartHand() == Side.LEFT) ? current.getLeftHand() : current.getRightHand();
 
-        int targetHand = (move.getEndHand() == 'L') ? opponent.getLeftHand() : current.getRightHand();
+        Hand targetHand = (move.getEndHand() == Side.LEFT) ? opponent.getLeftHand() : opponent.getRightHand();
 
-        if (attackingHand == 0) {
+        if (attackingHand.isDead()) {
             System.out.println("You cannot attack with a dead hand.");
             return false;
         }
 
-        if (targetHand == 0) {
+        if (targetHand.isDead()) {
             System.out.println("You cannot attack a dead hand.");
             return false;
         }
@@ -143,7 +129,7 @@ public class Chopsticks {
 
     private boolean isValidSplit(Move move) {
         Player current = getCurrentPlayer();
-        int currentTotal = current.getLeftHand() + current.getRightHand();
+        int currentTotal = current.getLeftHand().getFingers() + current.getRightHand().getFingers();
         int left = move.getLeft();
         int right = move.getRight();
         // validating range
@@ -159,8 +145,8 @@ public class Chopsticks {
         }
 
         // validating not identical
-        if ((left == current.getLeftHand() && right == current.getRightHand())
-            || (left == current.getRightHand() && right == current.getLeftHand())) {
+        if ((left == current.getLeftHand().getFingers() && right == current.getRightHand().getFingers())
+            || (left == current.getRightHand().getFingers() && right == current.getLeftHand().getFingers())) {
             System.out.println("Split is identical to current position");
             return false;
         }

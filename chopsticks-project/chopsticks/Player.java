@@ -3,30 +3,32 @@ package chopsticks;
 public class Player {
     private final String name;
     private int wins = 0;
-    private int leftHand;
-    private int rightHand;
+    private Hand leftHand;
+    private Hand rightHand;
 
     public Player(String name) {
         this.name = name;
+        this.leftHand = new Hand(1);
+        this.rightHand = new Hand(1);
     }
 
     public String getName() {
         return name;
     }
 
-    public int getLeftHand() {
+    public Hand getLeftHand() {
         return leftHand;
     }
 
-    public void setLeftHand(int left) {
+    public void setLeftHand(Hand left) {
         leftHand = left;
     }
 
-    public int getRightHand() {
+    public Hand getRightHand() {
         return rightHand;
     }
 
-    public void setRightHand(int right) {
+    public void setRightHand(Hand right) {
         rightHand = right;
     }
 
@@ -36,5 +38,9 @@ public class Player {
 
     public void incrementWins() {
         wins++;
+    }
+
+    public boolean isDead() {
+        return getLeftHand().isDead() && getRightHand().isDead();
     }
 }
