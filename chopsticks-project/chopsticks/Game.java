@@ -9,10 +9,9 @@ public class Game {
     private Chopsticks chopsticks;
     private InputHandler inputHandler;
 
-    public Game(Player player1, Player player2, Scanner scan, InputHandler inputHandler) {
+    public Game(Player player1, Player player2, InputHandler inputHandler) {
         this.player1 = player1;
         this.player2 = player2;
-        this.scan = scan;
         this.inputHandler = inputHandler;
         this.chopsticks = new Chopsticks(player1, player2);
     }

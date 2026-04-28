@@ -17,7 +17,7 @@ public class Main {
         InputHandler inputHandler = new InputHandler(scan, chopsticks);
 
         // initialize game
-        Game game = new Game(player1, player2, scan, inputHandler);
+        Game game = new Game(player1, player2, inputHandler);
         game.run();
 
         scan.close();
