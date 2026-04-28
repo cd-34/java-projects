@@ -1,11 +1,11 @@
 package chopsticks;
 import java.util.Scanner;
 
-public class InputHandler {
+public class MoveReader {
     private Scanner scan;
     private Chopsticks chopsticks;
 
-    public InputHandler(Scanner scan, Chopsticks chopsticks) {
+    public MoveReader(Scanner scan, Chopsticks chopsticks) {
         this.scan = scan;
         this.chopsticks = chopsticks;
     }

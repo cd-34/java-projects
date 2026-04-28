@@ -7,12 +7,12 @@ public class Game {
     private Player winner = null;
     private Scanner scan;
     private Chopsticks chopsticks;
-    private InputHandler inputHandler;
+    private MoveReader moveReader;
 
-    public Game(Player player1, Player player2, InputHandler inputHandler) {
+    public Game(Player player1, Player player2, MoveReader moveReader) {
         this.player1 = player1;
         this.player2 = player2;
-        this.inputHandler = inputHandler;
+        this.moveReader = moveReader;
         this.chopsticks = new Chopsticks(player1, player2);
     }
 
@@ -25,7 +25,7 @@ public class Game {
         while (playing) {
             chopsticks.init();
             Player winner = playGame();
-            playing = inputHandler.playAgain(scan);
+            playing = moveReader.playAgain(scan);
         }
     }
 
@@ -40,7 +40,7 @@ public class Game {
 
             // Loops until a valid move is made
             while(true) {
-                move = inputHandler.promptMove();
+                move = moveReader.promptMove();
                 if (chopsticks.isValidMove(move)) {
                     break;
                 }
