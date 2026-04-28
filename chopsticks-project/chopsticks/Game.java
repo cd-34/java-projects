@@ -5,7 +5,6 @@ public class Game {
     private Player player1;
     private Player player2;
     private Player winner = null;
-    private Scanner scan;
     private Chopsticks chopsticks;
     private MoveReader moveReader;
 
@@ -25,7 +24,7 @@ public class Game {
         while (playing) {
             chopsticks.init();
             Player winner = playGame();
-            playing = moveReader.playAgain(scan);
+            playing = moveReader.playAgain();
         }
     }
 

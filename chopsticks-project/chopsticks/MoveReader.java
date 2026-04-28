@@ -91,7 +91,7 @@ public class MoveReader {
         return Move.split(left, right);
     }
 
-    public static boolean playAgain(Scanner scan) {
+    public boolean playAgain() {
         while (true) {
             System.out.println("Would you like to play again? Y / N");
             String response = scan.nextLine();
