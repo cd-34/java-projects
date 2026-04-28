@@ -35,19 +35,15 @@ public class Game {
             System.out.println(chopsticks); // prints the "board"
             printTurn();
 
-            Move move;
-
-            // Loops until a valid move is made
-            while(true) {
-                move = moveReader.promptMove();
-                if (chopsticks.isValidMove(move)) {
-                    break;
-                }
-            }
+            // checks if move is valid
+            Move move = getValidMove();
+            // if it is valid, applies the movie
             chopsticks.applyMove(move);
+            // after every move application, checks if game is over
             if (!chopsticks.isGameOver()) {
                 chopsticks.incrementTurnCount();
             } else {
+                // once game is over, state == GameState.WON and while loop exits
                 state = GameState.WON;
             }
         }
@@ -56,6 +52,15 @@ public class Game {
         currentPlayer.incrementWins();
         printWinner();
         return chopsticks.getWinner(); 
+    }
+
+    private Move getValidMove() {
+        while(true) {
+            Move move = moveReader.promptMove();
+            if (chopsticks.isValidMove(move)) {
+                return move;
+            }
+        }
     }
 
     public void printTurn() {
