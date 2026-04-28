@@ -72,9 +72,9 @@ public class Chopsticks {
         Player current = getCurrentPlayer();
         Player opponent = getOpposingPlayer();
 
-        Hand attacking = (move.getStartHand() == 'L') ? current.getLeftHand() : current.getRightHand();
+        Hand attacking = (move.getStartHand() == Side.LEFT) ? current.getLeftHand() : current.getRightHand();
 
-        Hand target = (move.getEndHand() == 'L') ? opponent.getLeftHand() : opponent.getRightHand();
+        Hand target = (move.getEndHand() == Side.LEFT) ? opponent.getLeftHand() : opponent.getRightHand();
 
         target.add(attacking.getFingers());
     }
@@ -111,9 +111,9 @@ public class Chopsticks {
         Player current = getCurrentPlayer();
         Player opponent = getOpposingPlayer();
 
-        Hand attackingHand = (move.getStartHand() == 'L') ? current.getLeftHand() : current.getRightHand();
+        Hand attackingHand = (move.getStartHand() == Side.LEFT) ? current.getLeftHand() : current.getRightHand();
 
-        Hand targetHand = (move.getEndHand() == 'L') ? opponent.getLeftHand() : opponent.getRightHand();
+        Hand targetHand = (move.getEndHand() == Side.LEFT) ? opponent.getLeftHand() : opponent.getRightHand();
 
         if (attackingHand.isDead()) {
             System.out.println("You cannot attack with a dead hand.");

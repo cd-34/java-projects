@@ -61,15 +61,25 @@ public class InputHandler {
             && Character.isDigit(move.charAt(1));
     }
 
+    public Side parseSide(char c) {
+        if (c == 'L') {
+            return Side.LEFT;
+        }
+        if (c == 'R') {
+            return Side.RIGHT;
+        }
+        return null;
+    }
+
     private Move parseAttack(String move) {
-        char start = move.charAt(0);
-        char end = move.charAt(1);
+        Side start = parseSide(move.charAt(0));
+        Side end = parseSide(move.charAt(1));
 
         Player current = chopsticks.getCurrentPlayer();
         Player opponent = chopsticks.getOpposingPlayer();
 
-        Hand attackValue = (start == 'L') ? current.getLeftHand() : current.getRightHand();
-        Hand targetValue = (end == 'L') ? opponent.getLeftHand() : opponent.getRightHand();
+        Hand attackValue = (start == Side.LEFT) ? current.getLeftHand() : current.getRightHand();
+        Hand targetValue = (end == Side.LEFT) ? opponent.getLeftHand() : opponent.getRightHand();
         
         return Move.attack(start, end);
     }

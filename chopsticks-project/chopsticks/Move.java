@@ -9,8 +9,8 @@ public class Move {
     private Type type;
 
     // For attacks
-    private char startHand; 
-    private char endHand;   
+    private Side startHand; 
+    private Side endHand;   
 
     // For splits
     private int left;
@@ -27,7 +27,7 @@ public class Move {
         return "Invalid move";
     }
 
-    public static Move attack(char start, char end) {
+    public static Move attack(Side start, Side end) {
         Move move = new Move();
         move.type = Type.ATTACK;
         move.startHand = start;
@@ -47,11 +47,11 @@ public class Move {
         return type;
     }
 
-    public char getStartHand() {
+    public Side getStartHand() {
         return startHand;
     }
 
-    public char getEndHand() {
+    public Side getEndHand() {
         return endHand;
     }
 
