@@ -54,7 +54,8 @@ public class Game {
             }
         }
         
-        incrementCurrentPlayerWins();
+        Player currentPlayer = chopsticks.getCurrentPlayer();
+        currentPlayer.incrementWins();
         printWinner();
         return chopsticks.getWinner(); 
     }
@@ -65,11 +66,6 @@ public class Game {
         // maybe move this to a "rules" section that prints at the start of every game instead of every turn
         System.out.println("To attack, type the letter you want to attack with with the desired location (E.g. LR)");
         System.out.println("To split, type the numbers of how you'd like to split (E.g. 23)");
-    }
-
-    public void incrementCurrentPlayerWins() {
-        Player currentPlayer = chopsticks.getCurrentPlayer();
-        currentPlayer.incrementWins();
     }
 
     public void printWinner() {
