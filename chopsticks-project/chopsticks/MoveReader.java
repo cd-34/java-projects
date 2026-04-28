@@ -85,10 +85,7 @@ public class MoveReader {
     }
 
     private Move parseSplit(String move) {
-        int left = move.charAt(0) - '0';
-        int right = move.charAt(1) - '0';
-
-        return Move.split(left, right);
+        return Move.split(move.charAt(0) - '0', move.charAt(1) - '0');
     }
 
     public boolean playAgain() {
