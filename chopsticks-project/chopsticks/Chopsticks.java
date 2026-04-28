@@ -86,14 +86,14 @@ public class Chopsticks {
     }
 
     public boolean isGameOver() {
-        return Player.isPlayerDead(player1) || Player.isPlayerDead(player2);
+        return player1.isDead() || player2.isDead();
     }
 
     public Player getWinner() {
-        if (Player.isPlayerDead(player1)) {
+        if (player1.isDead()) {
             return player2;
         } 
-        if (Player.isPlayerDead(player2)) {
+        if (player2.isDead()) {
             return player1;
         }
         return null;

@@ -40,7 +40,7 @@ public class Player {
         wins++;
     }
 
-    public boolean isPlayerDead(Player player) {
-        return player.getLeftHand().isDead() && player.getRightHand().isDead();
+    public boolean isDead() {
+        return getLeftHand().isDead() && getRightHand().isDead();
     }
 }
