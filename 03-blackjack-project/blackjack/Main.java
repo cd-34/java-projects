@@ -5,11 +5,17 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello World!");
         Scanner scan = new Scanner(System.in);
-        Player player1 = new Player(ConsoleIO.askPlayerName(scan));
-        System.out.println("Welcome " + player1.getName() + "!");
 
+        System.out.println("How many players will be playing?");
         int playerCount = ConsoleIO.askPlayerCount(scan);
-        System.out.println(playerCount);
+
+        Player[] players = new Player[playerCount];
+
+        for (int i = 0; i < playerCount; i++) {
+            System.out.println("Please enter player " + (i + 1) + "'s name.");
+            players[i] = new Player(ConsoleIO.askPlayerName(scan)); // fix
+            System.out.println("Welcome " + players[i].getName() + "!"); // fix
+        }        
         scan.close();
     }
 }
