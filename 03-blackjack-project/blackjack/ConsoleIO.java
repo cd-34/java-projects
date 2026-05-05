@@ -8,8 +8,9 @@ public class ConsoleIO {
         this.scan = scan;
     }
 
-    public static String askPlayerName(Scanner scan) {
+    public String askPlayerName(Scanner scan, int playerNumber) {
         while (true) {
+            System.out.println("Please enter player " + (playerNumber + 1) + "'s name.");
             String inputName = scan.nextLine();
 
             if (inputName.isBlank()) {
@@ -20,7 +21,7 @@ public class ConsoleIO {
         }
     }
 
-    public static int askPlayerCount(Scanner scan) {
+    public int askPlayerCount(Scanner scan) {
         while (true) {
             if (scan.hasNextInt()) {
                 int playerCount = scan.nextInt();
