@@ -1,5 +1,6 @@
 package blackjack;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Deck {
     // should contain deal() method
@@ -18,6 +19,10 @@ public class Deck {
                 cards.add(new Card(rank, suit));
             }
         }
+    }
+
+    public void shuffle() {
+        Collections.shuffle(cards);
     }
 
     public ArrayList<Card> getCards() {

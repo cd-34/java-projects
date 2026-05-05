@@ -5,8 +5,9 @@ public class Main {
     public static void main(String[] args) {
         // temporary so I can see the deck being printed out
         Deck deck = new Deck();
+        deck.shuffle();
         for (Card card : deck.getCards()) {
-            System.out.println(card);
+            System.out.println(card + " " + card.getValue());
         }
 
         Scanner scan = new Scanner(System.in);
