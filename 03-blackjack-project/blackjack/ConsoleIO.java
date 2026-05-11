@@ -53,15 +53,15 @@ public class ConsoleIO {
     }
 
     // change to return an enum
-    public String askHitOrStand() {
+    public Action askHitOrStand() {
         while (true) {
             System.out.println("Hit or stand? H / S");
             String input = scan.nextLine().trim().toUpperCase();
             if (input.equals("H")) {
-                return "HIT";
+                return Action.HIT;
             }
             if (input.equals("S")) {
-                return "STAND";
+                return Action.STAND;
             }
             System.out.println("Invalid input — please enter 'h' or 's'.");
         }

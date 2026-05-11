@@ -35,6 +35,7 @@ public class BlackjackApp {
         while (playing) {
             blackjack.init(players);
             // after init, players should be asked one by one for their move
+            // System.out.println(consoleIO.askHitOrStand());
             playing = consoleIO.playAgain();
         }
     }
