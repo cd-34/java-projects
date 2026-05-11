@@ -34,4 +34,10 @@ public class Deck {
     public int size() {
         return cards.size();
     }
+
+    // returns the last card in the deck list
+    // also removes it from the deck
+    public Card deal() {
+        return cards.remove(cards.size() - 1);
+    }
 }
