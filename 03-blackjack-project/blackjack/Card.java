@@ -45,6 +45,8 @@ public class Card {
 
         return 
             "|----|\n" +
+            // formats to give an extra space if rank is not 10
+            // if rank is 10 then it's two characters, so there's no extra space
             "|" + String.format("%-2s", rank) + " " + suitSymbol + "|\n" +
             "|----|";
     }

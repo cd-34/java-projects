@@ -10,7 +10,6 @@ public class Main {
             System.out.println(card + "\n");
         }
 
-        // 
         Scanner scan = new Scanner(System.in);
         ConsoleIO consoleIO = new ConsoleIO(scan);
         BlackjackApp app = new BlackjackApp(consoleIO);

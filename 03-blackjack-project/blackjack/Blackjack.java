@@ -1,7 +1,7 @@
 package blackjack;
 
-// public class Blackjack {
-//     public Blackjack {
-
-//     }
-// }
+public class Blackjack {
+    public void init() {
+        
+    }
+}

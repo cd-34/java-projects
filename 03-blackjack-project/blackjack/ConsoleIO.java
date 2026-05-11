@@ -8,7 +8,7 @@ public class ConsoleIO {
         this.scan = scan;
     }
 
-    public String askPlayerName(Scanner scan, int playerNumber) {
+    public String askPlayerName(int playerNumber) {
         while (true) {
             System.out.println("Please enter player " + (playerNumber + 1) + "'s name.");
             String inputName = scan.nextLine();
@@ -21,7 +21,7 @@ public class ConsoleIO {
         }
     }
 
-    public int askPlayerCount(Scanner scan) {
+    public int askPlayerCount() {
         while (true) {
             if (scan.hasNextInt()) {
                 int playerCount = scan.nextInt();
@@ -34,6 +34,20 @@ public class ConsoleIO {
             } else {
                 System.out.println("Please enter a number between 1-4.");
                 scan.nextLine();
+            }
+        }
+    }
+
+    public boolean playAgain() {
+        while (true) {
+            System.out.println("Would you like to play again? Y / N");
+            String response = scan.nextLine();
+            if (response.toUpperCase().equals("Y")) {
+                return true;
+            } else if (response.toUpperCase().equals("N")) {
+                return false;
+            } else {
+                System.out.println("Invalid input.");
             }
         }
     }
