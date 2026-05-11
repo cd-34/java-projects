@@ -18,7 +18,7 @@ public class BlackjackApp {
 
         // Create a new array that stores the players
         // Array is best because it's an immutable size
-        Player[] players = new Player[playerCount];
+        this.players = new Player[playerCount];
 
         // Creates new player classes stored in players[] and sets their names
         for (int i = 0; i < playerCount; i++) {

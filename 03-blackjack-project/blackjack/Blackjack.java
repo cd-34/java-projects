@@ -5,21 +5,31 @@ public class Blackjack {
     private Player[] players;
     private Dealer dealer;
 
+    public Blackjack() {
+        this.deck = new Deck();
+        this.deck.shuffle();
+        this.dealer = new Dealer();
+    }
+
     public void init(Player[] players) {
+        this.players = players;
         // next 5 lines are just temporary so I can see the deck being shuffled and printed out
         // this.deck = new Deck();
         // this.deck.shuffle();
         // for (Card card : deck.getCards()) {
         //     System.out.println(card + "\n");
         // }
-        this.deck = new Deck();
-        this.deck.shuffle();
-        this.players = players;
 
         // at the start of every blackjack game
         // dealer gets one card, player gets 2 cards
         // should print that out for now and make prettier with stringbuilder later
         System.out.println(deck.size()); // should be 52
-        System.out.println(deck)
+        dealer.addCard(deck.deal());
+        System.out.println("Dealer's hand: \n" + dealer.getHand());
+
+        players[0].addCard(deck.deal());
+        players[0].addCard(deck.deal());
+        System.out.println(players[0].getName() + "'s hand: \n" + players[0].getHand());
+
     }
 }
