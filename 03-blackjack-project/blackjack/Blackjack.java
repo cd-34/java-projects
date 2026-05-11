@@ -23,13 +23,13 @@ public class Blackjack {
         // at the start of every blackjack game
         // dealer gets one card, player gets 2 cards
         // should print that out for now and make prettier with stringbuilder later
-        System.out.println(deck.size()); // should be 52
         dealer.addCard(deck.deal());
         System.out.println("Dealer's hand: \n" + dealer.getHand());
 
-        players[0].addCard(deck.deal());
-        players[0].addCard(deck.deal());
-        System.out.println(players[0].getName() + "'s hand: \n" + players[0].getHand());
-
+        for (int i = 0; i < players.length; i++) {
+            players[i].addCard(deck.deal());
+            players[i].addCard(deck.deal());
+            System.out.println(players[i].getName() + "'s hand: \n" + players[i].getHand());
+        }
     }
 }
