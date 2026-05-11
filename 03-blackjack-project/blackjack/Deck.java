@@ -37,7 +37,6 @@ public class Deck {
 
     // returns the last card in the deck list
     // also removes it from the deck
-    // need to double check this
     public Card deal() {
         return cards.remove(cards.size() - 1);
     }
