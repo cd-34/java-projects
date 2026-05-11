@@ -1,7 +1,7 @@
 package blackjack;
 
 public class Card {
-    // should store a card's suit + rank
+    // class should store a card's suit + rank
     private final Rank rank;
     private final Suit suit;
 
@@ -24,6 +24,28 @@ public class Card {
 
     @Override
     public String toString() {
-        return rank + " of " + suit;
+        String suitSymbol;
+
+        switch (getSuit()) {
+            case CLUBS:
+                suitSymbol = "♣";
+                break;
+            case HEARTS:
+                suitSymbol = "♥";
+                break;
+            case SPADES:
+                suitSymbol = "♠";
+                break;
+            case DIAMONDS:
+                suitSymbol = "♦";
+                break;
+            default:
+                suitSymbol = "?";
+        }
+
+        return 
+            "|----|\n" +
+            "|" + String.format("%-2s", rank) + " " + suitSymbol + "|\n" +
+            "|----|";
     }
 }

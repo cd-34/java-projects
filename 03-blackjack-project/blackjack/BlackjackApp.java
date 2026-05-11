@@ -14,6 +14,7 @@ public class BlackjackApp {
         int playerCount = consoleIO.askPlayerCount(scan); 
 
         // Create a new array that stores the players
+        // Array is best because it's an immutable size
         Player[] players = new Player[playerCount];
 
         // Creates new player classes stored in players[] and sets their names
@@ -22,4 +23,9 @@ public class BlackjackApp {
             System.out.println("Welcome " + players[i].getName() + "!"); // fix
         }
     }
+
+    // initializes a game based on number of players
+    // public void run() {
+
+    // }
 }

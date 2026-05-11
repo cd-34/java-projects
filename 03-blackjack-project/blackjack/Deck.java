@@ -4,9 +4,11 @@ import java.util.Collections;
 
 public class Deck {
     // should contain deal() method
-    // 52 card deck is a list called "cards"
+    // 52 card deck is a ArrayList called "cards"
+    // each <Card> is made up of class Card(Rank, Suit)
     private ArrayList<Card> cards;
 
+    // Instantiating a new deck builds a 52 card deck as an ArrayList
     public Deck() {
         cards = new ArrayList<>();
         buildDeck();
