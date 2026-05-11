@@ -3,9 +3,11 @@ import java.util.Scanner;
 
 public class BlackjackApp {
     private ConsoleIO consoleIO;
+    private Blackjack blackjack;
 
     public BlackjackApp(ConsoleIO consoleIO) {
         this.consoleIO = consoleIO;
+        this.blackjack = new Blackjack();
     }
 
     // adds players and their names
@@ -41,8 +43,8 @@ public class BlackjackApp {
     public void run() {
         boolean playing = true;
         while (playing) {
-            // blackjack.init();
-            // playing = consoleIO.playAgain();
+            blackjack.init();
+            playing = consoleIO.playAgain();
         }
     }
 
