@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class BlackjackApp {
     private ConsoleIO consoleIO;
     private Blackjack blackjack;
+    private Player[] players;
 
     public BlackjackApp(ConsoleIO consoleIO) {
         this.consoleIO = consoleIO;
@@ -32,7 +33,7 @@ public class BlackjackApp {
     public void run() {
         boolean playing = true;
         while (playing) {
-            blackjack.init();
+            blackjack.init(players);
             playing = consoleIO.playAgain();
         }
     }

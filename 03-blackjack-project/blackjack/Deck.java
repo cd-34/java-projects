@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Deck {
-    // should contain deal() method
     // 52 card deck is a ArrayList called "cards"
     // each <Card> is made up of class Card(Rank, Suit)
     private ArrayList<Card> cards;
@@ -37,6 +36,7 @@ public class Deck {
 
     // returns the last card in the deck list
     // also removes it from the deck
+    // removing from the end slightly more performative for an arraylist
     public Card deal() {
         return cards.remove(cards.size() - 1);
     }
