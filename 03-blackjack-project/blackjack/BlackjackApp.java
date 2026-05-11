@@ -27,14 +27,14 @@ public class BlackjackApp {
 
         // temporarily add two cards to player1's hand then print them out to test
         // remove later
-        Deck deck = new Deck();
-        deck.shuffle();
-        System.out.println(deck.size()); // should be 52
-        players[0].addCard(deck.deal());
-        players[0].addCard(deck.deal());
-        System.out.println(players[0].getName() + "'s hand:");
-        System.out.println(players[0].getHand());
-        System.out.println(deck.size()); // should be 50
+        // Deck deck = new Deck();
+        // deck.shuffle();
+        // System.out.println(deck.size()); // should be 52
+        // players[0].addCard(deck.deal());
+        // players[0].addCard(deck.deal());
+        // System.out.println(players[0].getName() + "'s hand:");
+        // System.out.println(players[0].getHand());
+        // System.out.println(deck.size()); // should be 50
     }
 
     // initializes a game and starts playGame() until there is a winner
