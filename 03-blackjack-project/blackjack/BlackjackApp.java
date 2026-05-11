@@ -34,6 +34,7 @@ public class BlackjackApp {
         boolean playing = true;
         while (playing) {
             blackjack.init(players);
+            // after init, players should be asked one by one for their move
             playing = consoleIO.playAgain();
         }
     }

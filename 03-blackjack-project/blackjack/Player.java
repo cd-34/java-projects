@@ -26,6 +26,10 @@ public class Player {
         return hand;
     }
 
+    public int getHandValue() {
+        return hand.getValue();
+    }
+
     public void addCard(Card card) {
         hand.addCard(card);
     }

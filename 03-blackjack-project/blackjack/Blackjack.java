@@ -4,6 +4,7 @@ public class Blackjack {
     private Deck deck;
     private Player[] players;
     private Dealer dealer;
+    private ConsoleIO consoleIO;
 
     public Blackjack() {
         this.deck = new Deck();
@@ -31,5 +32,6 @@ public class Blackjack {
             players[i].addCard(deck.deal());
             System.out.println(players[i].getName() + "'s hand: \n" + players[i].getHand());
         }
+        dealer.playTurn(deck);
     }
 }
