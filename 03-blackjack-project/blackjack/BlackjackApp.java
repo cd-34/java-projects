@@ -37,11 +37,12 @@ public class BlackjackApp {
             // after init, players should be asked one by one for their move
             playRound();
             blackjack.dealerTurn();
-            // determine winners
+            // determine winners and print scores
             blackjack.determineWinner();
             blackjack.printScores();
+            // ask to play again, if true then reset hands 
             playing = consoleIO.playAgain();
-            blackjack.resetHands();
+            blackjack.resetRound();
         }
     }
 

@@ -13,7 +13,7 @@ public class Blackjack {
 
     public void init(Player[] players) {
         this.players = players;
-        // next 5 lines are just temporary so I can see the deck being shuffled and printed out
+        // next 5 lines are just so I can see the deck being shuffled and printed out
         // this.deck = new Deck();
         // this.deck.shuffle();
         // for (Card card : deck.getCards()) {
@@ -22,7 +22,7 @@ public class Blackjack {
 
         // at the start of every blackjack game
         // dealer gets one card, player gets 2 cards
-        // should print that out for now and make prettier with stringbuilder later
+        // should print that out for now and make prettier with stringbuilder? later
         dealer.addCard(deck.deal());
         System.out.println("Dealer's hand: \n" + dealer.getHand());
 
@@ -43,11 +43,13 @@ public class Blackjack {
         System.out.println(card);
     }
 
-    public void resetHands() {
+    public void resetRound() {
         for (int i = 0; i < players.length; i++) {
             players[i].clearHand();
         }
         dealer.clearHand();
+        deck = new Deck();
+        deck.shuffle();
     }
 
     public void determineWinner() {

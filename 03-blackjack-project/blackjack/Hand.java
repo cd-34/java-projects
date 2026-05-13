@@ -1,5 +1,4 @@
 package blackjack;
-
 import java.util.ArrayList;
 
 public class Hand {
@@ -46,11 +45,6 @@ public class Hand {
 
     public boolean isBust() {
         return getValue() > 21;
-    }
-
-    // need to fix as this should only be for two cards
-    public boolean isBlackJack() {
-        return getValue() == 21;
     }
 
     @Override 

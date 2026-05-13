@@ -7,14 +7,14 @@ public class Deck {
     // each <Card> is made up of class Card(Rank, Suit)
     private ArrayList<Card> cards;
 
-    // Instantiating a new deck builds a 52 card deck as an ArrayList
+    // Initializing a new deck builds a 52 card deck as an ArrayList
     public Deck() {
         cards = new ArrayList<>();
         buildDeck();
     }
     
     // creates a 52 card deck with every value
-    private void buildDeck() {
+    public void buildDeck() {
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
                 cards.add(new Card(rank, suit));
