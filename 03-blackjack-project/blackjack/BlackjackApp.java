@@ -35,10 +35,24 @@ public class BlackjackApp {
         while (playing) {
             blackjack.init(players);
             // after init, players should be asked one by one for their move
-            // System.out.println(consoleIO.askHitOrStand());
+            playRound();
             playing = consoleIO.playAgain();
         }
     }
 
-    // public void playGame();
+    public void playRound() {
+        for (int i = 0; i < players.length; i++) {
+            // check (isBust())
+            // if false, ask hit or stand
+            System.out.println(players[i].getName() + "'s turn!"); 
+            System.out.println("Your current hand value: " + players[i].getHandValue());
+            if (consoleIO.askHitOrStand() == Action.HIT) {
+                // no deck of cards to use
+                // players[i].hand.addCard(card);
+            }
+
+            // logic for hit or stand needs to be implemented
+            // else, say player bust and move onto next player
+        }
+    }
 }

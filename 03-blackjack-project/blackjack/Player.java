@@ -33,4 +33,8 @@ public class Player {
     public void addCard(Card card) {
         hand.addCard(card);
     }
+
+    public boolean isPlayerBust() {
+        return hand.isBust();
+    }
 }

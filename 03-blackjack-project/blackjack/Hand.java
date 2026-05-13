@@ -58,7 +58,7 @@ public class Hand {
         for (Card card : cards) {
             stringbuilder.append(card).append("\n\n");
         }
-        stringbuilder.append("Total: ").append(getValue());
+        // stringbuilder.append("Total: ").append(getValue());
         return stringbuilder.toString();
     }
 }

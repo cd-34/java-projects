@@ -24,10 +24,11 @@ public class Dealer {
         hand.addCard(card);
     }
 
-    public boolean isBust() {
+    public boolean isDealerBust() {
         return hand.isBust();
     }
 
+    // should probably change this to return a boolean for reuse later 
     public void playTurn(Deck deck) {
         while (getHandValue() < 17) {
             Card card = deck.deal();
@@ -35,7 +36,7 @@ public class Dealer {
             System.out.println("Dealer hits: \n" + card);
         }
 
-        if (isBust()) {
+        if (isDealerBust()) {
             System.out.println("Dealer busts with " + getHandValue());
         } else {
             System.out.println("Dealer stands at " + getHandValue());
