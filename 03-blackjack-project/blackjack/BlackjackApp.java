@@ -46,9 +46,14 @@ public class BlackjackApp {
                 System.out.println(players[i].getName() + "'s turn!"); 
                 System.out.println("Your current hand value: " + players[i].getHandValue());
                 if (consoleIO.askHitOrStand() == Action.HIT) {
-                    // no deck of cards to use
-                    // players[i].hand.addCard(card);
+                    blackjack.dealCardToPlayer(i);
+                    System.out.println("Your current hand value: " + players[i].getHandValue());
+                } else if (consoleIO.askHitOrStand() == Action.STAND) {
+                    break;
                 }
+            }
+            if (players[i].isPlayerBust()) {
+                System.out.println(players[i].getName() + " busts!");
             }
 
 

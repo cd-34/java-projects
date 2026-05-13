@@ -33,4 +33,8 @@ public class Blackjack {
         }
         dealer.playTurn(deck);
     }
+
+    public void dealCardToPlayer(int i) {
+        players[i].addCard(deck.deal());
+    }
 }
