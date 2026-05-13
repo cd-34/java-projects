@@ -32,6 +32,9 @@ public class Hand {
         for (int i = 0; i < cards.size(); i++) {
             Card card = cards.get(i);
             total += card.getValue();
+            if (card.getRank() == Rank.ACE) {
+                aces++;
+            }
         }
         // in the case that your total would bust but you have an ace
         // this lets us change the value of an ace from 11 to 1
