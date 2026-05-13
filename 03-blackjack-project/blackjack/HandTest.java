@@ -11,7 +11,6 @@ public class HandTest {
         assertEquals(17, hand.getValue());
     }
 
-    // not yet working
     @Test
     public void testAce() {
         Hand hand = new Hand();
