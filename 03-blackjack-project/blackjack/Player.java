@@ -37,4 +37,8 @@ public class Player {
     public boolean isPlayerBust() {
         return hand.isBust();
     }
+
+    public void clearHand() {
+        hand.clear();
+    }
 }

@@ -39,4 +39,11 @@ public class Blackjack {
         players[i].addCard(card);
         System.out.println(card);
     }
+
+    public void resetHands() {
+        for (int i = 0; i < players.length; i++) {
+            players[i].clearHand();
+        }
+        dealer.clearHand();
+    }
 }

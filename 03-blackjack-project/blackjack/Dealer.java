@@ -28,6 +28,10 @@ public class Dealer {
         return hand.isBust();
     }
 
+    public void clearHand() {
+        hand.clear();
+    }
+
     // should probably change this to return a boolean for reuse later 
     public void playTurn(Deck deck) {
         while (getHandValue() < 17) {

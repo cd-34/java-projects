@@ -40,6 +40,7 @@ public class BlackjackApp {
                 // currently dealer moves before players
             // determine winners
             playing = consoleIO.playAgain();
+            blackjack.resetHands();
         }
     }
 
