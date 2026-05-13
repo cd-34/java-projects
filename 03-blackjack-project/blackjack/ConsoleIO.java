@@ -63,7 +63,7 @@ public class ConsoleIO {
             if (input.equals("S")) {
                 return Action.STAND;
             }
-            System.out.println("Invalid input — please enter 'h' or 's'.");
+            System.out.println("Invalid input — please enter 'H' or 'S'.");
         }
     }
 }

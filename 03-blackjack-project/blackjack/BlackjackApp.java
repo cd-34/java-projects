@@ -36,12 +36,16 @@ public class BlackjackApp {
             blackjack.init(players);
             // after init, players should be asked one by one for their move
             playRound();
+            // after players make their move, dealer should proceed with their logic
+                // currently dealer moves before players
+            // determine winners
             playing = consoleIO.playAgain();
         }
     }
 
     public void playRound() {
         for (int i = 0; i < players.length; i++) {
+            // can maybe put isBlackjack() here 
             while (!players[i].isPlayerBust()) {
                 System.out.println(players[i].getName() + "'s turn! Your current hand value: " + players[i].getHandValue());
                 Action action = consoleIO.askHitOrStand();
