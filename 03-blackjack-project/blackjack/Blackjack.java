@@ -49,4 +49,29 @@ public class Blackjack {
         }
         dealer.clearHand();
     }
+
+    public void determineWinner() {
+        int dealerValue = dealer.getHandValue();
+        for (int i = 0; i < players.length; i++) {
+            Player player = players[i];
+            int playerValue = player.getHandValue();
+
+            if (player.isPlayerBust()) {
+                System.out.println(player.getName() + "busts. Dealer wins!");
+            } else if (dealer.isDealerBust() || playerValue > dealerValue) {
+                System.out.println(player.getName() + " wins!");
+                player.incrementWins();
+            } else if (playerValue == dealerValue) {
+                System.out.println(player.getName() + " ties with the dealer!");
+            } else {
+                System.out.println(player.getName() + " loses!");
+            }
+        }
+    }
+
+    public void printScores() {
+        for (int i = 0; i < players.length; i++) {
+            System.out.println(players[i].getName() + "'s wins: " + players[i].getWins());
+        }
+    }
 }

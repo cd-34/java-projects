@@ -32,7 +32,6 @@ public class Dealer {
         hand.clear();
     }
 
-    // should probably change this to return a boolean for reuse later 
     public void playTurn(Deck deck) {
         while (getHandValue() < 17) {
             Card card = deck.deal();
@@ -41,9 +40,9 @@ public class Dealer {
         }
 
         if (isDealerBust()) {
-            System.out.println("Dealer busts with " + getHandValue());
+            System.out.println("Dealer busts with " + getHandValue() + ".");
         } else {
-            System.out.println("Dealer stands at " + getHandValue());
+            System.out.println("Dealer stands at " + getHandValue() + ".");
         }
     }
 }

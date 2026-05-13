@@ -37,8 +37,9 @@ public class BlackjackApp {
             // after init, players should be asked one by one for their move
             playRound();
             blackjack.dealerTurn();
-                // currently dealer moves before players
             // determine winners
+            blackjack.determineWinner();
+            blackjack.printScores();
             playing = consoleIO.playAgain();
             blackjack.resetHands();
         }
@@ -52,7 +53,6 @@ public class BlackjackApp {
                 Action action = consoleIO.askHitOrStand();
                 if (action == Action.HIT) {
                     blackjack.dealCardToPlayer(i);
-
                 } else if (action == Action.STAND) {
                     break;
                 } else {
