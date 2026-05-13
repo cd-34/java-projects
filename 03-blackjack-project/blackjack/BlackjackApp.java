@@ -43,22 +43,19 @@ public class BlackjackApp {
     public void playRound() {
         for (int i = 0; i < players.length; i++) {
             while (!players[i].isPlayerBust()) {
-                System.out.println(players[i].getName() + "'s turn!"); 
-                System.out.println("Your current hand value: " + players[i].getHandValue());
-                if (consoleIO.askHitOrStand() == Action.HIT) {
+                System.out.println(players[i].getName() + "'s turn! Your current hand value: " + players[i].getHandValue());
+                Action action = consoleIO.askHitOrStand();
+                if (action == Action.HIT) {
                     blackjack.dealCardToPlayer(i);
-                    System.out.println("Your current hand value: " + players[i].getHandValue());
-                } else if (consoleIO.askHitOrStand() == Action.STAND) {
+                } else if (action == Action.STAND) {
                     break;
+                } else {
+                    throw new IllegalArgumentException("Invalid action.");
                 }
             }
             if (players[i].isPlayerBust()) {
-                System.out.println(players[i].getName() + " busts!");
+                System.out.println(players[i].getName() + " busts with a total of " + players[i].getHandValue());
             }
-
-
-            // logic for hit or stand needs to be implemented
-            // else, say player bust and move onto next player
         }
     }
 }
