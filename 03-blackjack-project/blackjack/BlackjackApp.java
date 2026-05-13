@@ -47,6 +47,7 @@ public class BlackjackApp {
                 Action action = consoleIO.askHitOrStand();
                 if (action == Action.HIT) {
                     blackjack.dealCardToPlayer(i);
+
                 } else if (action == Action.STAND) {
                     break;
                 } else {

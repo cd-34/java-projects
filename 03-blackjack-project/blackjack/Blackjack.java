@@ -35,6 +35,8 @@ public class Blackjack {
     }
 
     public void dealCardToPlayer(int i) {
-        players[i].addCard(deck.deal());
+        Card card = deck.deal();
+        players[i].addCard(card);
+        System.out.println(card);
     }
 }
