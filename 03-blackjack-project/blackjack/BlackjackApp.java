@@ -42,14 +42,15 @@ public class BlackjackApp {
 
     public void playRound() {
         for (int i = 0; i < players.length; i++) {
-            // check (isBust())
-            // if false, ask hit or stand
-            System.out.println(players[i].getName() + "'s turn!"); 
-            System.out.println("Your current hand value: " + players[i].getHandValue());
-            if (consoleIO.askHitOrStand() == Action.HIT) {
-                // no deck of cards to use
-                // players[i].hand.addCard(card);
+            while (!players[i].isPlayerBust()) {
+                System.out.println(players[i].getName() + "'s turn!"); 
+                System.out.println("Your current hand value: " + players[i].getHandValue());
+                if (consoleIO.askHitOrStand() == Action.HIT) {
+                    // no deck of cards to use
+                    // players[i].hand.addCard(card);
+                }
             }
+
 
             // logic for hit or stand needs to be implemented
             // else, say player bust and move onto next player
