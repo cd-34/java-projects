@@ -14,7 +14,7 @@ public class Deck {
     }
     
     // creates a 52 card deck with every value
-    public void buildDeck() {
+    private void buildDeck() {
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
                 cards.add(new Card(rank, suit));
