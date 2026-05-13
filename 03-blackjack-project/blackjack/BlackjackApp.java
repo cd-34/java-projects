@@ -36,7 +36,7 @@ public class BlackjackApp {
             blackjack.init(players);
             // after init, players should be asked one by one for their move
             playRound();
-            // after players make their move, dealer should proceed with their logic
+            blackjack.dealerTurn();
                 // currently dealer moves before players
             // determine winners
             playing = consoleIO.playAgain();

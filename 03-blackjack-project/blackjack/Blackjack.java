@@ -31,6 +31,9 @@ public class Blackjack {
             players[i].addCard(deck.deal());
             System.out.println(players[i].getName() + "'s hand: \n" + players[i].getHand());
         }
+    }
+
+    public void dealerTurn() {
         dealer.playTurn(deck);
     }
 
