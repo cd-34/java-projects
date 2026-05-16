@@ -76,4 +76,8 @@ public class Blackjack {
             System.out.println(players[i].getName() + "'s wins: " + players[i].getWins());
         }
     }
+
+    public int getDeckSize() {
+        return deck.size();
+    }
 }

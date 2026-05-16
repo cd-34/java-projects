@@ -1,9 +1,11 @@
 FROM eclipse-temurin:17-jdk
-
 WORKDIR /app
 
-COPY blackjack/ ./blackjack/
+RUN apt-get update && apt-get install -y maven
 
-RUN javac blackjack/*.java
+COPY pom.xml .
+COPY src/ ./src/
 
-CMD ["java", "blackjack.Main"]
+RUN mvn package -DskipTests
+
+CMD ["java", "-jar", "target/blackjack-project-1.0-SNAPSHOT.jar"]
