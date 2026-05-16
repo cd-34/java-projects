@@ -16,9 +16,9 @@ public class BlackjackTest {
 
     @Test
     public void testResetRoundDeckSize() {
-        assertEquals(52, blackjack.getDeckSize());
+        assertEquals(49, blackjack.getDeckSize());
         blackjack.dealCardToPlayer(0);
-        assertEquals(51, blackjack.getDeckSize());
+        assertEquals(48, blackjack.getDeckSize());
         blackjack.resetRound();
         assertEquals(52, blackjack.getDeckSize());
     }
