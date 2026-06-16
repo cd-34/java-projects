@@ -55,6 +55,7 @@ public class BlackjackApp {
                     case PLAYER_WIN -> System.out.println(name + " wins!");
                     case PLAYER_LOSS -> System.out.println(name + " loses.");
                     case TIE -> System.out.println(name + " ties.");
+                    case IN_PROGRESS -> throw new UnsupportedOperationException("Unimplemented case: " + state);
                 }
             }
             

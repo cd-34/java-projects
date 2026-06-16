@@ -83,7 +83,7 @@ public class Blackjack {
 
     public Map<String, Gamestate> determineWinner() {
         // map used to produce one gamestate per player
-        Map<String, Gamestate> results = new LinkedHashMap();
+        Map<String, Gamestate> results = new LinkedHashMap<>();
         int dealerValue = dealer.getHandValue();
 
         for (int i = 0; i < players.length; i++) {
