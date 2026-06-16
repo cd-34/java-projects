@@ -1,13 +1,12 @@
 package blackjack;
 
-public class Player {
+public class Player extends Participant {
     private final String name;
     private int wins = 0;
-    private Hand hand;
 
     public Player(String name) {
+        super();
         this.name = name;
-        this.hand = new Hand();
     }
 
     public String getName() {
@@ -20,25 +19,5 @@ public class Player {
 
     public void incrementWins() {
         wins++;
-    }
-
-    public Hand getHand() {
-        return hand;
-    }
-
-    public int getHandValue() {
-        return hand.getValue();
-    }
-
-    public void addCard(Card card) {
-        hand.addCard(card);
-    }
-
-    public boolean isPlayerBust() {
-        return hand.isBust();
-    }
-
-    public void clearHand() {
-        hand.clear();
     }
 }

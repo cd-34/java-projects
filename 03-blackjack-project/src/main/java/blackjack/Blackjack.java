@@ -70,9 +70,9 @@ public class Blackjack {
             Player player = players[i];
             int playerValue = player.getHandValue();
 
-            if (player.isPlayerBust()) {
+            if (player.isBust()) {
                 System.out.println(player.getName() + " busts. Dealer wins!");
-            } else if (dealer.isDealerBust() || playerValue > dealerValue) {
+            } else if (dealer.isBust() || playerValue > dealerValue) {
                 System.out.println(player.getName() + " wins!");
                 player.incrementWins();
             } else if (playerValue == dealerValue) {

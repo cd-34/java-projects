@@ -59,7 +59,7 @@ public class BlackjackApp {
     public void playRound() {
         for (int i = 0; i < players.length; i++) {
             // can maybe put isBlackjack() here 
-            while (!players[i].isPlayerBust()) {
+            while (!players[i].isBust()) {
                 System.out.println(players[i].getName() + "'s turn! Your current hand value: " + players[i].getHandValue());
                 Action action = consoleIO.askHitOrStand();
                 if (action == Action.HIT) {
@@ -70,7 +70,7 @@ public class BlackjackApp {
                     throw new IllegalArgumentException("Invalid action.");
                 }
             }
-            if (players[i].isPlayerBust()) {
+            if (players[i].isBust()) {
                 System.out.println(players[i].getName() + " busts with a total of " + players[i].getHandValue());
             }
         }

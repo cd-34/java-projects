@@ -1,35 +1,15 @@
 package blackjack;
 
-public class Dealer {
+public class Dealer extends Participant {
     private final String name = "Dealer";
-    private Hand hand;
 
     public Dealer() {
+        super();
         this.hand = new Hand();
     }
 
     public String getName() {
         return name;
-    }
-
-    public Hand getHand() {
-        return hand;
-    }
-
-    public int getHandValue() {
-        return hand.getValue();
-    }
-
-    public void addCard(Card card) {
-        hand.addCard(card);
-    }
-
-    public boolean isDealerBust() {
-        return hand.isBust();
-    }
-
-    public void clearHand() {
-        hand.clear();
     }
 
     public void playTurn(Deck deck) {
@@ -39,7 +19,7 @@ public class Dealer {
             System.out.println("Dealer hits: \n" + card);
         }
 
-        if (isDealerBust()) {
+        if (isBust()) {
             System.out.println("Dealer busts with " + getHandValue() + ".");
         } else {
             System.out.println("Dealer stands at " + getHandValue() + ".");
