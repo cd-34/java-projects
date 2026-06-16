@@ -46,7 +46,18 @@ public class BlackjackApp {
             playRound();
             blackjack.dealerTurn();
             // determine winners and print scores
-            blackjack.determineWinner();
+            Map<String, Gamestate> results = blackjack.determineWinner();
+            for (Map.Entry<String, Gamestate> entry: results.entrySet()) {
+                String name = entry.getKey();
+                Gamestate state = entry.getValue();
+                
+                switch (state) {
+                    case PLAYER_WIN -> System.out.println(name + " wins!");
+                    case PLAYER_LOSS -> System.out.println(name + " loses.");
+                    case TIE -> System.out.println(name + " ties.");
+                }
+            }
+            
             for (Map.Entry<String, Integer> entry: blackjack.getScores().entrySet()) {
             System.out.println(entry.getKey() + "'s wins: " + entry.getValue());
             }
@@ -55,7 +66,7 @@ public class BlackjackApp {
             blackjack.resetRound();
         }
     }
-
+    
     public void playRound() {
         for (int i = 0; i < players.length; i++) {
             // can maybe put isBlackjack() here 

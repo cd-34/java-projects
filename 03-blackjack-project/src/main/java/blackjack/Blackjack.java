@@ -28,9 +28,7 @@ public class Blackjack {
     }
 
     // "record" keyword best for just passing around data
-    // java compiler generates equals, hashCode, toString methods
-    // as well as private, final fields, and public constructor
-    // playerHands map is for <Name, Hand> to support multiple players
+    // in this case, trying to pass around data on dealer's hand and players' hands
     public record InitialDeal(String dealerHand, Map<String, String> playerHands) {}
 
     // returns a dealer's hand and the player's <name, hand> as a map
@@ -64,23 +62,49 @@ public class Blackjack {
         deck.shuffle();
     }
 
-    public void determineWinner() {
+    // public void determineWinner() {
+    //     int dealerValue = dealer.getHandValue();
+    //     for (int i = 0; i < players.length; i++) {
+    //         Player player = players[i];
+    //         int playerValue = player.getHandValue();
+
+    //         if (player.isBust()) {
+    //             System.out.println(player.getName() + " busts. Dealer wins!");
+    //         } else if (dealer.isBust() || playerValue > dealerValue) {
+    //             System.out.println(player.getName() + " wins!");
+    //             player.incrementWins();
+    //         } else if (playerValue == dealerValue) {
+    //             System.out.println(player.getName() + " ties with the dealer!");
+    //         } else {
+    //             System.out.println(player.getName() + " loses!");
+    //         }
+    //     }
+    // }
+
+    // map used to produce one gamestate per player
+    public Map<String, Gamestate> determineWinner() {
+        Map<String, Gamestate> results = new HashMap();
         int dealerValue = dealer.getHandValue();
+
         for (int i = 0; i < players.length; i++) {
             Player player = players[i];
             int playerValue = player.getHandValue();
 
             if (player.isBust()) {
-                System.out.println(player.getName() + " busts. Dealer wins!");
+                results.put(player.getName(), Gamestate.PLAYER_LOSS);
             } else if (dealer.isBust() || playerValue > dealerValue) {
-                System.out.println(player.getName() + " wins!");
                 player.incrementWins();
+                results.put(player.getName(), Gamestate.PLAYER_WIN);
+                // System.out.println(player.getName() + " wins!");
+                // player.incrementWins();
             } else if (playerValue == dealerValue) {
-                System.out.println(player.getName() + " ties with the dealer!");
+                results.put(player.getName(), Gamestate.TIE);
             } else {
-                System.out.println(player.getName() + " loses!");
+                // happens when playerValue < dealerValue but neither bust
+                results.put(player.getName(), Gamestate.PLAYER_LOSS);
             }
         }
+        return results;
     }
 
     // only used once in blackjackapp under run()
