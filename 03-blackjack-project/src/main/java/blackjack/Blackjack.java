@@ -41,7 +41,6 @@ public class Blackjack {
         }
         return new InitialDeal(dealer.getHand().toString(), playerHands);
     }
-    
 
     // shallow method
     public void dealerTurn() {
