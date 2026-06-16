@@ -1,0 +1,3 @@
+* Whenever I "make all" in terminal now, it takes an extra 10s or so because of maven. Any workaround?
+
+* If I take a break from a project, I forget where methods are used, and how often they're used. I'm finding myself using Ctrl + Shift + F to find how often a method is used and where else it shows up. I know this falls under the whole "creating a simple interface so the reader knows its dependencies" category, but how do I apply that information? 

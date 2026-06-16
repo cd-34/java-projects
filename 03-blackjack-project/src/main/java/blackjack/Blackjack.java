@@ -1,5 +1,8 @@
 package blackjack;
 
+import java.util.Map;
+import java.util.LinkedHashMap;
+
 public class Blackjack {
     private Deck deck;
     private Player[] players;
@@ -73,11 +76,24 @@ public class Blackjack {
         }
     }
 
-    public void printScores() {
+    // only used once in blackjackapp under run()
+    public Map<String, Integer> printScores() {
+        Map<String, Integer> scores = new LinkedHashMap<>();
         for (int i = 0; i < players.length; i++) {
-            System.out.println(players[i].getName() + "'s wins: " + players[i].getWins());
+            scores.put(players[i].getName(), players[i].getWins());
         }
+        // move this to blackjackapp instead?
+        for (Map.Entry<String, Integer> entry: scores.entrySet()) {
+            System.out.println(entry.getKey() + "'s wins: " + entry.getValue());
+        }
+        return scores;
     }
+    // old function to be deleted
+    // public void printScores() {
+    //     for (int i = 0; i < players.length; i++) {
+    //         System.out.println(players[i].getName() + "'s wins: " + players[i].getWins());
+    //     }
+    // }
 
     public int getDeckSize() {
         return deck.size();
