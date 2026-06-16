@@ -77,14 +77,10 @@ public class Blackjack {
     }
 
     // only used once in blackjackapp under run()
-    public Map<String, Integer> printScores() {
+    public Map<String, Integer> getScores() {
         Map<String, Integer> scores = new LinkedHashMap<>();
         for (int i = 0; i < players.length; i++) {
             scores.put(players[i].getName(), players[i].getWins());
-        }
-        // move this to blackjackapp instead?
-        for (Map.Entry<String, Integer> entry: scores.entrySet()) {
-            System.out.println(entry.getKey() + "'s wins: " + entry.getValue());
         }
         return scores;
     }

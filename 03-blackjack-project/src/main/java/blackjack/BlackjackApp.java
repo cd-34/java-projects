@@ -1,4 +1,5 @@
 package blackjack;
+import java.util.Map;
 import java.util.Scanner;
 
 public class BlackjackApp {
@@ -39,7 +40,9 @@ public class BlackjackApp {
             blackjack.dealerTurn();
             // determine winners and print scores
             blackjack.determineWinner();
-            blackjack.printScores();
+            for (Map.Entry<String, Integer> entry: blackjack.getScores().entrySet()) {
+            System.out.println(entry.getKey() + "'s wins: " + entry.getValue());
+            }
             // ask to play again, if true then reset hands 
             playing = consoleIO.playAgain();
             blackjack.resetRound();
