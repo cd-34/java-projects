@@ -58,6 +58,7 @@ public class BlackjackApp {
                 }
             }
             
+            // print out total wins for each player
             for (Map.Entry<String, Integer> entry: blackjack.getScores().entrySet()) {
             System.out.println(entry.getKey() + "'s wins: " + entry.getValue());
             }
@@ -66,7 +67,7 @@ public class BlackjackApp {
             blackjack.resetRound();
         }
     }
-    
+
     public void playRound() {
         for (int i = 0; i < players.length; i++) {
             // can maybe put isBlackjack() here 

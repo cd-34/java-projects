@@ -1,7 +1,7 @@
 package blackjack;
 
 import java.util.Map;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 // Library's purpose is only for running blackjack
 public class Blackjack {
@@ -33,7 +33,7 @@ public class Blackjack {
 
     // returns a dealer's hand and the player's <name, hand> as a map
     public InitialDeal dealResult() {
-        Map<String, String> playerHands = new HashMap<>();
+        Map<String, String> playerHands = new LinkedHashMap<>();
         for (int i = 0; i < players.length; i++) {
             playerHands.put(players[i].getName(), players[i].getHand().toString());
         }
@@ -81,9 +81,9 @@ public class Blackjack {
     //     }
     // }
 
-    // map used to produce one gamestate per player
     public Map<String, Gamestate> determineWinner() {
-        Map<String, Gamestate> results = new HashMap();
+        // map used to produce one gamestate per player
+        Map<String, Gamestate> results = new LinkedHashMap();
         int dealerValue = dealer.getHandValue();
 
         for (int i = 0; i < players.length; i++) {
@@ -95,8 +95,6 @@ public class Blackjack {
             } else if (dealer.isBust() || playerValue > dealerValue) {
                 player.incrementWins();
                 results.put(player.getName(), Gamestate.PLAYER_WIN);
-                // System.out.println(player.getName() + " wins!");
-                // player.incrementWins();
             } else if (playerValue == dealerValue) {
                 results.put(player.getName(), Gamestate.TIE);
             } else {
@@ -109,7 +107,7 @@ public class Blackjack {
 
     // only used once in blackjackapp under run()
     public Map<String, Integer> getScores() {
-        Map<String, Integer> scores = new HashMap<>();
+        Map<String, Integer> scores = new LinkedHashMap<>();
         for (int i = 0; i < players.length; i++) {
             scores.put(players[i].getName(), players[i].getWins());
         }
