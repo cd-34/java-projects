@@ -1,8 +1,9 @@
 package blackjack;
 
 import java.util.Map;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 
+// Library's purpose is only for running blackjack
 public class Blackjack {
     private Deck deck;
     private Player[] players;
@@ -14,28 +15,35 @@ public class Blackjack {
         this.dealer = new Dealer();
     }
 
-    public void init(Player[] players) {
+    public InitialDeal init(Player[] players) {
         this.players = players;
-        // next 5 lines are just so I can see the deck being shuffled and printed out
-        // this.deck = new Deck();
-        // this.deck.shuffle();
-        // for (Card card : deck.getCards()) {
-        //     System.out.println(card + "\n");
-        // }
-
-        // at the start of every blackjack game
-        // dealer gets one card, player gets 2 cards
-        // should print that out for now and make prettier with stringbuilder? later
+        
         dealer.addCard(deck.deal());
-        System.out.println("Dealer's hand: \n" + dealer.getHand());
 
         for (int i = 0; i < players.length; i++) {
             players[i].addCard(deck.deal());
             players[i].addCard(deck.deal());
-            System.out.println(players[i].getName() + "'s hand: \n" + players[i].getHand());
         }
+        return dealResult();
     }
 
+    // "record" keyword best for just passing around data
+    // java compiler generates equals, hashCode, toString methods
+    // as well as private, final fields, and public constructor
+    // playerHands map is for <Name, Hand> to support multiple players
+    public record InitialDeal(String dealerHand, Map<String, String> playerHands) {}
+
+    // returns a dealer's hand and the player's <name, hand> as a map
+    public InitialDeal dealResult() {
+        Map<String, String> playerHands = new HashMap<>();
+        for (int i = 0; i < players.length; i++) {
+            playerHands.put(players[i].getName(), players[i].getHand().toString());
+        }
+        return new InitialDeal(dealer.getHand().toString(), playerHands);
+    }
+    
+
+    // shallow method
     public void dealerTurn() {
         dealer.playTurn(deck);
     }
@@ -78,7 +86,7 @@ public class Blackjack {
 
     // only used once in blackjackapp under run()
     public Map<String, Integer> getScores() {
-        Map<String, Integer> scores = new LinkedHashMap<>();
+        Map<String, Integer> scores = new HashMap<>();
         for (int i = 0; i < players.length; i++) {
             scores.put(players[i].getName(), players[i].getWins());
         }
