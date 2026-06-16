@@ -3,6 +3,8 @@ import java.util.Scanner;
 
 public class ConsoleIO {
     private Scanner scan;
+    private static final int MIN_PLAYERS = 1;
+    private static final int MAX_PLAYERS = 4;
 
     public ConsoleIO(Scanner scan) {
         this.scan = scan;
@@ -26,7 +28,7 @@ public class ConsoleIO {
             if (scan.hasNextInt()) {
                 int playerCount = scan.nextInt();
                 scan.nextLine();
-                if (playerCount >= 1 && playerCount <= 4) {
+                if (playerCount >= MIN_PLAYERS && playerCount <= MAX_PLAYERS) {
                     return playerCount;
                 } else {
                     System.out.println("This game only supports 1-4 players. Please enter a number again.");
