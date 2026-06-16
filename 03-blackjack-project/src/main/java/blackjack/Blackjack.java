@@ -37,10 +37,12 @@ public class Blackjack {
         dealer.playTurn(deck);
     }
 
-    public void dealCardToPlayer(int i) {
+    // shallow method that's only used in BlackjackApp's playRound() once
+    // however having this as its own method helps with testing 
+    public Card dealCardToPlayer(int i) {
         Card card = deck.deal();
         players[i].addCard(card);
-        System.out.println(card);
+        return card;
     }
 
     public void resetRound() {
@@ -59,7 +61,7 @@ public class Blackjack {
             int playerValue = player.getHandValue();
 
             if (player.isPlayerBust()) {
-                System.out.println(player.getName() + "busts. Dealer wins!");
+                System.out.println(player.getName() + " busts. Dealer wins!");
             } else if (dealer.isDealerBust() || playerValue > dealerValue) {
                 System.out.println(player.getName() + " wins!");
                 player.incrementWins();

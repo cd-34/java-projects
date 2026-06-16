@@ -53,6 +53,7 @@ public class BlackjackApp {
                 System.out.println(players[i].getName() + "'s turn! Your current hand value: " + players[i].getHandValue());
                 Action action = consoleIO.askHitOrStand();
                 if (action == Action.HIT) {
+                    System.out.println(blackjack.dealCardToPlayer(i));
                     blackjack.dealCardToPlayer(i);
                 } else if (action == Action.STAND) {
                     break;
