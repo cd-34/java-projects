@@ -65,30 +65,6 @@ public class BlackjackApp {
         }
     }
 
-    // need to do player turn and represent more elegantly than index
-    // blackjackapp shouldn't deal with states of playerbust etc
-        // blackjack knows turn, player, what phase we're in
-        // blackjackApp just acts based on that info 
-    // model as a FSM (finite state machine)
-    // public void playRound() {
-    //     for (int i = 0; i < blackjack.getPlayerCount(); i++) {
-    //         while (Gamestate.PLAYER_TURNS) {
-    //             System.out.println(blackjack.getPlayerName(i) + "'s turn! Your current hand value: " + blackjack.getPlayerHandValue(i));
-    //             Action action = consoleIO.askHitOrStand();
-    //             if (action == Action.HIT) {
-    //                 System.out.println(blackjack.dealCardToPlayer(i));
-    //             } else if (action == Action.STAND) {
-    //                 break;
-    //             } else {
-    //                 throw new IllegalArgumentException("Invalid action.");
-    //             }
-    //         }
-    //         if (blackjack.isPlayerBust(i)) {
-    //             System.out.println(blackjack.getPlayerName(i) + " busts with a total of " + blackjack.getPlayerHandValue(i));
-    //         }
-    //     }
-    // }
-
     public void playRound() {
         while (blackjack.getState() == Gamestate.PLAYER_TURNS) {
             System.out.println(blackjack.getCurrentPlayerName() + "'s turn! Current hand value: " + blackjack.getCurrentPlayerHandValue());

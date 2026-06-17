@@ -12,3 +12,9 @@ What's the solution? Put the builder into Blackjack? Make the builder do more?
 * dealerTurn() in Blackjack
     * Kinda requires a comment so that the reader knows it players ALL of a dealer's turns to completion and not just one card
     * Would this be too much of an interface for such a shallow method? Is the comment enough to suffice?
+
+* Simplified explanation of FSM is:
+    * State in this context is the different gamestates such as dealer turn, player turn, etc
+    * How the program acts is dependent on the state
+    * As a result, need to be diligent about making sure methods are only enacted once in the proper state
+    * Also need to be diligent about making sure that after the appropriate methods, the state is changed
