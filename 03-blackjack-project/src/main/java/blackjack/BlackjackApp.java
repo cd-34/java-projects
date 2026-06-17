@@ -43,16 +43,15 @@ public class BlackjackApp {
             playRound();
             blackjack.dealerTurn();
             // determine winners and print scores
-            Map<String, Gamestate> results = blackjack.determineWinner();
-            for (Map.Entry<String, Gamestate> entry: results.entrySet()) {
+            Map<String, Outcome> results = blackjack.determineWinner();
+            for (Map.Entry<String, Outcome> entry: results.entrySet()) {
                 String name = entry.getKey();
-                Gamestate state = entry.getValue();
+                Outcome outcome = entry.getValue();
                 
-                switch (state) {
+                switch (outcome) {
                     case PLAYER_WIN -> System.out.println(name + " wins!");
                     case PLAYER_LOSS -> System.out.println(name + " loses.");
                     case TIE -> System.out.println(name + " ties.");
-                    case IN_PROGRESS -> throw new UnsupportedOperationException("Unimplemented case: " + state);
                 }
             }
             
@@ -71,21 +70,40 @@ public class BlackjackApp {
         // blackjack knows turn, player, what phase we're in
         // blackjackApp just acts based on that info 
     // model as a FSM (finite state machine)
+    // public void playRound() {
+    //     for (int i = 0; i < blackjack.getPlayerCount(); i++) {
+    //         while (Gamestate.PLAYER_TURNS) {
+    //             System.out.println(blackjack.getPlayerName(i) + "'s turn! Your current hand value: " + blackjack.getPlayerHandValue(i));
+    //             Action action = consoleIO.askHitOrStand();
+    //             if (action == Action.HIT) {
+    //                 System.out.println(blackjack.dealCardToPlayer(i));
+    //             } else if (action == Action.STAND) {
+    //                 break;
+    //             } else {
+    //                 throw new IllegalArgumentException("Invalid action.");
+    //             }
+    //         }
+    //         if (blackjack.isPlayerBust(i)) {
+    //             System.out.println(blackjack.getPlayerName(i) + " busts with a total of " + blackjack.getPlayerHandValue(i));
+    //         }
+    //     }
+    // }
+
     public void playRound() {
-        for (int i = 0; i < blackjack.getPlayerCount(); i++) {
-            while (!blackjack.isPlayerBust(i)) {
-                System.out.println(blackjack.getPlayerName(i) + "'s turn! Your current hand value: " + blackjack.getPlayerHandValue(i));
-                Action action = consoleIO.askHitOrStand();
-                if (action == Action.HIT) {
-                    System.out.println(blackjack.dealCardToPlayer(i));
-                } else if (action == Action.STAND) {
-                    break;
-                } else {
-                    throw new IllegalArgumentException("Invalid action.");
+        while (blackjack.getState() == Gamestate.PLAYER_TURNS) {
+            System.out.println(blackjack.getCurrentPlayerName() + "'s turn! Current hand value: " + blackjack.getCurrentPlayerHandValue());
+            
+            Action action = consoleIO.askHitOrStand();
+            if (action == Action.HIT) {
+                System.out.println(blackjack.hitCurrentPlayer());
+                if (blackjack.isCurrentPlayerBust()) {
+                    System.out.println(blackjack.getCurrentPlayerName() + " busted with a total of " + blackjack.getCurrentPlayerHandValue());
+                    blackjack.advanceToNextPlayer(); 
                 }
-            }
-            if (blackjack.isPlayerBust(i)) {
-                System.out.println(blackjack.getPlayerName(i) + " busts with a total of " + blackjack.getPlayerHandValue(i));
+            } else if (action == Action.STAND) {
+                blackjack.standCurrentPlayer();
+            } else {
+                throw new IllegalArgumentException("Invalid action.");
             }
         }
     }
