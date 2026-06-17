@@ -11,7 +11,7 @@ public class BlackjackTest {
     public void setUp() {
         blackjack = new Blackjack();
         Player[] players = {new Player("Clear")};
-        blackjack.init(players);
+        blackjack.setPlayers(players);
     }
 
     @Test

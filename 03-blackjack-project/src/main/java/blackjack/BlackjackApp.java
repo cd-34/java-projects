@@ -37,7 +37,8 @@ public class BlackjackApp {
         boolean playing = true;
         while (playing) {
             // init deals one card to the dealer and two cards to each player
-            InitialDeal result = blackjack.init(players);
+            blackjack.setPlayers(players);
+            InitialDeal result = blackjack.dealRound();
             System.out.println("Dealer's hand:\n" + result.dealerHand());
             for (Map.Entry<String, String> entry : result.playerHands().entrySet()) {
                 System.out.println(entry.getKey() + "'s hand:\n" + entry.getValue());

@@ -15,9 +15,15 @@ public class Blackjack {
         this.dealer = new Dealer();
     }
 
-    public InitialDeal init(Player[] players) {
+    // "record" keyword best for just passing around data
+    // in this case, trying to pass around data on dealer's hand and players' hands
+    public record InitialDeal(String dealerHand, Map<String, String> playerHands) {}
+
+    public void setPlayers(Player[] players) {
         this.players = players;
-        
+    }
+
+    public InitialDeal dealRound() {
         dealer.addCard(deck.deal());
 
         for (int i = 0; i < players.length; i++) {
@@ -27,9 +33,7 @@ public class Blackjack {
         return dealResult();
     }
 
-    // "record" keyword best for just passing around data
-    // in this case, trying to pass around data on dealer's hand and players' hands
-    public record InitialDeal(String dealerHand, Map<String, String> playerHands) {}
+
 
     // returns a dealer's hand and the player's <name, hand> as a map
     public InitialDeal dealResult() {
