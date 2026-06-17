@@ -17,13 +17,13 @@ public class Blackjack {
 
     // "record" keyword best for just passing around data
     // in this case, trying to pass around data on dealer's hand and players' hands
-    public record InitialDeal(String dealerHand, Map<String, String> playerHands) {}
+    public record CurrentBoard(String dealerHand, Map<String, String> playerHands) {}
 
     public void setPlayers(Player[] players) {
         this.players = players;
     }
 
-    public InitialDeal dealRound() {
+    public CurrentBoard initialDeal() {
         dealer.addCard(deck.deal());
 
         for (int i = 0; i < players.length; i++) {
@@ -33,15 +33,13 @@ public class Blackjack {
         return dealResult();
     }
 
-
-
     // returns a dealer's hand and the player's <name, hand> as a map
-    public InitialDeal dealResult() {
+    public CurrentBoard dealResult() {
         Map<String, String> playerHands = new LinkedHashMap<>();
         for (int i = 0; i < players.length; i++) {
             playerHands.put(players[i].getName(), players[i].getHand().toString());
         }
-        return new InitialDeal(dealer.getHand().toString(), playerHands);
+        return new CurrentBoard(dealer.getHand().toString(), playerHands);
     }
 
     // shallow method

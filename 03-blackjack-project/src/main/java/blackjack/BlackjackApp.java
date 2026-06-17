@@ -2,7 +2,7 @@ package blackjack;
 import java.util.Map;
 import java.util.Scanner;
 
-import blackjack.Blackjack.InitialDeal;
+import blackjack.Blackjack.CurrentBoard;
 
 public class BlackjackApp {
     private ConsoleIO consoleIO;
@@ -38,7 +38,7 @@ public class BlackjackApp {
         while (playing) {
             // init deals one card to the dealer and two cards to each player
             blackjack.setPlayers(players);
-            InitialDeal result = blackjack.dealRound();
+            CurrentBoard result = blackjack.initialDeal();
             System.out.println("Dealer's hand:\n" + result.dealerHand());
             for (Map.Entry<String, String> entry : result.playerHands().entrySet()) {
                 System.out.println(entry.getKey() + "'s hand:\n" + entry.getValue());
