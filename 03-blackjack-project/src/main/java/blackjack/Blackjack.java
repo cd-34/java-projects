@@ -102,7 +102,9 @@ public class Blackjack {
     }
 
     // consequence of removing player information from blackjackapp
-    // duplicate code, need to fix later
+    // just duplicating code from participant -> dealer/player 
+    // but this allows us to do it for each player in the array
+    // issue with getters exposing internals?
     public int getPlayerCount() {
         return players.length;
     }
