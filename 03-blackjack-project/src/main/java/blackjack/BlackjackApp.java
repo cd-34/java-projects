@@ -34,13 +34,12 @@ public class BlackjackApp {
     public void run() {
         boolean playing = true;
         while (playing) {
-            // init deals one card to the dealer and two cards to each player
             CurrentBoard result = blackjack.initialDeal();
             System.out.println("Dealer's hand:\n" + result.dealerHand());
             for (Map.Entry<String, String> entry : result.playerHands().entrySet()) {
                 System.out.println(entry.getKey() + "'s hand:\n" + entry.getValue());
             }
-            // after init, players should be asked one by one for their move
+            // after initial deal, players should be asked one by one for their move
             playRound();
             blackjack.dealerTurn();
             // determine winners and print scores
@@ -67,6 +66,11 @@ public class BlackjackApp {
         }
     }
 
+    // need to do player turn and represent more elegantly than index
+    // blackjackapp shouldn't deal with states of playerbust etc
+        // blackjack knows turn, player, what phase we're in
+        // blackjackApp just acts based on that info 
+    // model as a FSM (finite state machine)
     public void playRound() {
         for (int i = 0; i < blackjack.getPlayerCount(); i++) {
             while (!blackjack.isPlayerBust(i)) {

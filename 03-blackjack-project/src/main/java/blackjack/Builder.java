@@ -5,11 +5,11 @@ import java.util.List;
 public class Builder {
     private final List<String> playerNames = new ArrayList<>();
 
-    public Builder() {
+    // public Builder() {
 
-    }
+    // }
 
-    // List allows us to continually add names as the object is being built upon
+    // List allows us to continually add names as the object is being built upon with .join
     public Builder join(String name) {
         playerNames.add(name);
         return this;
