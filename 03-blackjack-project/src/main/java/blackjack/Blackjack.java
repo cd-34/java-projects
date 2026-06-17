@@ -64,25 +64,6 @@ public class Blackjack {
         deck.shuffle();
     }
 
-    // public void determineWinner() {
-    //     int dealerValue = dealer.getHandValue();
-    //     for (int i = 0; i < players.length; i++) {
-    //         Player player = players[i];
-    //         int playerValue = player.getHandValue();
-
-    //         if (player.isBust()) {
-    //             System.out.println(player.getName() + " busts. Dealer wins!");
-    //         } else if (dealer.isBust() || playerValue > dealerValue) {
-    //             System.out.println(player.getName() + " wins!");
-    //             player.incrementWins();
-    //         } else if (playerValue == dealerValue) {
-    //             System.out.println(player.getName() + " ties with the dealer!");
-    //         } else {
-    //             System.out.println(player.getName() + " loses!");
-    //         }
-    //     }
-    // }
-
     public Map<String, Gamestate> determineWinner() {
         // map used to produce one gamestate per player
         Map<String, Gamestate> results = new LinkedHashMap<>();
@@ -115,14 +96,26 @@ public class Blackjack {
         }
         return scores;
     }
-    // old function to be deleted
-    // public void printScores() {
-    //     for (int i = 0; i < players.length; i++) {
-    //         System.out.println(players[i].getName() + "'s wins: " + players[i].getWins());
-    //     }
-    // }
 
     public int getDeckSize() {
         return deck.size();
+    }
+
+    // consequence of removing player information from blackjackapp
+    // duplicate code, need to fix later
+    public int getPlayerCount() {
+        return players.length;
+    }
+
+    public String getPlayerName(int i) {
+        return players[i].getName();
+    }
+
+    public int getPlayerHandValue(int i) {
+        return players[i].getHandValue();
+    }
+
+    public boolean isPlayerBust(int i) {
+        return players[i].isBust();
     }
 }

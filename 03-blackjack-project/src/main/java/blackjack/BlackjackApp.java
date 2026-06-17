@@ -7,7 +7,6 @@ import blackjack.Blackjack.CurrentBoard;
 public class BlackjackApp {
     private ConsoleIO consoleIO;
     private Blackjack blackjack;
-    private Player[] players;
 
     public BlackjackApp(ConsoleIO consoleIO) {
         this.consoleIO = consoleIO;
@@ -18,16 +17,15 @@ public class BlackjackApp {
     public void addPlayers(Scanner scan) {
         System.out.println("How many players will be playing?");
         int playerCount = consoleIO.askPlayerCount(); 
-
-        // Create a new array that stores the players
-        // Array is best because it's an immutable size
-        this.players = new Player[playerCount];
+        Builder builder = new Builder();
 
         // Creates new player classes stored in players[] and sets their names
         for (int i = 0; i < playerCount; i++) {
-            players[i] = new Player(consoleIO.askPlayerName(i)); 
-            System.out.println("Welcome " + players[i].getName() + "!"); 
+            String name = consoleIO.askPlayerName(i);
+            builder.join(name);
+            System.out.println("Welcome " + name + "!"); 
         }
+        this.blackjack = builder.build();
     }
 
     // initializes a game and starts playGame() until there is a winner
@@ -37,7 +35,6 @@ public class BlackjackApp {
         boolean playing = true;
         while (playing) {
             // init deals one card to the dealer and two cards to each player
-            blackjack.setPlayers(players);
             CurrentBoard result = blackjack.initialDeal();
             System.out.println("Dealer's hand:\n" + result.dealerHand());
             for (Map.Entry<String, String> entry : result.playerHands().entrySet()) {
@@ -71,10 +68,9 @@ public class BlackjackApp {
     }
 
     public void playRound() {
-        for (int i = 0; i < players.length; i++) {
-            // can maybe put isBlackjack() here 
-            while (!players[i].isBust()) {
-                System.out.println(players[i].getName() + "'s turn! Your current hand value: " + players[i].getHandValue());
+        for (int i = 0; i < blackjack.getPlayerCount(); i++) {
+            while (!blackjack.isPlayerBust(i)) {
+                System.out.println(blackjack.getPlayerName(i) + "'s turn! Your current hand value: " + blackjack.getPlayerHandValue(i));
                 Action action = consoleIO.askHitOrStand();
                 if (action == Action.HIT) {
                     System.out.println(blackjack.dealCardToPlayer(i));
@@ -84,8 +80,8 @@ public class BlackjackApp {
                     throw new IllegalArgumentException("Invalid action.");
                 }
             }
-            if (players[i].isBust()) {
-                System.out.println(players[i].getName() + " busts with a total of " + players[i].getHandValue());
+            if (blackjack.isPlayerBust(i)) {
+                System.out.println(blackjack.getPlayerName(i) + " busts with a total of " + blackjack.getPlayerHandValue(i));
             }
         }
     }
